@@ -11,7 +11,7 @@ permalink: /gfsmaps.html
 <center> 
 <center> 
 <td align="center" valign="center"> <img
-SRC="http://143.160.8.22/gfs/synoptic00.png"
+SRC="http://143.160.8.22/gfs/synoptic06.png"
 alt="GFS Synoptic" /> <br /> GFS Synoptic. </td> 
 </center>
 
@@ -19,7 +19,7 @@ alt="GFS Synoptic" /> <br /> GFS Synoptic. </td>
 
 <center>
 <td align="center" valign="center"> <img
-SRC="http://143.160.8.22/gfs/aptmp_map00.png"
+SRC="http://143.160.8.22/gfs/aptmp_map06.png"
 alt="GFS Temperature" /> <br /> GFS Temperature. </td> 
 </center>
 
@@ -27,7 +27,7 @@ alt="GFS Temperature" /> <br /> GFS Temperature. </td>
 
 <center> 
 <td align="center" valign="center"> <img
-SRC="http://143.160.8.22/gfs/cape_map00.png"
+SRC="http://143.160.8.22/gfs/cape_map06.png"
 alt="GFS CAPE" /> <br /> GFS CAPE. </td> 
 </center>
 
@@ -35,7 +35,7 @@ alt="GFS CAPE" /> <br /> GFS CAPE. </td>
 
 <center> 
 <td align="center" valign="center"> <img
-SRC="http://143.160.8.22/gfs/pwat_map00.png"
+SRC="http://143.160.8.22/gfs/pwat_map06.png"
 alt="GFS Precipitable Water" /> <br /> GFS Precipitable Water. </td> 
 </center>
 
@@ -43,7 +43,7 @@ alt="GFS Precipitable Water" /> <br /> GFS Precipitable Water. </td>
 
 <center> 
 <td align="center" valign="center"> <img
-SRC="http://143.160.8.22/gfs/radar_map00.png"
+SRC="http://143.160.8.22/gfs/radar_map06.png"
 alt="GFS Radar" /> <br /> GFS Radar. </td> 
 </center>
 
@@ -51,7 +51,7 @@ alt="GFS Radar" /> <br /> GFS Radar. </td>
 
 <center> 
 <td align="center" valign="center"> <img
-SRC="http://143.160.8.22/gfs/sohemp00.png"
+SRC="http://143.160.8.22/gfs/sohemp06.png"
 alt="GFS Synoptic" /> <br /> GFS Synoptic. </td> 
 </center>
 
@@ -59,7 +59,7 @@ alt="GFS Synoptic" /> <br /> GFS Synoptic. </td>
 
 <center> 
 <td align="center" valign="center"> <img
-SRC="http://143.160.8.22/gfs/zg500_sohemp00.png"
+SRC="http://143.160.8.22/gfs/zg500_sohemp06.png"
 alt="GFS Synoptic" /> <br /> GFS Synoptic. </td> 
 </center>
 
