@@ -47,17 +47,6 @@ The current UTC time is:
 </html>
 
 ---
-# Maximum dBZ
-
-Click on "layer" to open radar overlay or refresh your browser if the map box is missing
-
-<iframe style='height: 500pt; width: 100%;' frameborder="0" scrolling="no" id="iframe" src="http://143.160.8.22/leaflet.html"></iframe>
-
-<p align="center">
-<img src="/assets/images/radar/radardbz.png" alt="viridis" align="middle"> 
-</p> 
-
----
 # Detailed storm characteristics
 
 Detailed storm characteristics is availible by clicking on the red polygon, or the black storm track. It is usefull to examine the static image below to see where interference is wrongly identified, and tracked, as a storm by the algorithm.  Refresh your browser if the map box is missing.
@@ -68,6 +57,17 @@ Detailed storm characteristics is availible by clicking on the red polygon, or t
 # Static Image
 
 ![radar_image](http://143.160.8.22/latest.gif)
+
+---
+# Maximum dBZ
+
+Click on "layer" to open radar overlay or refresh your browser if the map box is missing
+
+<iframe style='height: 500pt; width: 100%;' frameborder="0" scrolling="no" id="iframe" src="http://143.160.8.22/leaflet.html"></iframe>
+
+<p align="center">
+<img src="/assets/images/radar/radardbz.png" alt="viridis" align="middle"> 
+</p> 
 
 # Disclaimer
 The NWU-Lekwena Radar and The NWU-WRF is a test bed for students to learn and
