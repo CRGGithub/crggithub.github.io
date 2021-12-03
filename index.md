@@ -15,7 +15,7 @@ university running an *in-house*, student driven operational weather radar and
 an operational numerical weather prediction model. Read more about WRF on the
 [official user page](https://www2.mmm.ucar.edu/wrf/users/).
 
-## Radar Status: **OFFLINE -- DAMAGED INFRASTRUCTURE**
+## Radar Status: **ONLINE**
 
 To learn more about the radar and how to interpret the image [click here](http://www.lekwenaradar.co.za/about)
 
