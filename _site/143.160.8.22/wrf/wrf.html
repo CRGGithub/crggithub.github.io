@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+
+    
+
+    <title>NWU-WRF</title>
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/143.160.8.22/wrf/wrf.html">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+    <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    <center>
+    
+      <a class="site-title" href="/">NWU Lekwena Radar</a>
+    
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/radar.html">Radar</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/satellite.html">Satellite</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/143.160.8.22/wrf/wrf.html">NWU-WRF</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/143.160.8.22/wrf/wrfskewt.html">NWU-WRF SkewT&#39;s</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+
+    <section class="page-header">
+      <h2 class="project-tagline">North-West University Operational WRF</h2>
+      
+      <!-- Post tagline -->
+      
+      <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+      <article>
+
+  <div>
+    <h2 id="forecasts">Forecasts</h2>
+<p>Click links to expand</p>
+<div style="margin-bottom: 20px;">
+    <button id="precipitationButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Precipitation</button>
+    <div id="precipitationContent" style="display: none; margin-top: 20px;">
+        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
+            <iframe src="http://143.160.8.22/wrf/wrfrainfall.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <button id="radarButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Radar</button>
+    <div id="radarContent" style="display: none; margin-top: 20px;">
+        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
+            <iframe src="http://143.160.8.22/wrf/wrfradar.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <button id="windGustButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Maximum Wind Gust</button>
+    <div id="windGustContent" style="display: none; margin-top: 20px;">
+        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
+            <iframe src="http://143.160.8.22/wrf/wrfwindspeed.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <button id="capeButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">CAPE</button>
+    <div id="capeContent" style="display: none; margin-top: 20px;">
+        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
+            <iframe src="http://143.160.8.22/wrf/wrfcape.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <button id="lfcButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">LFC</button>
+    <div id="lfcContent" style="display: none; margin-top: 20px;">
+        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
+            <iframe src="http://143.160.8.22/wrf/wrflfc.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <button id="cloudFractionButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Cloud Fraction</button>
+    <div id="cloudFractionContent" style="display: none; margin-top: 20px;">
+        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
+            <iframe src="http://143.160.8.22/wrf/wrfcf.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <button id="temperatureButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Temperature</button>
+    <div id="temperatureContent" style="display: none; margin-top: 20px;">
+        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
+            <iframe src="http://143.160.8.22/wrf/wrftemp.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <button id="heatIndexButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Heat Index</button>
+    <div id="heatIndexContent" style="display: none; margin-top: 20px;">
+        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
+            <iframe src="http://143.160.8.22/wrf/wrfhi.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<script>
+    // Utility to toggle content visibility
+    function toggleContent(buttonId, contentId) {
+        document.getElementById(buttonId).addEventListener("click", function() {
+            var content = document.getElementById(contentId);
+            content.style.display = content.style.display === "none" || content.style.display === "" ? "block" : "none";
+        });
+    }
+
+    // Attach toggle events for all buttons
+    toggleContent("precipitationButton", "precipitationContent");
+    toggleContent("radarButton", "radarContent");
+    toggleContent("windGustButton", "windGustContent");
+    toggleContent("capeButton", "capeContent");
+    toggleContent("lfcButton", "lfcContent");
+    toggleContent("cloudFractionButton", "cloudFractionContent");
+    toggleContent("temperatureButton", "temperatureContent");
+    toggleContent("heatIndexButton", "heatIndexContent");
+</script>
+
+<p>The Weather Research and Forecasting Model (WRF) is an advanced, community
+driven, and open source weather model that can be used for both operational
+forecasting and meteorological research at a variety of scales. Along with The
+NWU-Lekwena Radar, The NWU-WRF puts the North-West University Potchefstroom at
+the forefront of numerical weather prediction research in Africa, as the only
+university running an <em>in-house</em>, student driven operational weather radar and
+an operational numerical weather prediction model. Read more about WRF on the
+<a href="https://www2.mmm.ucar.edu/wrf/users/">official user page</a>.</p>
+
+<p><strong>The Weather Research and Forecasting Model Version (WRFV) 4.6.1</strong>,
+Microphysics=New Thompson, <em>et.al</em> (8),
+Longwave Radiation=RRTMG scheme (4),
+Shortwave Radiation=RRTMG scheme (4),
+Land Surface=Noah Land Surface Model (2),
+Planetary Boundary layer=Yonsei University scheme (1),
+Cumulus Parameterization=Grell-Freitas (3),
+Model Vertical Levels=34</p>
+
+<h4 id="initialization-strategy">Initialization Strategy</h4>
+<p><img src="http://localhost:4000/assets/images/wrf_forecast.png" alt="forecast_strat" /></p>
+
+<hr />
+
+<h4 id="practical-considerations-and-limitations">Practical considerations and limitations</h4>
+<ul>
+  <li>The model is initialized using publicly available GFS data. The GFS forecasts are also viewable <a href="http://www.lekwenaradar.co.za/forecast.html">here</a></li>
+  <li>The model requires <em>spin-up</em> time to become numerically stable, the first hour of the forecast should be discarded</li>
+  <li>For observed Skew-T diagrams please visit the <a href="http://weather.uwyo.edu/upperair/sounding.html">University of Wyoming Upper-Air Database</a></li>
+  <li>Customized forecast products is available on request</li>
+  <li>Please note that SAWS is the only entity in South-Africa which can issue weather related warnings</li>
+</ul>
+
+  </div>
+
+</article>
+
+
+      <footer class="site-footer">
+      <center>
+      <img src="/assets/images/logo/lekwena_logo.png"></a>
+      <img src="/assets/images/logo/nwu_logo_small.png"></a>
+      <img src="/assets/images/logo/wrc_logo_small.png"></a>
+      <br/>
+      <br/>
+      <span class="site-footer-credits">This page was generated via <a href="https://github.com/CRGGithub/crggithub.github.io">GitHub</a> and is
+       maintained by the <a href="http://natural-sciences.nwu.ac.za/unit-environmental-sciences-and-management/climate-change-air-quality-and-impacts">NWU Environmental Sciences Students.</a></span>
+      </center>
+      </footer>
+    </section>
+  </body>
+</html>
+

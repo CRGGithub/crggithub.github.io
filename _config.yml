@@ -1,0 +1,10 @@
+title: NWU Lekwena Radar
+description: A Living Weather Laboratory
+show_downloads: true
+baseurl: "/" # change this to the subpath of your site, e.g. /blog. Leave it empty if you don't need it.
+url: "https://crggithub.github.io" # change this to the base hostname & protocol for your site
+# cayman-blog date format
+# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
+cayman-blog:
+  date_format: "%b %-d, %Y"
+theme: # leave it empty

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-sA+9Q3roZjG9zlgIuNePVOmtxA9pH86ubYMnZjwpznA=" crossorigin="anonymous"/>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-pA4+lY4f0n1+KeHNX1K3+FW1fLrqqAP+8Gnv2xHrRzs=" crossorigin="anonymous"></script>
+
+    <!-- Other Custom Styles (Optional) -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ page.title }}</h1>
+        <p>{{ page.tagline }}</p>
+    </header>
+
+    <main>
+        {{ content }}
+    </main>
+
+    <footer>
+        <p>&copy; {{ site.title }}</p>
+    </footer>
+</body>
+</html>
+

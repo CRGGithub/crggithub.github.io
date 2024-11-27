@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+
+    
+
+    <title>NWU-WRF SkewT&#39;s</title>
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/143.160.8.22/wrf/wrfskewt.html">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/favicon.ico">
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+    <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    <center>
+    
+      <a class="site-title" href="/">NWU Lekwena Radar</a>
+    
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/radar.html">Radar</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/satellite.html">Satellite</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/143.160.8.22/wrf/wrf.html">NWU-WRF</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/143.160.8.22/wrf/wrfskewt.html">NWU-WRF SkewT&#39;s</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+
+    <section class="page-header">
+      <h2 class="project-tagline">North-West University Operational WRF</h2>
+      
+      <!-- Post tagline -->
+      
+      <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+      <article>
+
+  <div>
+    <h3 id="soundings-by-country">Soundings by Country</h3>
+<p>Click on the city buttons below to view the corresponding Skew-T diagram.</p>
+
+<div id="iframeContainer" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px; display: none;">
+    <iframe id="skewtIframe" src="" style="width: 80%; height: 700px; border: none;"></iframe>
+</div>
+
+<script>
+    /**
+     * Updates the iframe content and makes the container visible.
+     * @param {string} url - The URL to load in the iframe.
+     */
+    function updateIframe(url) {
+        var iframeContainer = document.getElementById('iframeContainer');
+        var iframe = document.getElementById('skewtIframe');
+
+        if (url) {
+            iframe.src = url; // Update the iframe's source
+            iframeContainer.style.display = 'block'; // Show the iframe container
+        }
+    }
+</script>
+
+<style>
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<h4 id="south-africa">South Africa</h4>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_alexandria.html')">Alexandria</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_bethlehem.html')">Bethlehem</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_bloemfontein.html')">Bloemfontein</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_cpt.html')">Cape Town</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_deaar.html')">De-Aar</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_durban.html')">Durban</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_irene.html')">Irene</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_upington.html')">Upington</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_mafikeng.html')">Mafikeng</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_polokwane.html')">Polokwane</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_gqeberha.html')">Gqeberha</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_springbok.html')">Springbok</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_sutherland.html')">Sutherland</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_mata.html')">Mata-Mata</button>
+</div>
+
+<hr />
+
+<h4 id="namibia">Namibia</h4>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_windhoek.html')">Windhoek</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_rundu.html')">Rundu</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_luderitz.html')">Luderitz</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_goageb.html')">Goageb</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_sesfontein.html')">Sesfontein</button>
+</div>
+
+<hr />
+
+<h4 id="botswana">Botswana</h4>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_gaberone.html')">Gaberone</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_ghanzi.html')">Ghanzi</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_francistown.html')">Francistown</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_maun.html')">Maun</button>
+</div>
+
+<hr />
+
+<h4 id="zimbabwe">Zimbabwe</h4>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_harare.html')">Harare</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_bulawayo.html')">Bulawayo</button>
+</div>
+
+<hr />
+
+<h4 id="mozambique">Mozambique</h4>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_maputu.html')">Maputu</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_beira.html')">Beira</button>
+</div>
+
+<hr />
+
+<h4 id="zambia">Zambia</h4>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_lusaka.html')">Lusaka</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_livingstone.html')">Livingstone</button>
+</div>
+
+<hr />
+
+<h4 id="lesotho-swaziland-and-madagascar">Lesotho, Swaziland, and Madagascar</h4>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_maseru.html')">Maseru</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_mbabane.html')">Mbabane</button>
+    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_anatnanarivo.html')">Antananarivo</button>
+</div>
+
+<hr />
+
+<h3 id="map-of-locations">Map of locations</h3>
+
+<p><img src="/assets/images/sounding_locations_2.png" alt="" usemap="#map" /></p>
+<map name="map">
+    <area shape="rect" coords="397, 278, 450, 292" href="http://143.160.8.22/wrf/wrfskwt_mafikeng.html" alt="mafikeng" title="Mafikeng" />
+    <area shape="rect" coords="410, 247, 468, 260" href="http://143.160.8.22/wrf/wrfskwt_gaberone.html" alt="gaberone" title="Gaberone" />
+    <area shape="rect" coords="496, 225, 556, 241" href="http://143.160.8.22/wrf/wrfskwt_polokwane.html" alt="polokwane" title="Polokwane" />
+    <area shape="rect" coords="624, 122, 661, 139" href="http://143.160.8.22/wrf/wrfskwt_beira.html" alt="beira" title="Beira" />
+    <area shape="rect" coords="469, 13, 514, 28" href="http://143.160.8.22/wrf/wrfskwt_lusaka.html" alt="lusaka" title="Lusaka" />
+    <area shape="rect" coords="532, 72, 576, 88" href="http://143.160.8.22/wrf/wrfskwt_harare.html" alt="harare" title="Harare" />
+    <area shape="rect" coords="476, 130, 532, 145" href="http://143.160.8.22/wrf/wrfskwt_bulawayo.html" alt="bulawayo" title="Bulawayo" />
+    <area shape="rect" coords="577, 280, 621, 296" href="http://143.160.8.22/wrf/wrfskwt_maputu.html" alt="maputu" title="Maputu" />
+    <area shape="rect" coords="537, 290, 568, 307" href="http://143.160.8.22/wrf/wrfskwt_mbabane.html" alt="mbabane" title="Mbabane" />
+    <area shape="rect" coords="459, 277, 514, 303" href="http://143.160.8.22/wrf/wrfskwt_irene.html" alt="irene" title="Irene" />
+    <area shape="rect" coords="466, 342, 532, 358" href="http://143.160.8.22/wrf/wrfskwt_bethlehem.html" alt="bethlehem" title="Bethlehem" />
+    <area shape="rect" coords="459, 373, 490, 388" href="http://143.160.8.22/wrf/wrfskwt_maseru.html" alt="maseru" title="Maseru" />
+    <area shape="rect" coords="419, 365, 445, 381" href="http://143.160.8.22/wrf/wrfskwt_bloemfontein.html" alt="bloemfontein" title="Bloemfontein" />
+    <area shape="rect" coords="297, 347, 352, 361" href="http://143.160.8.22/wrf/wrfskwt_upington.html" alt="upington" title="Upington" />
+    <area shape="rect" coords="536, 379, 581, 394" href="http://143.160.8.22/wrf/wrfskwt_durban.html" alt="durban" title="Durban" />
+    <area shape="rect" coords="364, 409, 411, 426" href="http://143.160.8.22/wrf/wrfskwt_deaar.html" alt="deaar" title="De-Aar" />
+    <area shape="rect" coords="404, 502, 480, 518" href="http://143.160.8.22/wrf/wrfskwt_gqeberha.html" alt="gqeberha" title="Gqeberha" />
+    <area shape="rect" coords="235, 502, 298, 518" href="http://143.160.8.22/wrf/wrfskwt_cpt.html" alt="capetown" title="Cape-Town" />
+    <area shape="rect" coords="217, 382, 276, 396" href="http://143.160.8.22/wrf/wrfskwt_springbok.html" alt="springbok" title="Springbok" />
+    <area shape="rect" coords="184, 351, 245, 367" href="http://143.160.8.22/wrf/wrfskwt_alexander.html" alt="alexander" title="Alexander" />
+    <area shape="rect" coords="306, 170, 352, 186" href="http://143.160.8.22/wrf/wrfskwt_ghanzi.html" alt="ghanzi" title="Ghanzi" />
+    <area shape="rect" coords="151, 298, 200, 315" href="http://143.160.8.22/wrf/wrfskwt_luderitz.html" alt="luderitz" title="Luderitz" />
+    <area shape="rect" coords="148, 218, 199, 235" href="http://143.160.8.22/wrf/wrfskwt_gobabeb.html" alt="goageb" title="Goababeb" />
+    <area shape="rect" coords="195, 192, 257, 207" href="http://143.160.8.22/wrf/wrfskwt_windhoek.html" alt="windhoek" title="Windhoek" />
+    <area shape="rect" coords="258, 72, 309, 89" href="http://143.160.8.22/wrf/wrfskwt_rundu.html" alt="rundu" title="Rundu" />
+    <area shape="rect" coords="281, 454, 348, 475" href="http://143.160.8.22/wrf/wrfskwt_sutherland.html" alt="sutherland" title="Sutherland" />
+    <area shape="rect" coords="264, 271, 331, 296" href="http://143.160.8.22/wrf/wrfskwt_mata.html" alt="matamata" title="Mata-Mata" />
+    <area shape="rect" coords="444, 153, 517, 174" href="http://143.160.8.22/wrf/wrfskwt_francistown.html" alt="francistown" title="Francistown" />
+    <area shape="rect" coords="347, 123, 390, 145" href="http://143.160.8.22/wrf/wrfskwt_maun.html" alt="maun" title="Maun" />
+    <area shape="rect" coords="402, 68, 476, 90" href="http://143.160.8.22/wrf/wrfskwt_livingstone.html" alt="livingstone" title="Livingstone" />
+    <area shape="rect" coords="112, 100, 178, 121" href="http://143.160.8.22/wrf/wrfskwt_sesfontein.html" alt="sesfontein" title="Sesfontein" />
+</map>
+
+<h4 id="practical-considerations-and-limitations">Practical considerations and limitations</h4>
+<ul>
+  <li>The model is initialized using publicly available GFS data. The GFS forecasts are also viewable <a href="http://www.lekwenaradar.co.za/forecast.html">here</a></li>
+  <li>The model requires <em>spin-up</em> time to become numerically stable, the first hour of the forecast should be discarded</li>
+  <li>For observed Skew-T diagrams please visit the <a href="http://weather.uwyo.edu/upperair/sounding.html">University of Wyoming Upper-Air Database</a></li>
+  <li>Customized forecast products is available on request</li>
+  <li>Please note that SAWS is the only entity in South-Africa which can issue weather related warnings</li>
+</ul>
+
+  </div>
+
+</article>
+
+
+      <footer class="site-footer">
+      <center>
+      <img src="/assets/images/logo/lekwena_logo.png"></a>
+      <img src="/assets/images/logo/nwu_logo_small.png"></a>
+      <img src="/assets/images/logo/wrc_logo_small.png"></a>
+      <br/>
+      <br/>
+      <span class="site-footer-credits">This page was generated via <a href="https://github.com/CRGGithub/crggithub.github.io">GitHub</a> and is
+       maintained by the <a href="http://natural-sciences.nwu.ac.za/unit-environmental-sciences-and-management/climate-change-air-quality-and-impacts">NWU Environmental Sciences Students.</a></span>
+      </center>
+      </footer>
+    </section>
+  </body>
+</html>
+
