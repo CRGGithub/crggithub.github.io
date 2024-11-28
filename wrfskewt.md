@@ -2,7 +2,7 @@
 layout: page
 title: NWU-WRF SkewT's
 tagline: North-West University Operational WRF
-permalink: 143.160.8.22/wrf/wrfskewt.html
+permalink: /wrfskewt.html
 ---
 
 ### Soundings by Country

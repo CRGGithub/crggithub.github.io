@@ -2,7 +2,7 @@
 layout: page
 title: NWU-WRF
 tagline: North-West University Operational WRF
-permalink: 143.160.8.22/wrf/wrf.html
+permalink: /wrf.html
 ---
 
 ## Forecasts 
