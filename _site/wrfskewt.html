@@ -142,6 +142,19 @@
     <h3 id="soundings-by-country">Soundings by Country</h3>
 <p>Click on the city buttons below to view the corresponding Skew-T diagram.</p>
 
+<script>
+    /**
+     * Opens the selected link in a new tab.
+     * Works across desktop and mobile browsers.
+     */
+    function openInNewTab(url) {
+        if (url) {
+            // Open the URL in a new tab
+            window.open(url, '_blank');
+        }
+    }
+</script>
+
 <h4 id="south-africa">South Africa</h4>
 <p><select id="southAfricaSelect" onchange="window.open(this.value, '_blank')">
     <option value="" selected="" disabled="">Select a city</option>
