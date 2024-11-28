@@ -142,114 +142,84 @@
     <h3 id="soundings-by-country">Soundings by Country</h3>
 <p>Click on the city buttons below to view the corresponding Skew-T diagram.</p>
 
-<div id="iframeContainer" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px; display: none;">
-    <iframe id="skewtIframe" src="" style="width: 80%; height: 700px; border: none;"></iframe>
-</div>
-
-<script>
-    /**
-     * Updates the iframe content and makes the container visible.
-     * @param {string} url - The URL to load in the iframe.
-     */
-    function updateIframe(url) {
-        var iframeContainer = document.getElementById('iframeContainer');
-        var iframe = document.getElementById('skewtIframe');
-
-        if (url) {
-            iframe.src = url; // Update the iframe's source
-            iframeContainer.style.display = 'block'; // Show the iframe container
-        }
-    }
-</script>
-
-<style>
-    button {
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 14px;
-        cursor: pointer;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
-
-    button:hover {
-        background-color: #45a049;
-    }
-</style>
-
 <h4 id="south-africa">South Africa</h4>
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_alexandria.html')">Alexandria</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_bethlehem.html')">Bethlehem</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_bloemfontein.html')">Bloemfontein</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_cpt.html')">Cape Town</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_deaar.html')">De-Aar</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_durban.html')">Durban</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_irene.html')">Irene</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_upington.html')">Upington</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_mafikeng.html')">Mafikeng</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_polokwane.html')">Polokwane</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_gqeberha.html')">Gqeberha</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_springbok.html')">Springbok</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_sutherland.html')">Sutherland</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_mata.html')">Mata-Mata</button>
-</div>
+<p><select id="southAfricaSelect" onchange="window.open(this.value, '_blank')">
+    <option value="" selected="" disabled="">Select a city</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_alexandria.html">Alexandria</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_bethlehem.html">Bethlehem</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_bloemfontein.html">Bloemfontein</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_cpt.html">Cape Town</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_deaar.html">De-Aar</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_durban.html">Durban</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_irene.html">Irene</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_upington.html">Upington</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_mafikeng.html">Mafikeng</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_polokwane.html">Polokwane</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_gqeberha.html">Gqeberha</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_springbok.html">Springbok</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_sutherland.html">Sutherland</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_mata.html">Mata-Mata</option>
+</select></p>
 
 <hr />
 
 <h4 id="namibia">Namibia</h4>
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_windhoek.html')">Windhoek</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_rundu.html')">Rundu</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_luderitz.html')">Luderitz</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_gobabeb.html')">Gobabeb</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_sesfontein.html')">Sesfontein</button>
-</div>
+<p><select id="namibiaSelect" onchange="window.open(this.value, '_blank')">
+    <option value="" selected="" disabled="">Select a city</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_windhoek.html">Windhoek</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_rundu.html">Rundu</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_luderitz.html">Luderitz</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_goageb.html">Goageb</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_sesfontein.html">Sesfontein</option>
+</select></p>
 
 <hr />
 
 <h4 id="botswana">Botswana</h4>
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_gaberone.html')">Gaberone</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_ghanzi.html')">Ghanzi</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_francistown.html')">Francistown</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_maun.html')">Maun</button>
-</div>
+<p><select id="botswanaSelect" onchange="window.open(this.value, '_blank')">
+    <option value="" selected="" disabled="">Select a city</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_gaberone.html">Gaberone</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_ghanzi.html">Ghanzi</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_francistown.html">Francistown</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_maun.html">Maun</option>
+</select></p>
 
 <hr />
 
 <h4 id="zimbabwe">Zimbabwe</h4>
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_harare.html')">Harare</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_bulawayo.html')">Bulawayo</button>
-</div>
+<p><select id="zimbabweSelect" onchange="window.open(this.value, '_blank')">
+    <option value="" selected="" disabled="">Select a city</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_harare.html">Harare</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_bulawayo.html">Bulawayo</option>
+</select></p>
 
 <hr />
 
 <h4 id="mozambique">Mozambique</h4>
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_maputu.html')">Maputu</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_beira.html')">Beira</button>
-</div>
+<p><select id="mozambiqueSelect" onchange="window.open(this.value, '_blank')">
+    <option value="" selected="" disabled="">Select a city</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_maputu.html">Maputu</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_beira.html">Beira</option>
+</select></p>
 
 <hr />
 
 <h4 id="zambia">Zambia</h4>
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_lusaka.html')">Lusaka</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_livingstone.html')">Livingstone</button>
-</div>
+<p><select id="zambiaSelect" onchange="window.open(this.value, '_blank')">
+    <option value="" selected="" disabled="">Select a city</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_lusaka.html">Lusaka</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_livingstone.html">Livingstone</option>
+</select></p>
 
 <hr />
 
 <h4 id="lesotho-swaziland-and-madagascar">Lesotho, Swaziland, and Madagascar</h4>
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_maseru.html')">Maseru</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_mbabane.html')">Mbabane</button>
-    <button onclick="updateIframe('http://143.160.8.22/wrf/wrfskwt_anatnanarivo.html')">Antananarivo</button>
-</div>
+<p><select id="otherCountriesSelect" onchange="window.open(this.value, '_blank')">
+    <option value="" selected="" disabled="">Select a city</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_maseru.html">Maseru</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_mbabane.html">Mbabane</option>
+    <option value="http://143.160.8.22/wrf/wrfskwt_anatnanarivo.html">Antananarivo</option>
+</select></p>
 
 <hr />
 

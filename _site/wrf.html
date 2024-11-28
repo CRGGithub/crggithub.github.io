@@ -140,77 +140,31 @@
 
   <div>
     <h2 id="forecasts">Forecasts</h2>
-<p>Click links to expand</p>
-<div style="margin-bottom: 20px;">
-    <button id="precipitationButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Precipitation</button>
-    <div id="precipitationContent" style="display: none; margin-top: 20px;">
-        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
-            <iframe src="http://143.160.8.22/wrf/wrfrainfall.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    </div>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <button id="radarButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Radar</button>
-    <div id="radarContent" style="display: none; margin-top: 20px;">
-        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
-            <iframe src="http://143.160.8.22/wrf/wrfradar.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    </div>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <button id="windGustButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Maximum Wind Gust</button>
-    <div id="windGustContent" style="display: none; margin-top: 20px;">
-        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
-            <iframe src="http://143.160.8.22/wrf/wrfwindspeed.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    </div>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <button id="capeButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">CAPE</button>
-    <div id="capeContent" style="display: none; margin-top: 20px;">
-        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
-            <iframe src="http://143.160.8.22/wrf/wrfcape.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    </div>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <button id="lfcButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">LFC</button>
-    <div id="lfcContent" style="display: none; margin-top: 20px;">
-        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
-            <iframe src="http://143.160.8.22/wrf/wrflfc.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    </div>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <button id="cloudFractionButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Cloud Fraction</button>
-    <div id="cloudFractionContent" style="display: none; margin-top: 20px;">
-        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
-            <iframe src="http://143.160.8.22/wrf/wrfcf.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    </div>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <button id="temperatureButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Temperature</button>
-    <div id="temperatureContent" style="display: none; margin-top: 20px;">
-        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
-            <iframe src="http://143.160.8.22/wrf/wrftemp.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    </div>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <button id="heatIndexButton" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">Heat Index</button>
-    <div id="heatIndexContent" style="display: none; margin-top: 20px;">
-        <div style="position: relative; padding-bottom: 90%; height: 0; overflow: hidden; max-width: 100%;">
-            <iframe src="http://143.160.8.22/wrf/wrfhi.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
-        </div>
-    </div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+    <button onclick="window.open('http://143.160.8.22/wrf/wrfrainfall.html', '_blank')" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Precipitation
+    </button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrfradar.html', '_blank')" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Radar
+    </button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrfwindspeed.html', '_blank')" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Maximum Wind Gust
+    </button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrfcape.html', '_blank')" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        CAPE
+    </button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrflfc.html', '_blank')" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        LFC
+    </button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrfcf.html', '_blank')" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Cloud Fraction
+    </button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrftemp.html', '_blank')" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Temperature
+    </button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrfhi.html', '_blank')" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+        Heat Index
+    </button>
 </div>
 
 <hr />
