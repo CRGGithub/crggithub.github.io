@@ -8,6 +8,19 @@ permalink: /wrfskewt.html
 ### Soundings by Country
 Click on the city buttons below to view the corresponding Skew-T diagram.
 
+<script>
+    /**
+     * Opens the selected link in a new tab.
+     * Works across desktop and mobile browsers.
+     */
+    function openInNewTab(url) {
+        if (url) {
+            // Open the URL in a new tab
+            window.open(url, '_blank');
+        }
+    }
+</script>
+
 #### South Africa
 <select id="southAfricaSelect" onchange="window.open(this.value, '_blank')">
     <option value="" selected disabled>Select a city</option>
