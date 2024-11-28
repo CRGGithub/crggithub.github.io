@@ -10,7 +10,7 @@ Click on the city buttons below to view the corresponding Skew-T diagram.
 
 #### South Africa
 <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_alexandria.html', '_blank')">Alexandria</button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_alexander.html', '_blank')">Alexander</button>
     <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_bethlehem.html', '_blank')">Bethlehem</button>
     <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_bloemfontein.html', '_blank')">Bloemfontein</button>
     <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_cpt.html', '_blank')">Cape Town</button>
@@ -33,7 +33,7 @@ Click on the city buttons below to view the corresponding Skew-T diagram.
     <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_windhoek.html', '_blank')">Windhoek</button>
     <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_rundu.html', '_blank')">Rundu</button>
     <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_luderitz.html', '_blank')">Luderitz</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_goageb.html', '_blank')">Goageb</button>
+    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_gobabeb.html', '_blank')">Gobabeb</button>
     <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_sesfontein.html', '_blank')">Sesfontein</button>
 </div>
 
