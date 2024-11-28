@@ -12,10 +12,10 @@ tagline: A Living Weather Laboratory
     <button style="margin: 10px; padding: 10px 20px; font-size: 16px;" onclick="window.location.href='http://143.160.8.22/latest.gif';">
         LEKWENA RADAR
     </button>
-    <button style="margin: 10px; padding: 10px 20px; font-size: 16px;" onclick="window.location.href='http://www.lekwenaradar.co.za/143.160.8.22/wrf/wrf.html';">
+    <button style="margin: 10px; padding: 10px 20px; font-size: 16px;" onclick="window.location.href='http://www.lekwenaradar.co.za/wrf.html';">
         NWU-WRF
     </button>
-    <button style="margin: 10px; padding: 10px 20px; font-size: 16px;" onclick="window.location.href='http://www.lekwenaradar.co.za/143.160.8.22/wrf/wrfskewt.html';">
+    <button style="margin: 10px; padding: 10px 20px; font-size: 16px;" onclick="window.location.href='http://www.lekwenaradar.co.za/wrfskewt.html';">
         WRF-SKEWT
     </button>
     <button style="margin: 10px; padding: 10px 20px; font-size: 16px;" onclick="window.location.href='http://www.lekwenaradar.co.za/satellite.html';">
