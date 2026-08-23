@@ -1,129 +1,95 @@
 ---
 layout: page
-title: NWU-WRF SkewT's
-tagline: North-West University Operational WRF
+title: Soundings
 permalink: /wrfskewt.html
+eyebrow: Forecast
+tagline: Forecast Skew-T / log-p diagrams for 48 locations across Southern Africa.
+description: >-
+  WRF forecast Skew-T / log-p soundings for 48 Southern African locations,
+  from a 3 km convection-permitting nest out to the 18 km synoptic domain.
 ---
 
-### Soundings by Country
-Click on the city buttons below to view the corresponding Skew-T diagram.
+{%- assign snd = site.data.soundings -%}
+{%- assign base = site.data_host | append: site.data_paths.wrf_prefix -%}
 
-#### South Africa
-<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_alexander.html', '_blank')">Alexander</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_bethlehem.html', '_blank')">Bethlehem</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_bloemfontein.html', '_blank')">Bloemfontein</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_cpt.html', '_blank')">Cape Town</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_deaar.html', '_blank')">De-Aar</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_durban.html', '_blank')">Durban</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_irene.html', '_blank')">Irene</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_upington.html', '_blank')">Upington</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_mafikeng.html', '_blank')">Mafikeng</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_polokwane.html', '_blank')">Polokwane</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_gqeberha.html', '_blank')">Gqeberha</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_springbok.html', '_blank')">Springbok</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_sutherland.html', '_blank')">Sutherland</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_mata.html', '_blank')">Mata-Mata</button>
-</div>
+<p>
+  Each station below opens a forecast sounding stepped through the run. Stations are grouped
+  by the WRF domain that produces them, because resolution changes what the profile can tell
+  you: the 3 km nest resolves individual convective cells, while the 18 km domain only carries
+  the synoptic-scale structure.
+</p>
 
----
+<aside class="callout callout--info" role="note">
+  <div class="callout__body">
+    <p>
+      These are <strong>model</strong> soundings, not observations. For observed profiles to
+      verify against, use the
+      <a href="https://weather.uwyo.edu/upperair/sounding.shtml">University of Wyoming
+      upper-air database</a>.
+    </p>
+  </div>
+</aside>
 
-#### Namibia
-<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_windhoek.html', '_blank')">Windhoek</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_rundu.html', '_blank')">Rundu</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_luderitz.html', '_blank')">Luderitz</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_gobabeb.html', '_blank')">Gobabeb</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_sesfontein.html', '_blank')">Sesfontein</button>
-</div>
+{%- for g in snd.groups %}
+## {{ g.title }}
 
----
+<p>
+  <span class="badge badge--accent">{{ g.domain }} &middot; {{ g.resolution }}</span>
+</p>
 
-#### Botswana
-<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_gaberone.html', '_blank')">Gaberone</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_ghanzi.html', '_blank')">Ghanzi</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_francistown.html', '_blank')">Francistown</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_maun.html', '_blank')">Maun</button>
-</div>
+<p>{{ g.blurb | strip_newlines | strip }}</p>
 
----
+<ul class="chips">
+  {%- for s in g.stations %}
+  <li>
+    <a class="chip" href="{{ base }}{{ s.page }}" target="_blank" rel="noopener">
+      {{ s.name }}
+      <svg class="chip__ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+  </li>
+  {%- endfor %}
+</ul>
+{%- endfor %}
 
-#### Zimbabwe
-<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_harare.html', '_blank')">Harare</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_bulawayo.html', '_blank')">Bulawayo</button>
-</div>
+## Where the stations are
 
----
+<p>
+  The map covers the 18 km and 9 km stations &mdash; click a place name to open its sounding.
+  The 3 km Highveld stations sit too close together to label at this scale, so use the
+  buttons above for those.
+</p>
 
-#### Mozambique
-<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_maputu.html', '_blank')">Maputu</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_beira.html', '_blank')">Beira</button>
-</div>
+<figure class="hotspot-map">
+  <div class="hotspot-map__frame"
+       style="aspect-ratio: {{ snd.map_image.width }} / {{ snd.map_image.height }}">
+    <img src="{{ snd.map_image.src | relative_url }}"
+         width="{{ snd.map_image.width }}" height="{{ snd.map_image.height }}"
+         alt="Map of Southern Africa showing the forecast sounding locations"
+         loading="lazy" decoding="async">
+    {%- for a in snd.map_image.areas %}
+    <a class="hotspot" href="{{ base }}{{ a.page }}" target="_blank" rel="noopener"
+       title="{{ a.title }} sounding"
+       style="left:{{ a.left }}%;top:{{ a.top }}%;width:{{ a.width }}%;height:{{ a.height }}%">
+      <span class="visually-hidden">{{ a.title }} sounding</span>
+    </a>
+    {%- endfor %}
+  </div>
+  <figcaption>
+    Sounding locations in the 18 km and 9 km domains. Hover to highlight a station,
+    click to open its forecast profile.
+  </figcaption>
+</figure>
 
----
+## Practical limits
 
-#### Zambia
-<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_lusaka.html', '_blank')">Lusaka</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_livingstone.html', '_blank')">Livingstone</button>
-</div>
-
----
-
-#### Lesotho, Swaziland, and Madagascar
-<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_maseru.html', '_blank')">Maseru</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_mbabane.html', '_blank')">Mbabane</button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfskwt_anatnanarivo.html', '_blank')">Antananarivo</button>
-</div>
-
----
-
-### Map of locations 
-
-<img src="/assets/images/sounding_locations_2.png" alt="" usemap="#map" />
-<map name="map">
-    <area shape="rect" coords="397, 278, 450, 292" href="http://143.160.8.22/wrf/wrfskwt_mafikeng.html" alt="mafikeng" title="Mafikeng" />
-    <area shape="rect" coords="410, 247, 468, 260" href="http://143.160.8.22/wrf/wrfskwt_gaberone.html" alt="gaberone" title="Gaberone" />
-    <area shape="rect" coords="496, 225, 556, 241" href="http://143.160.8.22/wrf/wrfskwt_polokwane.html" alt="polokwane" title="Polokwane" />
-    <area shape="rect" coords="624, 122, 661, 139" href="http://143.160.8.22/wrf/wrfskwt_beira.html" alt="beira" title="Beira" />
-    <area shape="rect" coords="469, 13, 514, 28"   href="http://143.160.8.22/wrf/wrfskwt_lusaka.html" alt="lusaka" title="Lusaka" />
-    <area shape="rect" coords="532, 72, 576, 88"   href="http://143.160.8.22/wrf/wrfskwt_harare.html" alt="harare" title="Harare" />
-    <area shape="rect" coords="476, 130, 532, 145" href="http://143.160.8.22/wrf/wrfskwt_bulawayo.html" alt="bulawayo" title="Bulawayo" />
-    <area shape="rect" coords="577, 280, 621, 296" href="http://143.160.8.22/wrf/wrfskwt_maputu.html" alt="maputu" title="Maputu" />
-    <area shape="rect" coords="537, 290, 568, 307" href="http://143.160.8.22/wrf/wrfskwt_mbabane.html" alt="mbabane" title="Mbabane" />
-    <area shape="rect" coords="459, 277, 514, 303" href="http://143.160.8.22/wrf/wrfskwt_irene.html" alt="irene" title="Irene" />
-    <area shape="rect" coords="466, 342, 532, 358" href="http://143.160.8.22/wrf/wrfskwt_bethlehem.html" alt="bethlehem" title="Bethlehem" />
-    <area shape="rect" coords="459, 373, 490, 388" href="http://143.160.8.22/wrf/wrfskwt_maseru.html" alt="maseru" title="Maseru" />
-    <area shape="rect" coords="419, 365, 445, 381" href="http://143.160.8.22/wrf/wrfskwt_bloemfontein.html" alt="bloemfontein" title="Bloemfontein" />
-    <area shape="rect" coords="297, 347, 352, 361" href="http://143.160.8.22/wrf/wrfskwt_upington.html" alt="upington" title="Upington" />
-    <area shape="rect" coords="536, 379, 581, 394" href="http://143.160.8.22/wrf/wrfskwt_durban.html" alt="durban" title="Durban" />
-    <area shape="rect" coords="364, 409, 411, 426" href="http://143.160.8.22/wrf/wrfskwt_deaar.html" alt="deaar" title="De-Aar" />
-    <area shape="rect" coords="404, 502, 480, 518" href="http://143.160.8.22/wrf/wrfskwt_gqeberha.html" alt="gqeberha" title="Gqeberha" />
-    <area shape="rect" coords="235, 502, 298, 518" href="http://143.160.8.22/wrf/wrfskwt_cpt.html" alt="capetown" title="Cape-Town" />
-    <area shape="rect" coords="217, 382, 276, 396" href="http://143.160.8.22/wrf/wrfskwt_springbok.html" alt="springbok" title="Springbok" />
-    <area shape="rect" coords="184, 351, 245, 367" href="http://143.160.8.22/wrf/wrfskwt_alexander.html" alt="alexander" title="Alexander" />
-    <area shape="rect" coords="306, 170, 352, 186" href="http://143.160.8.22/wrf/wrfskwt_ghanzi.html" alt="ghanzi" title="Ghanzi" />
-    <area shape="rect" coords="151, 298, 200, 315" href="http://143.160.8.22/wrf/wrfskwt_luderitz.html" alt="luderitz" title="Luderitz" />
-    <area shape="rect" coords="148, 218, 199, 235" href="http://143.160.8.22/wrf/wrfskwt_gobabeb.html" alt="gobabeb" title="Gobabeb" />
-    <area shape="rect" coords="195, 192, 257, 207" href="http://143.160.8.22/wrf/wrfskwt_windhoek.html" alt="windhoek" title="Windhoek" />
-    <area shape="rect" coords="258, 72, 309, 89"   href="http://143.160.8.22/wrf/wrfskwt_rundu.html" alt="rundu" title="Rundu" />
-    <area shape="rect" coords="281, 454, 348, 475" href="http://143.160.8.22/wrf/wrfskwt_sutherland.html" alt="sutherland" title="Sutherland" />
-    <area shape="rect" coords="264, 271, 331, 296" href="http://143.160.8.22/wrf/wrfskwt_mata.html" alt="matamata" title="Mata-Mata" />
-    <area shape="rect" coords="444, 153, 517, 174" href="http://143.160.8.22/wrf/wrfskwt_francistown.html" alt="francistown" title="Francistown" />
-    <area shape="rect" coords="347, 123, 390, 145" href="http://143.160.8.22/wrf/wrfskwt_maun.html" alt="maun" title="Maun" />
-    <area shape="rect" coords="402, 68, 476, 90"   href="http://143.160.8.22/wrf/wrfskwt_livingstone.html" alt="livingstone" title="Livingstone" />
-    <area shape="rect" coords="112, 100, 178, 121" href="http://143.160.8.22/wrf/wrfskwt_sesfontein.html" alt="sesfontein" title="Sesfontein" />
-</map>
-
-
-
-#### Practical considerations and limitations
-+ The model is initialized using publicly available GFS data. The GFS forecasts are also viewable [here](http://www.lekwenaradar.co.za/forecast.html)
-+ The model requires *spin-up* time to become numerically stable, the first hour of the forecast should be discarded
-+ For observed Skew-T diagrams please visit the [University of Wyoming Upper-Air Database](http://weather.uwyo.edu/upperair/sounding.html)
-+ Customized forecast products is available on request
-+ Please note that SAWS is the only entity in South-Africa which can issue weather related warnings
+<aside class="callout callout--info" role="note">
+  <div class="callout__body">
+    <ul class="plain-list">
+      <li>Initialisation comes from publicly available GFS data.</li>
+      <li>Discard the first hour of every run &mdash; the model is still spinning up.</li>
+      <li>Customised products are available on request from
+          <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.</li>
+      <li>SAWS is the only entity in South Africa that may issue weather warnings.</li>
+    </ul>
+  </div>
+</aside>

@@ -1,94 +1,156 @@
 ---
 layout: page
 title: NWU-WRF
-tagline: North-West University Operational WRF
 permalink: /wrf.html
+eyebrow: Forecast
+tagline: A three-domain operational WRF-ARW forecast, run in house every day.
+description: >-
+  The North-West University operational WRF forecast - 18, 9 and 3 km domains
+  over Southern Africa, with gridded fields and sector impact dashboards.
 ---
 
-## Forecasts 
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfrainfall.html', '_blank')" 
-            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        Precipitation
-    </button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfradar.html', '_blank')" 
-            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        Radar
-    </button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfwindspeed.html', '_blank')" 
-            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        Maximum Wind Gust
-    </button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfcape.html', '_blank')" 
-            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        CAPE
-    </button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrflfc.html', '_blank')" 
-            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        LFC
-    </button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfcf.html', '_blank')" 
-            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        Cloud Fraction
-    </button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrftemp.html', '_blank')" 
-            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        Temperature
-    </button>
-    <button onclick="window.open('http://143.160.8.22/wrf/wrfhi.html', '_blank')" 
-            style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;">
-        Heat Index
-    </button>
+{%- assign wrf = site.data.wrf -%}
+{%- assign portal = site.data_host | append: site.data_paths.wrf_portal -%}
+{%- assign base = site.data_host | append: site.data_paths.wrf_prefix -%}
+
+<ul class="stats">
+  <li class="stat"><span class="stat__value">{{ wrf.version | remove: 'WRF-ARW ' }}</span><span class="stat__label">WRF-ARW version</span></li>
+  <li class="stat"><span class="stat__value">3 km</span><span class="stat__label">Finest nest</span></li>
+  <li class="stat"><span class="stat__value">{{ wrf.length }}</span><span class="stat__label">Forecast length</span></li>
+  <li class="stat"><span class="stat__value">06Z</span><span class="stat__label">Daily GFS cycle</span></li>
+</ul>
+
+<p>
+  The Weather Research and Forecasting model is an open, community-built weather model used
+  for both operational forecasting and research. Running it in house alongside the Lekwena
+  radar puts NWU Potchefstroom at the front of numerical weather prediction research in
+  Africa &mdash; it is the only university on the continent operating a student-driven
+  weather radar and an operational NWP model side by side. The model background is documented
+  on the <a href="https://www2.mmm.ucar.edu/wrf/users/">official WRF user page</a>.
+</p>
+
+<p>
+  <a class="btn btn--primary" href="{{ portal }}" target="_blank" rel="noopener">
+    Open the full WRF portal
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
+  </a>
+</p>
+
+## Impact dashboards
+
+<p>
+  The dashboards translate raw model output into decisions. Rather than reading a CAPE field
+  and a wind field separately, each location is scored for the things that actually cost
+  money and time.
+</p>
+
+<ul class="card-grid card-grid--wide">
+  {%- for d in wrf.dashboards %}
+  <li>
+    <a class="card" href="{{ base }}{{ d.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">{{ d.scale }} domain</p>
+      <h3 class="card__title">{{ d.title }}</h3>
+      <p class="card__body">{{ d.blurb | strip_newlines | strip }}</p>
+      <span class="card__foot">Open dashboard &nearr;</span>
+    </a>
+  </li>
+  {%- endfor %}
+</ul>
+
+## Gridded fields
+
+<p>
+  Every field below is published at both resolutions. The <strong>9 km</strong> domain covers
+  South Africa, Lesotho and Eswatini and is the one to use for synoptic and next-day planning.
+  The <strong>3 km</strong> nest covers North West and Gauteng, resolves convection explicitly
+  rather than parameterising it, and is the better guide to thunderstorm timing, placement
+  and mode over the Highveld.
+</p>
+
+<ul class="card-grid">
+  {%- for f in wrf.fields %}
+  <li>
+    <div class="card">
+      <h3 class="card__title">{{ f.title }}</h3>
+      <p class="card__body">{{ f.blurb }}</p>
+      <p class="card__actions">
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ f.page }}" target="_blank" rel="noopener">9 km</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ f.page }}" target="_blank" rel="noopener">3 km</a>
+      </p>
+    </div>
+  </li>
+  {%- endfor %}
+</ul>
+
+<p>
+  Vertical profiles for 48 locations are on the
+  <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
+</p>
+
+## Model domains
+
+<div class="table-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Domain</th><th>Resolution</th><th>Grid</th><th>Extent</th><th>Coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for d in wrf.domains %}
+      <tr>
+        <td><strong>{{ d.id }}</strong><br><span class="cell-note">{{ d.label }}</span></td>
+        <td>{{ d.resolution }}</td>
+        <td>{{ d.grid }}</td>
+        <td>{{ d.extent }}</td>
+        <td>{{ d.coverage }}{% if d.note %}<br><span class="cell-note">{{ d.note }}</span>{% endif %}</td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
 </div>
 
----
+<p>
+  The domains are two-way nested: the 3 km nest sits inside the 9 km domain, which sits inside
+  the 18 km domain, and each nest feeds its solution back to its parent. The outer domain
+  exists to supply lateral boundary conditions and its gridded fields are not published.
+</p>
 
-<script>
-    // Utility to toggle content visibility
-    function toggleContent(buttonId, contentId) {
-        document.getElementById(buttonId).addEventListener("click", function() {
-            var content = document.getElementById(contentId);
-            content.style.display = content.style.display === "none" || content.style.display === "" ? "block" : "none";
-        });
-    }
+## Configuration
 
-    // Attach toggle events for all buttons
-    toggleContent("precipitationButton", "precipitationContent");
-    toggleContent("radarButton", "radarContent");
-    toggleContent("windGustButton", "windGustContent");
-    toggleContent("capeButton", "capeContent");
-    toggleContent("lfcButton", "lfcContent");
-    toggleContent("cloudFractionButton", "cloudFractionContent");
-    toggleContent("temperatureButton", "temperatureContent");
-    toggleContent("heatIndexButton", "heatIndexContent");
-</script>
+<div class="table-scroll">
+  <table class="spec">
+    <tbody>
+      {%- for p in wrf.physics %}
+      <tr><th scope="row">{{ p.name }}</th><td>{{ p.value }}</td></tr>
+      {%- endfor %}
+      <tr><th scope="row">Forecast length</th><td>{{ wrf.length }}</td></tr>
+      <tr><th scope="row">Cycle</th><td>{{ wrf.cadence }}</td></tr>
+    </tbody>
+  </table>
+</div>
 
-The Weather Research and Forecasting Model (WRF) is an advanced, community
-driven, and open source weather model that can be used for both operational
-forecasting and meteorological research at a variety of scales. Along with The
-NWU-Lekwena Radar, The NWU-WRF puts the North-West University Potchefstroom at
-the forefront of numerical weather prediction research in Africa, as the only
-university running an *in-house*, student driven operational weather radar and
-an operational numerical weather prediction model. Read more about WRF on the
-[official user page](https://www2.mmm.ucar.edu/wrf/users/).
+<figure>
+  <img src="{{ '/assets/images/wrf_forecast.png' | relative_url }}"
+       alt="Diagram of the daily WRF initialisation strategy" loading="lazy" decoding="async">
+  <figcaption>Daily initialisation strategy.</figcaption>
+</figure>
 
-**The Weather Research and Forecasting Model Version (WRFV) 4.6.1**,
-Microphysics=New Thompson, *et.al* (8),
-Longwave Radiation=RRTMG scheme (4),
-Shortwave Radiation=RRTMG scheme (4),
-Land Surface=Noah Land Surface Model (2),
-Planetary Boundary layer=Yonsei University scheme (1),
-Cumulus Parameterization=Grell-Freitas (3),
-Model Vertical Levels=34
+## Practical limits
 
-#### Initialization Strategy
-![forecast_strat]({{ "/assets/images/wrf_forecast.png" | absolute_url }})
-
----
-
-#### Practical considerations and limitations
-+ The model is initialized using publicly available GFS data. The GFS forecasts are also viewable [here](http://www.lekwenaradar.co.za/forecast.html)
-+ The model requires *spin-up* time to become numerically stable, the first hour of the forecast should be discarded
-+ For observed Skew-T diagrams please visit the [University of Wyoming Upper-Air Database](http://weather.uwyo.edu/upperair/sounding.html)
-+ Customized forecast products is available on request
-+ Please note that SAWS is the only entity in South-Africa which can issue weather related warnings
+<aside class="callout callout--info" role="note">
+  <div class="callout__body">
+    <ul class="plain-list">
+      <li>Initialisation comes from publicly available GFS data, so the forecast inherits
+          whatever errors GFS starts with.</li>
+      <li>The model needs spin-up time to become numerically stable. Discard the first hour
+          of every run.</li>
+      <li>Observed soundings for verification are in the
+          <a href="https://weather.uwyo.edu/upperair/sounding.shtml">University of Wyoming
+          upper-air database</a>.</li>
+      <li>Customised forecast products can be produced on request &mdash; contact
+          <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.</li>
+      <li>SAWS is the only entity in South Africa that may issue weather warnings.</li>
+    </ul>
+  </div>
+</aside>

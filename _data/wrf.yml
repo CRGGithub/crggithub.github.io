@@ -1,0 +1,100 @@
+# The NWU operational WRF-ARW configuration, mirroring the product index
+# published by the model server at {{ site.data_host }}/wrf/index.html
+version: "WRF-ARW 4.8.0"
+init: "NCEP GFS 0.25 deg, 3-hourly"
+length: "72 h"
+cadence: "Daily, from the 06Z GFS cycle"
+
+domains:
+  - id: d01
+    label: Outer domain
+    resolution: 18 km
+    grid: 279 x 219
+    extent: "0.4-49.6E, 5.4-40.3S"
+    coverage: Southern Africa
+    note: Lateral boundary forcing only - not published as gridded fields
+    published: false
+  - id: d02
+    label: Regional domain
+    resolution: 9 km
+    grid: 214 x 200
+    extent: "15.9-34.8E, 21.2-36.5S"
+    coverage: South Africa, Lesotho and Eswatini
+    note: Cumulus parameterised
+    published: true
+  - id: d03
+    label: Convection-permitting nest
+    resolution: 3 km
+    grid: 246 x 156
+    extent: "22.0-29.2E, 24.1-28.2S"
+    coverage: North West and Gauteng
+    note: Cumulus scheme off - convection resolved explicitly
+    published: true
+
+physics:
+  - name: Dynamical core
+    value: WRF-ARW v4.8.0, non-hydrostatic
+  - name: Microphysics
+    value: Thompson (mp_physics = 6)
+  - name: Cumulus
+    value: Kain-Fritsch on d01/d02, off on d03
+  - name: Longwave radiation
+    value: RRTMG (ra_lw_physics = 3)
+  - name: Shortwave radiation
+    value: RRTMG (ra_sw_physics = 3)
+  - name: Planetary boundary layer
+    value: YSU (bl_pbl_physics = 1)
+  - name: Surface layer
+    value: Revised MM5 Monin-Obukhov (sf_sfclay_physics = 1)
+  - name: Land surface
+    value: Unified Noah LSM (sf_surface_physics = 2), 4 soil layers
+  - name: Initial and boundary conditions
+    value: NCEP GFS 0.25 deg, 3-hourly
+
+dashboards:
+  - page: impact_dashboard.html
+    title: National Impact Dashboard
+    scale: 9 km
+    blurb: >-
+      Thirty-two cities scored for storms and lightning, rainfall, wind, Heat
+      Index, athlete heat stress (WBGT), livestock heat load (THI, broken out
+      for cattle, sheep, goats, pigs and poultry), frost with nightly
+      hours-below-threshold, fire danger, spray windows and irrigation
+      scheduling.
+  - page: nwu_dashboard.html
+    title: NWU Campus Dashboard
+    scale: 3 km
+    blurb: >-
+      Convection-permitting guidance for the three NWU campuses -
+      Potchefstroom, Mahikeng and Vanderbijlpark (Vaal).
+
+# Gridded fields. `page` is the 9 km product; the 3 km nest uses the same
+# name with an nwgp_ prefix.
+fields:
+  - page: wrfradar.html
+    title: Simulated Radar
+    blurb: Model reflectivity - where the model is putting storms.
+  - page: wrfrainfall.html
+    title: Accumulated Precipitation
+    blurb: Running rainfall total through the forecast.
+  - page: wrfcape.html
+    title: Simulated CAPE
+    blurb: Convective available potential energy - storm fuel.
+  - page: wrflfc.html
+    title: Level of Free Convection
+    blurb: How far air must be lifted before it rises on its own.
+  - page: wrfwindspeed.html
+    title: Maximum Wind Gust
+    blurb: Peak surface gust in each output interval.
+  - page: wrftemp.html
+    title: Temperature
+    blurb: Screen-level (2 m) air temperature.
+  - page: wrfhi.html
+    title: Heat Index
+    blurb: Apparent temperature combining heat and humidity.
+  - page: wrfcf.html
+    title: Cloud Fraction
+    blurb: Total column cloud cover.
+  - page: wrfpet.html
+    title: Potential Evapotranspiration
+    blurb: Atmospheric demand for water - irrigation planning.

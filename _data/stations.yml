@@ -1,0 +1,72 @@
+# NWU-operated automatic weather stations.
+#
+# Observational telemetry, refreshed hourly on the data server. Everything here
+# is *observed* - see _data/wrf.yml for the model side.
+#
+# Paths are relative to site.data_host.
+live_page: "/wrf/stations.html"
+img_prefix: "/wrf/stations/img/"
+
+# NOTE: `blurb` is deliberately conservative - only what the source page states.
+# Fill in the siting details (coordinates, elevation, instrument make, date
+# commissioned) as you have them; nothing else needs to change.
+stations:
+  - id: lekwena
+    name: Lekwena
+    kind: Single station
+    blurb: >-
+      Co-located with the Lekwena C-band radar on the Lekwena Wildlife Estate
+      outside Potchefstroom.
+  - id: metsi
+    name: Metsi
+    kind: Single station
+    blurb: NWU-operated station, reported under its own site name.
+  - id: pienaarskamp
+    name: Pienaarskamp
+    kind: Single station
+    blurb: One of the two stations in and around Potchefstroom.
+  - id: potch_south
+    name: Potch South
+    kind: Single station
+    blurb: The second of the two stations in and around Potchefstroom.
+  - id: potchefstroom
+    name: Potchefstroom
+    kind: Derived average
+    default: true
+    blurb: >-
+      The mean of Pienaarskamp and Potch South. Wind is vector-averaged rather
+      than averaged as compass degrees, so a northerly and a north-westerly do
+      not average out to something southerly.
+
+# Year-to-date plots published per station. `suffix` completes the filename,
+# e.g. lekwena_temp.png
+charts:
+  - suffix: temp
+    title: Temperature
+    note: Daily minimum, mean and maximum.
+  - suffix: rain
+    title: Rainfall
+    note: Daily total with the cumulative year-to-date curve.
+  - suffix: eto
+    title: Reference evapotranspiration
+    note: Penman reference ET, daily and cumulative - the irrigation baseline.
+  - suffix: humidity
+    title: Humidity
+    note: Relative humidity through the year.
+  - suffix: wind
+    title: Wind speed
+    note: Daily wind speed.
+  - suffix: radiation
+    title: Solar radiation
+    note: Daily incoming shortwave energy.
+
+# Variables carried in the hourly current-conditions feed.
+variables:
+  - { name: Temperature,            unit: "°C",     note: Air temperature at screen height. }
+  - { name: Dew point,              unit: "°C",     note: Temperature at which the air would saturate. }
+  - { name: Relative humidity,      unit: "%",      note: "" }
+  - { name: Wind speed and gust,    unit: "m/s",    note: With direction; vector-averaged. }
+  - { name: Rainfall this hour,     unit: "mm",     note: "" }
+  - { name: Rainfall today,         unit: "mm",     note: Midnight-to-present total. }
+  - { name: Solar radiation,        unit: "MJ/m²",  note: Incoming shortwave energy over the hour. }
+  - { name: Reference ET,           unit: "mm",     note: Penman reference evapotranspiration. }

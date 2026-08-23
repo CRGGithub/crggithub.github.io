@@ -1,0 +1,139 @@
+# EUMETSAT WMS products served from view.eumetsat.int/geoserver/wms
+#
+# Every product is a stack of `layers` drawn bottom-up, plus the shared
+# coastline/border overlay. `cadence` is the repeat cycle of the instrument in
+# minutes and `lag` is how far behind real time to ask, so the slot requested
+# is always one the archive has actually finished ingesting.
+overlay: "backgrounds:ne_10m_coastline,backgrounds:ne_boundary_lines_land"
+
+views:
+  - id: southern-africa
+    title: Southern Africa
+    crs: "EPSG:4326"
+    bbox: "-38,8,-14,44"
+    width: 1400
+    height: 933
+  - id: south-africa
+    title: South Africa
+    crs: "EPSG:4326"
+    bbox: "-36,14,-21,35"
+    width: 1400
+    height: 1000
+  - id: highveld
+    title: Highveld and radar range
+    crs: "EPSG:4326"
+    bbox: "-29.5,22,-22.5,32"
+    width: 1400
+    height: 980
+  - id: full-disc
+    title: Full disc
+    crs: "AUTO:97004,9001,0,0"
+    bbox: "-2200000,-4000000,4900000,4000000"
+    width: 1400
+    height: 1633
+
+products:
+  - id: geocolour
+    title: GeoColour + Lightning
+    satellite: MTG-I FCI
+    layers: "mtg_fd:rgb_geocolour,mtg_fd:li_afa"
+    cadence: 10
+    lag: 40
+    default: true
+    blurb: >-
+      True colour by day, an infrared and city-lights blend by night, with
+      Lightning Imager accumulated flash area painted on top. The single best
+      all-hours situational picture.
+
+  - id: convection
+    title: Convection RGB
+    satellite: MSG SEVIRI
+    layers: "msg_fes:rgb_convection"
+    cadence: 15
+    lag: 45
+    blurb: >-
+      The classic severe-storm recipe. Vigorous, small-ice-topped convection
+      turns bright yellow; deep but less intense cloud stays white or red.
+
+  - id: rdt
+    title: Rapidly Developing Thunderstorms
+    satellite: MSG SEVIRI
+    layers: "msg_fes:ir108,msg_fes:rdt"
+    cadence: 15
+    lag: 45
+    blurb: >-
+      Automatically detected and tracked convective cells outlined over the
+      10.8 µm infrared image, colour-coded by phase of the storm life cycle.
+
+  - id: kindex
+    title: K-Index instability
+    satellite: MSG GII
+    layers: "msg_fes:gii_kindex"
+    cadence: 15
+    lag: 60
+    blurb: >-
+      Satellite-retrieved K-Index in clear air. High values flag the
+      moist, unstable air masses that thunderstorms grow in - a useful
+      cross-check on the WRF CAPE fields.
+
+  - id: wv062
+    title: Water Vapour 6.2 µm
+    satellite: MSG SEVIRI
+    layers: "msg_fes:wv062"
+    cadence: 15
+    lag: 45
+    blurb: >-
+      Upper-tropospheric moisture. Dark bands are dry, sinking air; the sharp
+      edges between dark and bright trace the jet stream and short waves.
+
+  - id: airmass
+    title: Airmass RGB
+    satellite: MSG SEVIRI
+    layers: "msg_fes:rgb_airmass"
+    cadence: 15
+    lag: 45
+    blurb: >-
+      Separates warm, moist tropical air (green) from cold, dry polar and
+      stratospheric air (blue and red). Red streaks mark tropopause folds
+      ahead of developing cut-off lows.
+
+  - id: ir105
+    title: Infrared 10.5 µm
+    satellite: MTG-I FCI
+    layers: "mtg_fd:ir105_hrfi"
+    cadence: 10
+    lag: 40
+    blurb: >-
+      Brightness temperature of whatever the satellite can see. The coldest,
+      whitest tops are the highest and usually the most active storms.
+
+  - id: dust
+    title: Dust RGB
+    satellite: MTG-I FCI
+    layers: "mtg_fd:rgb_dust"
+    cadence: 10
+    lag: 40
+    blurb: >-
+      Lifted dust shows magenta, thin high cloud black, thick cloud red-brown.
+      Also a good low-cloud and fog discriminator overnight.
+
+  - id: truecolour
+    title: True Colour
+    satellite: MTG-I FCI
+    daylight_only: true
+    layers: "mtg_fd:rgb_truecolour"
+    cadence: 10
+    lag: 40
+    blurb: >-
+      Unenhanced visible imagery, closest to what the eye would see from
+      orbit. Daylight only - it goes black after sunset.
+
+  - id: fire
+    title: Fire Radiative Power
+    satellite: MTG-I FCI
+    layers: "mtg_fd:rgb_geocolour,mtg_fd:frp"
+    cadence: 10
+    lag: 40
+    blurb: >-
+      Detected active fires and their radiative power over the GeoColour
+      background - relevant through the dry Highveld burning season.

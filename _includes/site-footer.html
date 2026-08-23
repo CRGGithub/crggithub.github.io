@@ -1,0 +1,50 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <p class="footer__heading">{{ site.title | escape }}</p>
+        <p class="limit-38">{{ site.description | strip_newlines | strip }}</p>
+        <p>
+          Product requests and collaboration:
+          <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>
+        </p>
+      </div>
+
+      <div>
+        <p class="footer__heading">Products</p>
+        <ul class="footer__list">
+          {%- for item in site.nav %}
+          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__heading">Elsewhere</p>
+        <ul class="footer__list">
+          <li><a href="https://www.weathersa.co.za/">South African Weather Service</a></li>
+          <li><a href="https://www2.mmm.ucar.edu/wrf/users/">WRF user community</a></li>
+          <li><a href="{{ site.eumetsat.viewer }}">EUMETSAT View</a></li>
+          <li><a href="https://weather.uwyo.edu/upperair/sounding.shtml">Wyoming upper-air archive</a></li>
+          <li><a href="{{ site.repository_url }}">Source on GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__logos">
+      <img src="{{ '/assets/images/logo/lekwena_logo.png' | relative_url }}"
+           alt="Lekwena Wildlife Estate" loading="lazy" decoding="async">
+      <img src="{{ '/assets/images/logo/nwu_logo_small.png' | relative_url }}"
+           alt="North-West University" loading="lazy" decoding="async">
+      <img src="{{ '/assets/images/logo/wrc_logo_small.png' | relative_url }}"
+           alt="Water Research Commission" loading="lazy" decoding="async">
+    </div>
+
+    <p class="footer__fine">
+      Maintained by the Climatology Research Group,
+      <a href="{{ site.institution_url }}">NWU Unit for Environmental Sciences and Management</a>.
+      Research and teaching products only &mdash; the South African Weather Service is the sole
+      issuer of official weather warnings in South Africa.
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,115 @@
+# Forecast Skew-T / log-p soundings, grouped by the WRF domain that
+# produces them. `page` is relative to {{ site.data_host }}/wrf/
+groups:
+  - domain: d03
+    resolution: 3 km
+    title: North West and Gauteng
+    blurb: >-
+      Convection-permitting soundings from the 3 km nest. This is the domain to
+      use for thunderstorm timing and mode over the Highveld.
+    stations:
+      - { name: Potchefstroom, page: nwgp_wrfskwt_potchefstroom.html }
+      - { name: Mahikeng,      page: nwgp_wrfskwt_mahikeng.html }
+      - { name: Vanderbijlpark, page: nwgp_wrfskwt_vanderbijlpark.html }
+      - { name: Vereeniging,   page: nwgp_wrfskwt_vereeniging.html }
+      - { name: Klerksdorp,    page: nwgp_wrfskwt_klerksdorp.html }
+      - { name: Rustenburg,    page: nwgp_wrfskwt_rustenburg.html }
+      - { name: Brits,         page: nwgp_wrfskwt_brits.html }
+      - { name: Lichtenburg,   page: nwgp_wrfskwt_lichtenburg.html }
+      - { name: Vryburg,       page: nwgp_wrfskwt_vryburg.html }
+      - { name: Zeerust,       page: nwgp_wrfskwt_zeerust.html }
+      - { name: Pretoria,      page: nwgp_wrfskwt_pretoria.html }
+      - { name: Centurion,     page: nwgp_wrfskwt_centurion.html }
+      - { name: Johannesburg,  page: nwgp_wrfskwt_johannesburg.html }
+      - { name: Soweto,        page: nwgp_wrfskwt_soweto.html }
+      - { name: Krugersdorp,   page: nwgp_wrfskwt_krugersdorp.html }
+      - { name: Benoni,        page: nwgp_wrfskwt_benoni.html }
+
+  - domain: d02
+    resolution: 9 km
+    title: South Africa and neighbours
+    blurb: >-
+      Regional soundings from the 9 km domain, covering the South African
+      upper-air network plus the nearest cross-border stations.
+    stations:
+      - { name: Irene,         page: wrfskwt_irene.html }
+      - { name: Bethlehem,     page: wrfskwt_bethlehem.html }
+      - { name: Bloemfontein,  page: wrfskwt_bloemfontein.html }
+      - { name: Mafikeng,      page: wrfskwt_mafikeng.html }
+      - { name: Polokwane,     page: wrfskwt_polokwane.html }
+      - { name: Durban,        page: wrfskwt_durban.html }
+      - { name: Gqeberha,      page: wrfskwt_gqeberha.html }
+      - { name: Cape Town,     page: wrfskwt_cpt.html }
+      - { name: De Aar,        page: wrfskwt_deaar.html }
+      - { name: Upington,      page: wrfskwt_upington.html }
+      - { name: Springbok,     page: wrfskwt_springbok.html }
+      - { name: Alexander Bay, page: wrfskwt_alexander.html }
+      - { name: Sutherland,    page: wrfskwt_sutherland.html }
+      - { name: Mata-Mata,     page: wrfskwt_mata.html }
+      - { name: Windhoek,      page: wrfskwt_windhoek.html }
+      - { name: Gaborone,      page: wrfskwt_gaberone.html }
+      - { name: Ghanzi,        page: wrfskwt_ghanzi.html }
+      - { name: Maseru,        page: wrfskwt_maseru.html }
+      - { name: Mbabane,       page: wrfskwt_mbabane.html }
+      - { name: Maputo,        page: wrfskwt_maputu.html }
+
+  - domain: d01
+    resolution: 18 km
+    title: Wider Southern Africa
+    blurb: >-
+      Synoptic-scale soundings from the outer domain. Useful for tracking
+      tropical systems and the wider circulation feeding South Africa.
+    stations:
+      - { name: Harare,        page: wrfskwt_harare.html }
+      - { name: Bulawayo,      page: wrfskwt_bulawayo.html }
+      - { name: Lusaka,        page: wrfskwt_lusaka.html }
+      - { name: Livingstone,   page: wrfskwt_livingstone.html }
+      - { name: Francistown,   page: wrfskwt_francistown.html }
+      - { name: Maun,          page: wrfskwt_maun.html }
+      - { name: Rundu,         page: wrfskwt_rundu.html }
+      - { name: Gobabeb,       page: wrfskwt_gobabeb.html }
+      - { name: Sesfontein,    page: wrfskwt_sesfontein.html }
+      - { name: Luderitz,      page: wrfskwt_luderitz.html }
+      - { name: Beira,         page: wrfskwt_beira.html }
+      - { name: Antananarivo,  page: wrfskwt_anatnanarivo.html }
+
+# Clickable regions on /assets/images/sounding_locations_2.png (860 x 640)
+map_image:
+  src: /assets/images/sounding_locations_2.png
+  width: 760
+  height: 697
+  # Hotspots as percentages of the natural image size, so they stay aligned at
+  # any rendered width. A classic <map>/<area> uses fixed pixels and drifts as
+  # soon as the image is scaled to fit a phone.
+  areas:
+    - { page: wrfskwt_mafikeng.html,       title: Mafikeng,      left: 52.24, top: 39.89, width: 6.97, height: 2.01 }
+    - { page: wrfskwt_gaberone.html,       title: Gaborone,      left: 53.95, top: 35.44, width: 7.63, height: 1.87 }
+    - { page: wrfskwt_polokwane.html,      title: Polokwane,     left: 65.26, top: 32.28, width: 7.89, height: 2.30 }
+    - { page: wrfskwt_beira.html,          title: Beira,         left: 82.11, top: 17.50, width: 4.87, height: 2.44 }
+    - { page: wrfskwt_bulawayo.html,       title: Bulawayo,      left: 62.63, top: 18.65, width: 7.37, height: 2.15 }
+    - { page: wrfskwt_maputu.html,         title: Maputo,        left: 75.92, top: 40.17, width: 5.79, height: 2.30 }
+    - { page: wrfskwt_mbabane.html,        title: Mbabane,       left: 70.66, top: 41.61, width: 4.08, height: 2.44 }
+    - { page: wrfskwt_irene.html,          title: Irene,         left: 60.39, top: 39.74, width: 7.24, height: 3.73 }
+    - { page: wrfskwt_bethlehem.html,      title: Bethlehem,     left: 61.32, top: 49.07, width: 8.68, height: 2.30 }
+    - { page: wrfskwt_maseru.html,         title: Maseru,        left: 60.39, top: 53.52, width: 4.08, height: 2.15 }
+    - { page: wrfskwt_bloemfontein.html,   title: Bloemfontein,  left: 55.13, top: 52.37, width: 3.42, height: 2.30 }
+    - { page: wrfskwt_upington.html,       title: Upington,      left: 39.08, top: 49.78, width: 7.24, height: 2.01 }
+    - { page: wrfskwt_durban.html,         title: Durban,        left: 70.53, top: 54.38, width: 5.92, height: 2.15 }
+    - { page: wrfskwt_deaar.html,          title: De Aar,        left: 47.89, top: 58.68, width: 6.18, height: 2.44 }
+    - { page: wrfskwt_gqeberha.html,       title: Gqeberha,      left: 53.16, top: 72.02, width: 10.00, height: 2.30 }
+    - { page: wrfskwt_cpt.html,            title: Cape Town,     left: 30.92, top: 72.02, width: 8.29, height: 2.30 }
+    - { page: wrfskwt_springbok.html,      title: Springbok,     left: 28.55, top: 54.81, width: 7.76, height: 2.01 }
+    - { page: wrfskwt_alexander.html,      title: Alexander Bay, left: 24.21, top: 50.36, width: 8.03, height: 2.30 }
+    - { page: wrfskwt_ghanzi.html,         title: Ghanzi,        left: 40.26, top: 24.39, width: 6.05, height: 2.30 }
+    - { page: wrfskwt_luderitz.html,       title: Luderitz,      left: 19.87, top: 42.75, width: 6.45, height: 2.44 }
+    - { page: wrfskwt_gobabeb.html,        title: Gobabeb,       left: 19.47, top: 31.28, width: 6.71, height: 2.44 }
+    - { page: wrfskwt_windhoek.html,       title: Windhoek,      left: 25.66, top: 27.55, width: 8.16, height: 2.15 }
+    - { page: wrfskwt_sutherland.html,     title: Sutherland,    left: 36.97, top: 65.14, width: 8.82, height: 3.01 }
+    - { page: wrfskwt_mata.html,           title: Mata-Mata,     left: 34.74, top: 38.88, width: 8.82, height: 3.59 }
+    - { page: wrfskwt_francistown.html,    title: Francistown,   left: 58.42, top: 21.95, width: 9.61, height: 3.01 }
+    - { page: wrfskwt_maun.html,           title: Maun,          left: 45.66, top: 17.65, width: 5.66, height: 3.16 }
+    - { page: wrfskwt_sesfontein.html,     title: Sesfontein,    left: 14.74, top: 14.35, width: 8.68, height: 3.01 }
+    - { page: wrfskwt_lusaka.html,         title: Lusaka,        left: 61.71, top:  1.87, width: 5.92, height: 2.15 }
+    - { page: wrfskwt_harare.html,         title: Harare,        left: 70.00, top: 10.33, width: 5.79, height: 2.30 }
+    - { page: wrfskwt_rundu.html,          title: Rundu,         left: 33.95, top: 10.33, width: 6.71, height: 2.44 }
+    - { page: wrfskwt_livingstone.html,    title: Livingstone,   left: 52.89, top:  9.76, width: 9.74, height: 3.16 }

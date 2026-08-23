@@ -1,0 +1,56 @@
+{%- comment -%}
+  Embeds a resource served off the campus data server.
+
+  Params:
+    path     required  path on the data server, e.g. "/latest.gif"
+    kind     "image" (default) or "frame"
+    title    panel heading
+    note     small print under the panel
+    height   CSS height for frames (default 34rem via the stylesheet)
+    refresh  seconds between silent reloads of an image (0 / omitted = never)
+    id       optional element id
+
+  The server address itself comes from site.data_host, so it is never written
+  into a page. When the visitor is on https:// and the data server is still
+  http:// the browser would block the embed outright, so site.js swaps in a
+  click-through card instead of leaving a broken white box on the page.
+{%- endcomment -%}
+{%- assign kind = include.kind | default: 'image' -%}
+{%- assign url = site.data_host | append: include.path -%}
+
+<figure class="panel"{% if include.id %} id="{{ include.id }}"{% endif %}>
+  {%- if include.title %}
+  <div class="panel__head">
+    <h3 class="panel__title">{{ include.title }}</h3>
+    {%- if include.refresh %}
+    <p class="panel__meta" data-refresh-stamp>&mdash;</p>
+    {%- endif %}
+  </div>
+  {%- endif %}
+
+  <div class="panel__body"
+       data-live-embed
+       data-kind="{{ kind }}"
+       data-url="{{ url }}"
+       data-label="{{ include.title | default: 'this product' | escape }}"
+       {% if include.refresh %}data-refresh="{{ include.refresh }}"{% endif %}>
+    {%- if kind == 'frame' -%}
+    <iframe class="panel__frame"
+            src="{{ url }}"
+            title="{{ include.title | default: 'Live data' | escape }}"
+            loading="lazy"
+            {% if include.height %}style="height:{{ include.height }}"{% endif %}
+            referrerpolicy="no-referrer"></iframe>
+    {%- else -%}
+    <img class="panel__media"
+         src="{{ url }}"
+         alt="{{ include.alt | default: include.title | default: 'Live product' | escape }}"
+         loading="lazy" decoding="async"
+         referrerpolicy="no-referrer">
+    {%- endif -%}
+  </div>
+
+  {%- if include.note %}
+  <figcaption class="panel__foot"><p>{{ include.note }}</p></figcaption>
+  {%- endif %}
+</figure>

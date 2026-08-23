@@ -1,0 +1,264 @@
+// ---------------------------------------------------------------------------
+// Page shell: masthead, hero, content column, footer
+// ---------------------------------------------------------------------------
+
+.wrap {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+// ---- Masthead -------------------------------------------------------------
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  // Opaque first so browsers without color-mix still get a solid bar.
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .masthead { background: var(--bg); }
+}
+
+.masthead__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3.75rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-right: auto;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  &:hover { color: var(--text); }
+}
+.brand__mark {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(140deg, var(--plum-700), var(--cyan-600));
+  color: #fff;
+}
+.brand__mark svg { width: 1.15rem; height: 1.15rem; display: block; }
+.brand__text { display: flex; flex-direction: column; line-height: 1.12; }
+.brand__name { font-size: 0.98rem; }
+.brand__sub {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+@include sm-down {
+  .brand__sub { display: none; }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+.nav__link {
+  display: block;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  font-weight: 550;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  &:hover { color: var(--text); background: var(--bg-inset); }
+  &[aria-current="page"] {
+    color: var(--brand);
+    background: var(--bg-inset);
+  }
+}
+
+.icon-btn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  &:hover { color: var(--text); background: var(--bg-inset); border-color: var(--border); }
+  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  svg { width: 1.15rem; height: 1.15rem; display: block; }
+}
+// Only one of the two theme glyphs is shown at a time.
+.icon-btn .icon-moon { display: none; }
+:root[data-theme="dark"] .icon-btn .icon-moon,
+.icon-btn .icon-sun { display: block; }
+:root[data-theme="dark"] .icon-btn .icon-sun { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icon-btn .icon-sun { display: none; }
+  :root:not([data-theme="light"]) .icon-btn .icon-moon { display: block; }
+}
+
+.nav-toggle { display: none; }
+
+@include md-down {
+  .nav-toggle { display: grid; }
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.4rem var(--gutter) 0.9rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+  }
+  .nav__link { padding: 0.7rem 0.6rem; font-size: 1rem; }
+
+  // Closed state comes straight off the button's aria-expanded, so the drawer
+  // is never briefly visible while the deferred script loads. Gated on
+  // .has-js (set inline in <head>) so that with scripting off the nav simply
+  // stays open and stacked rather than becoming unreachable.
+  .has-js .nav-toggle[aria-expanded="false"] + .nav { display: none; }
+}
+
+// ---- Hero -----------------------------------------------------------------
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: var(--hero-text);
+  background:
+    radial-gradient(90rem 40rem at 15% -20%, rgba(255,255,255,0.16), transparent 60%),
+    linear-gradient(115deg, var(--hero-from) 0%, var(--hero-via) 52%, var(--hero-to) 100%);
+}
+// Faint sweep suggesting a radar scan, purely decorative.
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: -40% -10% auto auto;
+  width: 44rem;
+  height: 44rem;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 50%,
+      rgba(255,255,255,0.055) 0 1px, transparent 1px 3.6rem);
+  pointer-events: none;
+}
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  padding-block: fluid(2.2rem, "1.2rem + 4vw", 4rem);
+}
+.hero__eyebrow {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+  padding: 0.22rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+}
+.hero__title {
+  margin: 0 0 0.5rem;
+  color: #fff;
+  font-size: fluid(1.9rem, "1.2rem + 3vw", 3rem);
+  letter-spacing: -0.03em;
+}
+.hero__tagline {
+  margin: 0;
+  max-width: 46ch;
+  font-size: fluid(1rem, "0.95rem + 0.4vw", 1.2rem);
+  color: var(--hero-text-dim);
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+// Compact hero on interior pages
+.hero--slim .hero__inner { padding-block: fluid(1.6rem, "1rem + 2.4vw", 2.6rem); }
+
+// ---- Content --------------------------------------------------------------
+
+.content {
+  flex: 1 0 auto;
+  padding-block: fluid(2rem, "1.4rem + 2.4vw", 3.25rem);
+}
+
+// ---- Footer ---------------------------------------------------------------
+
+.site-footer {
+  margin-top: auto;
+  padding-block: 2.5rem;
+  background: var(--bg-sunken);
+  border-top: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+.footer__grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  @include md-up { grid-template-columns: 1.4fr 1fr 1fr; }
+}
+.footer__heading {
+  margin: 0 0 0.7rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.footer__list { list-style: none; margin: 0; padding: 0; }
+.footer__list li { margin-bottom: 0.4rem; }
+// The partner logos are dark artwork on transparent backgrounds, so they sit
+// on a white plate rather than being filtered - these are brand marks and
+// inverting them is not ours to do.
+.footer__logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 2rem 0 1.2rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--border);
+  img {
+    height: 2.3rem;
+    width: auto;
+    padding: 0.4rem 0.7rem;
+    background: #fff;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+}
+.footer__fine {
+  margin: 0;
+  max-width: none;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}

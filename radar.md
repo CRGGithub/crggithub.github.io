@@ -1,73 +1,87 @@
 ---
 layout: page
 title: Radar
-tagline: North-West University Lekwena C-Band Radar
 permalink: /radar.html
+eyebrow: Observed
+tagline: The NWU Lekwena dual-polarised C-band Doppler radar, Potchefstroom.
+description: >-
+  Live reflectivity, interactive maximum-dBZ maps and automatically tracked
+  storm cells from the North-West University Lekwena C-band weather radar.
 ---
-<meta http-equiv="refresh" content="950" >
 
----
-<meta http-equiv="refresh" content="120" >
+<div class="timebar">
+  <span class="timebar__item">
+    <span class="timebar__label">UTC</span>
+    <span class="clock"><span class="clock__time" data-clock="utc">--:--:--</span></span>
+  </span>
+  <span class="timebar__item">
+    <span class="timebar__label">SAST</span>
+    <span class="clock"><span class="clock__time" data-clock="sast">--:--:--</span></span>
+  </span>
+  <span class="timebar__item">
+    <span class="timebar__label">Status</span>
+    {% include radar-status.html %}
+  </span>
+  <span class="timebar__item">
+    <span class="timebar__label">Range</span>
+    <span>200 km</span>
+  </span>
+</div>
 
-## Radar Status: **ONLINE: ONLY STATIC IMAGE AVAILABLE**
-### Recommended to view products on Firefox
+{% include radar-notice.html %}
 
-To learn more about the radar and how to interpret the image [click here](http://www.lekwenaradar.co.za/about)
+<p>
+  Compare the time stamp burnt into the image below with the UTC clock above. If they are
+  more than roughly ten minutes apart, the radar or the link back to campus is down and you
+  are looking at a stale scan. That check is always worth doing &mdash; the status badge
+  above is set by hand, so it can lag reality.
+</p>
 
-<html>
-<head>
-<script>
-function startTime() {
-  var today = new Date();
-  var h = today.getUTCHours();
-  var m = today.getUTCMinutes();
-  var s = today.getUTCSeconds();
-  m = checkTime(m);
-  s = checkTime(s);
-  document.getElementById('txt').innerHTML =
-  h + ":" + m + ":" + s;
-  var t = setTimeout(startTime, 500);
-}
-function checkTime(i) {
-  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-  return i;
-}
-</script>
-</head>
+## Latest reflectivity
 
-<body onload="startTime()">
-The current UTC time is:
-<div id="txt"></div>
-</body>
-</html>
----
-# Static Image
+{% include live-embed.html
+   path=site.data_paths.radar_gif
+   kind="image"
+   title="Maximum reflectivity, dBZ"
+   alt="Latest reflectivity image from the NWU Lekwena radar"
+   refresh=120
+   note="Refreshes automatically every two minutes. Colour scale, place markers and interference patterns are explained on the about page." %}
 
-![radar_image](http://143.160.8.22/latest.gif)
----
-# Detailed storm characteristics
+## Maximum dBZ map
 
-Detailed storm characteristics is availible by clicking on the red polygon, or the black storm track. It is usefull to examine the static image below to see where interference is wrongly identified, and tracked, as a storm by the algorithm.  Refresh your browser if the map box is missing.
+<p>
+  Pan and zoom the reflectivity field over a basemap. Use the layer control in the corner of
+  the map to switch the radar overlay on and off. Refresh the page if the map does not appear.
+</p>
 
-<iframe style='height: 500pt; width: 100%;' frameborder="0" scrolling="no" id="iframe" src="http://143.160.8.22/shpmap.html"></iframe>
+{% include live-embed.html
+   path=site.data_paths.radar_dbz
+   kind="frame"
+   title="Interactive maximum dBZ"
+   height="32rem" %}
 
----
-# Maximum dBZ
+<figure>
+  <img src="{{ '/assets/images/radar/radardbz.png' | relative_url }}"
+       alt="Colour scale mapping reflectivity in dBZ onto the viridis colour map"
+       loading="lazy" decoding="async">
+  <figcaption>Reflectivity scale used by the map above. Higher dBZ means larger particles &mdash;
+  heavy rain, hail or ice aloft.</figcaption>
+</figure>
 
-Click on "layer" to open radar overlay or refresh your browser if the map box is missing
+## Storm characteristics
 
-<iframe style='height: 500pt; width: 100%;' frameborder="0" scrolling="no" id="iframe" src="http://143.160.8.22/leaflet.html"></iframe>
+<p>
+  Storm cells are identified and tracked automatically. Click a red polygon or a black track
+  to read that cell's characteristics. It is worth checking the static image above at the same
+  time: interference is sometimes picked up and tracked as though it were a storm.
+</p>
 
-<p align="center">
-<img src="/assets/images/radar/radardbz.png" alt="viridis" align="middle"> 
-</p> 
+{% include live-embed.html
+   path=site.data_paths.radar_storms
+   kind="frame"
+   title="Tracked storm cells"
+   height="32rem" %}
 
-# Disclaimer
-The NWU-Lekwena Radar and The NWU-WRF is a test bed for students to learn and
-develop creative solutions related to weather forecasting and now-casting. This
-means that the radar and model can be switched off for maintenance or it could
-be broken on purpose in the name of learning. The radar and model should not be
-used as a tool to make any severe weather alerts as the South-African Weather
-Service is the only credible institution to do this. The products created here
-should only be viewed as a tool for the development of young scientists and
-something interesting to look at.
+## Disclaimer
+
+{% include disclaimer.html %}
