@@ -3,7 +3,14 @@
 version: "WRF-ARW 4.8.0"
 init: "NCEP GFS 0.25 deg, 3-hourly"
 length: "72 h"
-cadence: "Daily, from the 06Z GFS cycle"
+
+# The GFS cycle each daily run is initialised from. This is the ONLY place it
+# is written - the home page badge, the WRF stat tile and the configuration
+# table all read it from here. It cannot be detected automatically: the site is
+# static and only rebuilds on push, and the model server sends no CORS headers,
+# so the browser cannot read the cycle off the portal either. Edit this line
+# whenever the operational cycle changes.
+cycle: "18Z"
 
 domains:
   - id: d01

@@ -34,10 +34,20 @@ scripts:
       <div class="satview__chips" data-sat-views role="group"
            aria-labelledby="satview-view-label"></div>
     </div>
+    <div class="satview__group">
+      <span class="satview__legend">Overlay</span>
+      <div class="satview__chips">
+        <button type="button" class="chip" data-sat-bounds-toggle aria-pressed="true">
+          Boundaries
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="satview__stage" data-sat-stage>
-    <img class="satview__img" data-sat-img alt="" decoding="async">
+    <img class="satview__img" data-sat-base alt="" decoding="async">
+    <img class="satview__layer" data-sat-overlay alt="" aria-hidden="true" decoding="async" hidden>
+    <div class="satview__layer-set" data-sat-bounds aria-hidden="true"></div>
     <div class="satview__spinner" aria-hidden="true"></div>
     <p class="satview__error" data-sat-error role="status" hidden></p>
   </div>
@@ -63,7 +73,7 @@ scripts:
 
   <div class="panel__foot">
     <p>
-      <a data-sat-download href="{{ site.eumetsat.wms }}" target="_blank" rel="noopener">Open this frame at full resolution</a>
+      <a data-sat-download href="{{ site.eumetsat.wms }}" target="_blank" rel="noopener">Open this frame at full resolution</a> (base image, without the overlays)
       &middot; imagery copyright EUMETSAT, reproduced under their
       <a href="https://www.eumetsat.int/eumetsat-data-licensing">data licence</a>.
     </p>
@@ -142,7 +152,11 @@ scripts:
 <script type="application/json" id="satview-config">
 {
   "wms": {{ site.eumetsat.wms | jsonify }},
-  "overlay": {{ sat.overlay | jsonify }},
+  "boundaries": [
+    {%- for b in sat.boundaries %}
+    { "id": {{ b.id | jsonify }}, "layer": {{ b.layer | jsonify }} }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ],
   "views": [
     {%- for v in sat.views %}
     {
@@ -161,7 +175,9 @@ scripts:
       "id": {{ p.id | jsonify }},
       "title": {{ p.title | jsonify }},
       "satellite": {{ p.satellite | jsonify }},
-      "layers": {{ p.layers | jsonify }},
+      "base": {{ p.base | jsonify }},
+      "overlay": {{ p.overlay | default: nil | jsonify }},
+      "overlay_cadence": {{ p.overlay_cadence | default: p.cadence }},
       "cadence": {{ p.cadence }},
       "lag": {{ p.lag }},
       "default": {{ p.default | default: false }},

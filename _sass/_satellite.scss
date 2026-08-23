@@ -44,6 +44,9 @@
   background-size: 22px 22px;
   min-height: 16rem;
 }
+// The base image sets the stage height; every other layer is absolutely
+// positioned on top of it. Each layer is a separate WMS request because this
+// GeoServer only ever renders the first layer of a multi-layer one.
 .satview__img {
   display: block;
   width: 100%;
@@ -52,6 +55,30 @@
   transition: opacity 0.2s;
 }
 .satview__stage.is-loading .satview__img { opacity: 0.4; }
+
+.satview__layer,
+.satview__layer-set {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  pointer-events: none;
+}
+.satview__layer-set img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+// Vector lines are a flat white or pale grey, which disappears against bright
+// cloud tops. A tight dark halo keeps them legible over anything underneath.
+.satview__layer-set {
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.85));
+}
+.satview__layer[hidden],
+.satview__layer-set[hidden] { display: none; }
 
 .satview__spinner {
   position: absolute;

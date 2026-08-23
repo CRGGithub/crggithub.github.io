@@ -1,10 +1,27 @@
 # EUMETSAT WMS products served from view.eumetsat.int/geoserver/wms
 #
-# Every product is a stack of `layers` drawn bottom-up, plus the shared
-# coastline/border overlay. `cadence` is the repeat cycle of the instrument in
-# minutes and `lag` is how far behind real time to ask, so the slot requested
-# is always one the archive has actually finished ingesting.
-overlay: "backgrounds:ne_10m_coastline,backgrounds:ne_boundary_lines_land"
+# IMPORTANT: this GeoServer renders only the FIRST layer of a multi-layer
+# GetMap request - ask for four layers and you get the first one back, with no
+# error. So every layer here is requested separately and the browser stacks
+# the results. That is why a product has one `base` and at most one `overlay`
+# rather than a comma-separated list.
+#
+# `cadence` is the instrument repeat cycle in minutes; `lag` is how far behind
+# real time to ask, so the slot requested is one the archive has finished
+# ingesting.
+
+# Static vector layers drawn over every product, listed bottom-up so the
+# faint provincial lines sit under the brighter national ones.
+boundaries:
+  - id: provinces
+    layer: "osmgray:ne_10m_admin_1_states_provinces_lines"
+    label: Provinces and states
+  - id: countries
+    layer: "backgrounds:ne_boundary_lines_land"
+    label: Country borders
+  - id: coastline
+    layer: "backgrounds:ne_10m_coastline"
+    label: Coastline
 
 views:
   - id: southern-africa
@@ -36,7 +53,9 @@ products:
   - id: geocolour
     title: GeoColour + Lightning
     satellite: MTG-I FCI
-    layers: "mtg_fd:rgb_geocolour,mtg_fd:li_afa"
+    base: "mtg_fd:rgb_geocolour"
+    overlay: "mtg_fd:li_afa"
+    overlay_cadence: 5
     cadence: 10
     lag: 40
     default: true
@@ -48,7 +67,7 @@ products:
   - id: convection
     title: Convection RGB
     satellite: MSG SEVIRI
-    layers: "msg_fes:rgb_convection"
+    base: "msg_fes:rgb_convection"
     cadence: 15
     lag: 45
     blurb: >-
@@ -58,17 +77,20 @@ products:
   - id: rdt
     title: Rapidly Developing Thunderstorms
     satellite: MSG SEVIRI
-    layers: "msg_fes:ir108,msg_fes:rdt"
+    base: "msg_fes:ir108"
+    overlay: "msg_fes:rdt"
+    overlay_cadence: 15
     cadence: 15
     lag: 45
     blurb: >-
       Automatically detected and tracked convective cells outlined over the
       10.8 µm infrared image, colour-coded by phase of the storm life cycle.
+      Nothing is drawn when no cells are being tracked.
 
   - id: kindex
     title: K-Index instability
     satellite: MSG GII
-    layers: "msg_fes:gii_kindex"
+    base: "msg_fes:gii_kindex"
     cadence: 15
     lag: 60
     blurb: >-
@@ -79,7 +101,7 @@ products:
   - id: wv062
     title: Water Vapour 6.2 µm
     satellite: MSG SEVIRI
-    layers: "msg_fes:wv062"
+    base: "msg_fes:wv062"
     cadence: 15
     lag: 45
     blurb: >-
@@ -89,7 +111,7 @@ products:
   - id: airmass
     title: Airmass RGB
     satellite: MSG SEVIRI
-    layers: "msg_fes:rgb_airmass"
+    base: "msg_fes:rgb_airmass"
     cadence: 15
     lag: 45
     blurb: >-
@@ -100,7 +122,7 @@ products:
   - id: ir105
     title: Infrared 10.5 µm
     satellite: MTG-I FCI
-    layers: "mtg_fd:ir105_hrfi"
+    base: "mtg_fd:ir105_hrfi"
     cadence: 10
     lag: 40
     blurb: >-
@@ -110,7 +132,7 @@ products:
   - id: dust
     title: Dust RGB
     satellite: MTG-I FCI
-    layers: "mtg_fd:rgb_dust"
+    base: "mtg_fd:rgb_dust"
     cadence: 10
     lag: 40
     blurb: >-
@@ -121,7 +143,7 @@ products:
     title: True Colour
     satellite: MTG-I FCI
     daylight_only: true
-    layers: "mtg_fd:rgb_truecolour"
+    base: "mtg_fd:rgb_truecolour"
     cadence: 10
     lag: 40
     blurb: >-
@@ -131,7 +153,9 @@ products:
   - id: fire
     title: Fire Radiative Power
     satellite: MTG-I FCI
-    layers: "mtg_fd:rgb_geocolour,mtg_fd:frp"
+    base: "mtg_fd:rgb_geocolour"
+    overlay: "mtg_fd:frp"
+    overlay_cadence: 10
     cadence: 10
     lag: 40
     blurb: >-

@@ -17,7 +17,7 @@ description: >-
   <li class="stat"><span class="stat__value">{{ wrf.version | remove: 'WRF-ARW ' }}</span><span class="stat__label">WRF-ARW version</span></li>
   <li class="stat"><span class="stat__value">3 km</span><span class="stat__label">Finest nest</span></li>
   <li class="stat"><span class="stat__value">{{ wrf.length }}</span><span class="stat__label">Forecast length</span></li>
-  <li class="stat"><span class="stat__value">06Z</span><span class="stat__label">Daily GFS cycle</span></li>
+  <li class="stat"><span class="stat__value">{{ wrf.cycle }}</span><span class="stat__label">Daily GFS cycle</span></li>
 </ul>
 
 <p>
@@ -125,16 +125,10 @@ description: >-
       <tr><th scope="row">{{ p.name }}</th><td>{{ p.value }}</td></tr>
       {%- endfor %}
       <tr><th scope="row">Forecast length</th><td>{{ wrf.length }}</td></tr>
-      <tr><th scope="row">Cycle</th><td>{{ wrf.cadence }}</td></tr>
+      <tr><th scope="row">Cycle</th><td>Daily, from the {{ wrf.cycle }} GFS cycle</td></tr>
     </tbody>
   </table>
 </div>
-
-<figure>
-  <img src="{{ '/assets/images/wrf_forecast.png' | relative_url }}"
-       alt="Diagram of the daily WRF initialisation strategy" loading="lazy" decoding="async">
-  <figcaption>Daily initialisation strategy.</figcaption>
-</figure>
 
 ## Practical limits
 
