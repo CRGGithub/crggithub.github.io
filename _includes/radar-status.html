@@ -1,0 +1,14 @@
+{%- comment -%}
+  Radar status badge, driven by site.radar in _config.yml. It is set by hand
+  because the scan time is burnt into the GIF as pixels and the data server
+  sends no CORS headers, so nothing in the browser can read it.
+{%- endcomment -%}
+{%- assign st = site.radar.status | default: 'limited' -%}
+{%- case st -%}
+  {%- when 'online' -%}
+    <span class="badge badge--ok"><span class="dot dot--pulse"></span> Online</span>
+  {%- when 'offline' -%}
+    <span class="badge badge--bad"><span class="dot"></span> Offline</span>
+  {%- else -%}
+    <span class="badge"><span class="dot"></span> Limited</span>
+{%- endcase -%}

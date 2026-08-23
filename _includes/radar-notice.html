@@ -1,0 +1,12 @@
+{%- if site.radar.note and site.radar.note != '' -%}
+<aside class="callout callout--warn" role="status">
+  <div class="callout__body">
+    <p class="callout__title">
+      {%- if site.radar.status == 'offline' -%}Radar offline
+      {%- elsif site.radar.status == 'limited' -%}Radar running in a limited mode
+      {%- else -%}Radar notice{%- endif -%}
+    </p>
+    <p>{{ site.radar.note | strip_newlines | strip }}</p>
+  </div>
+</aside>
+{%- endif -%}

@@ -1,0 +1,5 @@
+{%- comment -%}
+  Builds a link to the data server without ever spelling out its address in a
+  page. Usage: {% include data-link.html path="/wrf/wrfradar.html" %}
+{%- endcomment -%}
+{{- site.data_host }}{{ include.path -}}

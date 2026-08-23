@@ -1,10 +1,126 @@
+# ---------------------------------------------------------------------------
+# Site identity
+# ---------------------------------------------------------------------------
 title: NWU Lekwena Radar
-description: A Living Weather Laboratory
-show_downloads: true
-baseurl: "/" # change this to the subpath of your site, e.g. /blog. Leave it empty if you don't need it.
-url: "https://crggithub.github.io" # change this to the base hostname & protocol for your site
-# cayman-blog date format
-# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
-cayman-blog:
-  date_format: "%b %-d, %Y"
-theme: # leave it empty
+short_title: Lekwena Radar
+description: >-
+  Live weather radar, WRF numerical forecasts and EUMETSAT satellite imagery
+  from the North-West University Climatology Research Group, Potchefstroom.
+tagline: A Living Weather Laboratory
+lang: en
+
+url: "https://www.lekwenaradar.co.za"
+baseurl: ""
+
+institution: North-West University
+institution_url: "http://natural-sciences.nwu.ac.za/unit-environmental-sciences-and-management/climate-change-air-quality-and-impacts"
+repository_url: "https://github.com/CRGGithub/crggithub.github.io"
+contact_name: Dr Henno Havenga
+contact_email: henno.havenga@nwu.ac.za
+
+# ---------------------------------------------------------------------------
+# Live data server
+#
+# Every radar image, WRF product and map served off the on-campus machine is
+# addressed through `site.data_host`. It is deliberately the ONLY place the
+# server address appears, so the raw IP never has to be published and the
+# whole site can be repointed by editing this one line.
+#
+# Currently the campus hostname is used instead of the bare IP. To move to a
+# vanity name, add a DNS A record (e.g. wrf.lekwenaradar.co.za -> the server)
+# and change data_host to match. If TLS is ever terminated on that server,
+# switch the scheme to https:// here and every embed on the site starts
+# working for visitors on https as well - see data_host_secure below.
+# ---------------------------------------------------------------------------
+data_host: "http://fpt-unx.puk.ac.za"
+
+# Set to true once the data server serves valid HTTPS. While false, the site
+# swaps embedded radar/WRF frames for click-through cards when a visitor is on
+# https://, because browsers block http:// content inside an https:// page.
+data_host_secure: false
+
+# ---------------------------------------------------------------------------
+# Radar status
+#
+# MAINTAINER: this is the one thing on the site that a machine cannot work out
+# for itself. The radar's timestamp is burnt into the GIF as pixels, and the
+# server sends no CORS headers, so the browser cannot read how old a scan is.
+# Set `status` by hand whenever the radar's state changes.
+#
+#   online  - scanning and publishing fresh images
+#   limited - reachable but degraded (e.g. static image only, no live products)
+#   offline - down for maintenance or fault
+#
+# `note` appears as a banner on the home and radar pages. Leave it blank for
+# no banner.
+# ---------------------------------------------------------------------------
+radar:
+  status: offline
+  note: >-
+    The radar is currently down and the image below is the last scan it
+    produced, on 10 March 2026. The WRF forecasts, the weather stations and the
+    satellite imagery are unaffected and still updating normally.
+
+# Paths on the data server
+data_paths:
+  radar_gif: "/latest.gif"
+  radar_storms: "/shpmap.html"
+  radar_dbz: "/leaflet.html"
+  stations: "/wrf/stations.html"
+  wrf_portal: "/wrf/index.html"
+  wrf_prefix: "/wrf/"
+
+# ---------------------------------------------------------------------------
+# EUMETSAT WMS (view.eumetsat.int)
+# ---------------------------------------------------------------------------
+eumetsat:
+  wms: "https://view.eumetsat.int/geoserver/wms"
+  viewer: "https://view.eumetsat.int/productviewer"
+
+# ---------------------------------------------------------------------------
+# Navigation - explicit order beats alphabetical page discovery
+# ---------------------------------------------------------------------------
+nav:
+  - title: Radar
+    url: /radar.html
+  - title: Stations
+    url: /stations.html
+  - title: WRF
+    url: /wrf.html
+  - title: Soundings
+    url: /wrfskewt.html
+  - title: Satellite
+    url: /satellite.html
+  - title: About
+    url: /about.html
+
+# ---------------------------------------------------------------------------
+# Build
+# ---------------------------------------------------------------------------
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+sass:
+  style: compressed
+
+date_format: "%b %-d, %Y"
+
+theme:
+
+# Note: setting `exclude` replaces Jekyll's default list rather than adding to
+# it, so the defaults are repeated here.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - .sass-cache
+  - .jekyll-cache
+  - .jekyll-metadata
+  - README.md
+  - CONTRIBUTING.md
+  - CODE_OF_CONDUCT.md
+  - push_site.sh
+  - reset_git.sh

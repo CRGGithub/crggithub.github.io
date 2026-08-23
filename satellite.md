@@ -1,50 +1,174 @@
 ---
 layout: page
 title: Satellite
-tagline: See Southern-Africa's weather from space
 permalink: /satellite.html
+eyebrow: Observed
+tagline: Meteosat imagery over Southern Africa, straight from EUMETSAT.
+description: >-
+  Current Meteosat Third Generation and MSG imagery over Southern Africa -
+  GeoColour with lightning, Convection RGB, water vapour, airmass, instability
+  and detected thunderstorm cells, with a scrubbable loop.
+scripts:
+  - /assets/js/satellite.js
 ---
-<meta http-equiv="refresh" content="950" >
 
-# EUMETSAT Products
+{%- assign sat = site.data.satellite -%}
 
-All images are products from the [European Organisation for the Exploitation of
-Meteorological Satellites (EUMETSAT)](https://www.eumetsat.int/website/home/index.html) 
+<p>
+  Every image on this page is requested live from the
+  <a href="https://www.eumetsat.int/">European Organisation for the Exploitation of
+  Meteorological Satellites</a> map service. Pick a product, pick a region, and scrub or
+  animate through the last couple of hours. Nothing is cached here &mdash; you are looking at
+  the archive as it stands right now.
+</p>
 
-<center> 
-<center> 
-<td align="center" valign="center"> <img
-SRC="https://eumetview.eumetsat.int/static-images/latestImages/EUMETSAT_MSG_RGBNatColourEnhncd_SouthernAfrica.jpg"
-alt="EUMETSAT Natural Color" /> <br /> EUMETSAT Natural Color (copyright 2020 EUMETSAT). </td> 
-</center>
+<div class="satview" data-satview tabindex="-1">
+  <div class="satview__toolbar">
+    <div class="satview__group satview__group--grow">
+      <span class="satview__legend" id="satview-product-label">Product</span>
+      <div class="satview__chips" data-sat-products role="group"
+           aria-labelledby="satview-product-label"></div>
+    </div>
+    <div class="satview__group">
+      <span class="satview__legend" id="satview-view-label">Region</span>
+      <div class="satview__chips" data-sat-views role="group"
+           aria-labelledby="satview-view-label"></div>
+    </div>
+  </div>
 
-<br>
+  <div class="satview__stage" data-sat-stage>
+    <img class="satview__img" data-sat-img alt="" decoding="async">
+    <div class="satview__spinner" aria-hidden="true"></div>
+    <p class="satview__error" data-sat-error role="status" hidden></p>
+  </div>
 
-<center> 
-<td align="center" valign="center"> <img
-SRC="https://eumetview.eumetsat.int/static-images/latestImages/EUMETSAT_MSG_RGBConvection_SouthernAfrica.jpg"
-alt="EUMETSAT Convection RGB" /> <br /> EUMETSAT Convection RGB (copyright 2020 EUMETSAT). </td> 
-</center>
+  <div class="satview__scrub">
+    <button class="satview__step" type="button" data-sat-play
+            aria-pressed="false" aria-label="Play the loop">
+      <svg data-play-icon viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      <svg data-pause-icon viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+    </button>
+    <button class="satview__step" type="button" data-sat-prev aria-label="Previous frame">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <input class="satview__slider" type="range" min="0" max="11" step="1" value="11"
+           data-sat-slider aria-label="Frame time">
+    <button class="satview__step" type="button" data-sat-next aria-label="Next frame">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <span class="satview__stamp" data-sat-stamp>loading&hellip;</span>
+  </div>
 
-<br>
+  <div class="satview__caption" data-sat-caption></div>
 
-<center> 
-<td align="center" valign="center"> <img
-SRC="https://eumetview.eumetsat.int/static-images/latestImages/EUMETSAT_MSG_WV062_SouthernAfrica.jpg"
-alt="EUMETSAT Water Vapor" /> <br /> EUMETSAT Water Vapor (copyright 2020 EUMETSAT). </td> 
-</center>
+  <div class="panel__foot">
+    <p>
+      <a data-sat-download href="{{ site.eumetsat.wms }}" target="_blank" rel="noopener">Open this frame at full resolution</a>
+      &middot; imagery copyright EUMETSAT, reproduced under their
+      <a href="https://www.eumetsat.int/eumetsat-data-licensing">data licence</a>.
+    </p>
+  </div>
+</div>
 
-<br>
+<noscript>
+  <div class="callout callout--warn">
+    <div class="callout__body">
+      <p class="callout__title">The viewer needs JavaScript</p>
+      <p>
+        Frames are addressed by timestamp, which has to be calculated in the browser.
+        With scripting off, browse the imagery directly at
+        <a href="{{ site.eumetsat.viewer }}">EUMETSAT View</a> instead.
+      </p>
+    </div>
+  </div>
+</noscript>
 
-<td align="center" valign="center"> <img
-SRC="https://eumetview.eumetsat.int/static-images/latestImages/EUMETSAT_MSG_IR108Color_SouthernAfrica.jpg"
-alt="EUMETSAT RGB" /> <br /> EUMETSAT SEVIRI spectral channel IR 10.8 (copyright 2020 EUMETSAT). </td> 
-</center>
+## Reading the products
 
-<br>
+<div class="table-scroll">
+  <table>
+    <thead>
+      <tr><th>Product</th><th>Instrument</th><th>Cycle</th><th>What it shows</th></tr>
+    </thead>
+    <tbody>
+      {%- for p in sat.products %}
+      <tr>
+        <td><strong>{{ p.title }}</strong></td>
+        <td>{{ p.satellite }}</td>
+        <td>{{ p.cadence }} min</td>
+        <td>{{ p.blurb | strip_newlines | strip }}</td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
 
-<center>
-<td align="center" valign="center"> <img
-SRC="https://eumetview.eumetsat.int/static-images/latestImages/EUMETSAT_MSG_AMV_SouthernAfrica.png"
-alt="EUMETSAT Atmospheric Vectors" /> <br /> EUMETSAT Multi-Sensor Atmospheric Vectors Estimate (copyright 2020 EUMETSAT). </td> 
-</center>
+<aside class="callout callout--info" role="note">
+  <div class="callout__body">
+    <p class="callout__title">Why the latest frame is 40 minutes old</p>
+    <p>
+      The satellite scans the full disc every 10 or 15 minutes depending on the instrument,
+      and EUMETSAT then needs time to process and publish each slot. Asking for the current
+      clock time returns an empty image, so the viewer deliberately steps back far enough
+      that the requested slot is certainly in the archive. Scrub right for the newest frame
+      available.
+    </p>
+  </div>
+</aside>
+
+## Related
+
+<ul class="linklist">
+  <li>
+    <a href="{{ site.eumetsat.viewer }}" target="_blank" rel="noopener">
+      <span class="linklist__name">EUMETSAT View</span>
+      <span class="linklist__note">Full product catalogue and archive</span>
+    </a>
+  </li>
+  <li>
+    <a href="{{ '/radar.html' | relative_url }}">
+      <span class="linklist__name">Lekwena radar</span>
+      <span class="linklist__note">What the storms look like from below</span>
+    </a>
+  </li>
+  <li>
+    <a href="{{ '/wrf.html' | relative_url }}">
+      <span class="linklist__name">NWU-WRF simulated radar and CAPE</span>
+      <span class="linklist__note">What the model expects next</span>
+    </a>
+  </li>
+</ul>
+
+<script type="application/json" id="satview-config">
+{
+  "wms": {{ site.eumetsat.wms | jsonify }},
+  "overlay": {{ sat.overlay | jsonify }},
+  "views": [
+    {%- for v in sat.views %}
+    {
+      "id": {{ v.id | jsonify }},
+      "title": {{ v.title | jsonify }},
+      "crs": {{ v.crs | jsonify }},
+      "bbox": {{ v.bbox | jsonify }},
+      "width": {{ v.width }},
+      "height": {{ v.height }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ],
+  "products": [
+    {%- for p in sat.products %}
+    {
+      "id": {{ p.id | jsonify }},
+      "title": {{ p.title | jsonify }},
+      "satellite": {{ p.satellite | jsonify }},
+      "layers": {{ p.layers | jsonify }},
+      "cadence": {{ p.cadence }},
+      "lag": {{ p.lag }},
+      "default": {{ p.default | default: false }},
+      "daylight_only": {{ p.daylight_only | default: false }},
+      "blurb": {{ p.blurb | strip_newlines | strip | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ]
+}
+</script>
