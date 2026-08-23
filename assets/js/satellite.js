@@ -1,17 +1,22 @@
 /* ---------------------------------------------------------------------------
  * EUMETSAT WMS viewer
  *
- * Builds GetMap requests against view.eumetsat.int for one product, one
- * geographic view and one time slot at a time, and lets the visitor scrub or
- * animate through the most recent slots.
+ * Two things drive the design here.
  *
- * Timing is the fiddly part. Each instrument has a fixed repeat cycle
- * (`cadence`, minutes) and the archive needs a while to ingest a slot
- * (`lag`, minutes). Asking for "now" reliably returns a blank image, and
- * asking for no time at all makes GeoServer stitch together whatever chunks
- * happen to be present, which shows up as visible seams across the disc. So
- * every request pins an explicit slot: round down to the cadence grid, then
- * step back far enough that the data is certainly there.
+ * 1. This GeoServer renders only the FIRST layer of a multi-layer GetMap
+ *    request. Asking for "satellite,lightning,coastline,borders" silently
+ *    returns just the satellite image - no error, no warning. So each layer is
+ *    fetched as its own image and the browser stacks them.
+ *
+ * 2. Timing. Each instrument has a fixed repeat cycle (`cadence`, minutes) and
+ *    the archive needs a while to ingest a slot (`lag`, minutes). Asking for
+ *    "now" reliably returns a blank image, and asking for no time at all makes
+ *    GeoServer stitch together whatever chunks are present, which shows up as
+ *    visible seams. So every request pins an explicit slot: round down to the
+ *    cadence grid, then step back far enough that the data is certainly there.
+ *
+ * The boundary layers are vector and carry no time dimension, so they are
+ * fetched once per region and reused across every frame and product.
  * ------------------------------------------------------------------------- */
 (function () {
   'use strict';
@@ -31,43 +36,53 @@
 
   var FRAMES = 12;
   var MINUTE = 60 * 1000;
+  var STORE_KEY = 'lekwena-sat-boundaries';
 
   var el = {
-    stage:    root.querySelector('[data-sat-stage]'),
-    img:      root.querySelector('[data-sat-img]'),
-    error:    root.querySelector('[data-sat-error]'),
-    products: root.querySelector('[data-sat-products]'),
-    views:    root.querySelector('[data-sat-views]'),
-    slider:   root.querySelector('[data-sat-slider]'),
-    stamp:    root.querySelector('[data-sat-stamp]'),
-    prev:     root.querySelector('[data-sat-prev]'),
-    next:     root.querySelector('[data-sat-next]'),
-    play:     root.querySelector('[data-sat-play]'),
-    caption:  root.querySelector('[data-sat-caption]'),
-    download: root.querySelector('[data-sat-download]')
+    stage:     root.querySelector('[data-sat-stage]'),
+    base:      root.querySelector('[data-sat-base]'),
+    overlay:   root.querySelector('[data-sat-overlay]'),
+    bounds:    root.querySelector('[data-sat-bounds]'),
+    error:     root.querySelector('[data-sat-error]'),
+    products:  root.querySelector('[data-sat-products]'),
+    views:     root.querySelector('[data-sat-views]'),
+    boundsBtn: root.querySelector('[data-sat-bounds-toggle]'),
+    slider:    root.querySelector('[data-sat-slider]'),
+    stamp:     root.querySelector('[data-sat-stamp]'),
+    prev:      root.querySelector('[data-sat-prev]'),
+    next:      root.querySelector('[data-sat-next]'),
+    play:      root.querySelector('[data-sat-play]'),
+    caption:   root.querySelector('[data-sat-caption]'),
+    download:  root.querySelector('[data-sat-download]')
   };
 
+  function storedBoundaries() {
+    try {
+      var v = localStorage.getItem(STORE_KEY);
+      if (v === 'off') { return false; }
+    } catch (e) { /* private mode - fall through to the default */ }
+    return true;
+  }
+
   var state = {
-    product: cfg.products.find(function (p) { return p.default; }) || cfg.products[0],
+    product: cfg.products.filter(function (p) { return p['default']; })[0] || cfg.products[0],
     view: cfg.views[0],
-    // 0 = oldest frame in the window, FRAMES - 1 = most recent
-    frame: FRAMES - 1,
+    frame: FRAMES - 1,          // 0 = oldest in the window, FRAMES-1 = newest
+    boundaries: storedBoundaries(),
     playing: false,
     timer: null
   };
 
-  /* -- Time helpers ------------------------------------------------------- */
+  /* -- Time --------------------------------------------------------------- */
 
-  /* The newest slot we are willing to ask for, as a Date. */
-  function latestSlot(product) {
-    var step = product.cadence * MINUTE;
-    var target = Date.now() - product.lag * MINUTE;
-    return new Date(Math.floor(target / step) * step);
+  function latestSlot(cadence, lag) {
+    var step = cadence * MINUTE;
+    return new Date(Math.floor((Date.now() - lag * MINUTE) / step) * step);
   }
 
   function slotForFrame(product, frame) {
     var back = (FRAMES - 1 - frame) * product.cadence * MINUTE;
-    return new Date(latestSlot(product).getTime() - back);
+    return new Date(latestSlot(product.cadence, product.lag).getTime() - back);
   }
 
   function pad(n) { return n < 10 ? '0' + n : String(n); }
@@ -83,13 +98,15 @@
     return pad(t.getUTCHours()) + ':' + pad(t.getUTCMinutes());
   }
 
-  function humanStamp(d) {
-    return isoZ(d).replace('T', ' ').replace(':00Z', 'Z') + '  (' + sast(d) + ' SAST)';
+  /* Round a base slot onto an overlay's own, usually finer, cadence grid. */
+  function alignTo(when, cadence) {
+    var step = cadence * MINUTE;
+    return new Date(Math.floor(when.getTime() / step) * step);
   }
 
   /* -- Request building --------------------------------------------------- */
 
-  function buildUrl(product, view, when, width) {
+  function buildUrl(layer, view, when, width, opaque) {
     var w = width || view.width;
     var h = Math.round(w * (view.height / view.width));
 
@@ -98,59 +115,134 @@
       'version=1.3.0',
       'request=GetMap',
       'styles=',
-      'format=image/jpeg',
-      'bgcolor=0x000000',
-      'transparent=false',
-      // WMS 1.3.0 renamed SRS to CRS, but the AUTO projections are still
-      // addressed the old way by this GeoServer instance.
+      'format=' + (opaque ? 'image/jpeg' : 'image/png'),
+      'transparent=' + (opaque ? 'false' : 'true'),
+      // WMS 1.3.0 renamed SRS to CRS, but this GeoServer still addresses the
+      // AUTO projections the old way.
       (view.crs.indexOf('AUTO') === 0 ? 'srs=' : 'crs=') + encodeURIComponent(view.crs),
       'bbox=' + encodeURIComponent(view.bbox),
       'width=' + w,
       'height=' + h,
-      'layers=' + encodeURIComponent(product.layers + ',' + cfg.overlay),
-      'time=' + encodeURIComponent(isoZ(when))
+      'layers=' + encodeURIComponent(layer)
     ];
+    if (opaque) { params.push('bgcolor=0x000000'); }
+    if (when) { params.push('time=' + encodeURIComponent(isoZ(when))); }
     return cfg.wms + '?' + params.join('&');
+  }
+
+  /* -- Boundary layers ---------------------------------------------------- */
+
+  var boundsForView = null;
+
+  function renderBoundaries() {
+    el.bounds.hidden = !state.boundaries;
+    el.boundsBtn.setAttribute('aria-pressed', String(state.boundaries));
+
+    if (!state.boundaries || boundsForView === state.view.id) { return; }
+    boundsForView = state.view.id;
+
+    el.bounds.replaceChildren();
+    cfg.boundaries.forEach(function (b) {
+      var img = document.createElement('img');
+      img.className = 'satview__layer';
+      img.alt = '';
+      img.setAttribute('aria-hidden', 'true');
+      img.decoding = 'async';
+      img.src = buildUrl(b.layer, state.view, null, null, false);
+      el.bounds.appendChild(img);
+    });
   }
 
   /* -- Rendering ---------------------------------------------------------- */
 
   var pending = 0;
 
-  function show(url) {
+  /* Load the base and its overlay off-screen, then swap both at once so a
+   * half-updated frame is never on screen. */
+  function show(baseUrl, overlayUrl) {
     var token = ++pending;
+    var waiting = overlayUrl ? 2 : 1;
+    var failed = false;
+    var loaded = {};
+    var settled = false;
+
     el.stage.classList.add('is-loading');
     el.error.hidden = true;
 
-    var probe = new Image();
-    probe.decoding = 'async';
-    probe.onload = function () {
-      if (token !== pending) { return; }        // a newer request won
-      el.img.src = probe.src;
+    // A request that neither loads nor errors - a stalled connection, a proxy
+    // holding it open - would otherwise leave the stage dimmed for good.
+    var guard = setTimeout(function () {
+      if (token === pending && !settled) { el.stage.classList.remove('is-loading'); }
+    }, 30000);
+
+    function done() {
+      if (token !== pending) { return; }           // a newer request won
+      settled = true;
+      clearTimeout(guard);
       el.stage.classList.remove('is-loading');
+
+      if (failed) {
+        el.error.hidden = false;
+        el.error.textContent =
+          'EUMETSAT did not return an image for this slot. Try an earlier frame.';
+        return;
+      }
+      el.base.src = loaded.base;
+      if (overlayUrl) {
+        el.overlay.src = loaded.overlay;
+        el.overlay.hidden = false;
+      } else {
+        el.overlay.removeAttribute('src');
+        el.overlay.hidden = true;
+      }
+    }
+
+    function load(url, key, required) {
+      var probe = new Image();
+      probe.decoding = 'async';
+      probe.onload = function () {
+        loaded[key] = probe.src;
+        if (--waiting === 0) { done(); }
+      };
+      probe.onerror = function () {
+        // A missing overlay is normal - no lightning, no fires, no tracked
+        // cells. Only a missing base image is an actual failure.
+        if (required) { failed = true; }
+        if (--waiting === 0) { done(); }
+      };
+      probe.src = url;
+    }
+
+    load(baseUrl, 'base', true);
+    if (overlayUrl) { load(overlayUrl, 'overlay', false); }
+  }
+
+  function urlsForFrame(product, view, frame, width) {
+    var when = slotForFrame(product, frame);
+    var out = {
+      when: when,
+      base: buildUrl(product.base, view, when, width, true),
+      overlay: null
     };
-    probe.onerror = function () {
-      if (token !== pending) { return; }
-      el.stage.classList.remove('is-loading');
-      el.error.hidden = false;
-      el.error.textContent =
-        'EUMETSAT did not return an image for this slot. Try an earlier frame.';
-    };
-    probe.src = url;
+    if (product.overlay) {
+      var oWhen = alignTo(when, product.overlay_cadence || product.cadence);
+      out.overlay = buildUrl(product.overlay, view, oWhen, width, false);
+    }
+    return out;
   }
 
   function render() {
-    var when = slotForFrame(state.product, state.frame);
-    var url = buildUrl(state.product, state.view, when);
+    var u = urlsForFrame(state.product, state.view, state.frame);
 
-    show(url);
-    el.stamp.textContent = humanStamp(when);
-    el.img.alt = state.product.title + ' over ' + state.view.title +
-      ', ' + isoZ(when);
+    show(u.base, u.overlay);
+    renderBoundaries();
+
+    el.stamp.textContent =
+      isoZ(u.when).replace('T', ' ').replace(':00Z', 'Z') + '  (' + sast(u.when) + ' SAST)';
+    el.base.alt = state.product.title + ' over ' + state.view.title + ', ' + isoZ(u.when);
 
     if (el.download) {
-      // A bigger render of the same scene, for printing or a slide.
-      el.download.href = buildUrl(state.product, state.view, when, 2400);
+      el.download.href = urlsForFrame(state.product, state.view, state.frame, 2400).base;
     }
 
     var parts = ['<p><strong>' + state.product.title + '</strong> &mdash; ' +
@@ -170,8 +262,9 @@
   function prefetch() {
     [state.frame - 1, state.frame + 1].forEach(function (f) {
       if (f < 0 || f > FRAMES - 1) { return; }
-      var img = new Image();
-      img.src = buildUrl(state.product, state.view, slotForFrame(state.product, f));
+      var u = urlsForFrame(state.product, state.view, f);
+      new Image().src = u.base;
+      if (u.overlay) { new Image().src = u.overlay; }
     });
   }
 
@@ -205,13 +298,21 @@
     function (p) { return p === state.product; },
     function (p) {
       state.product = p;
-      state.frame = FRAMES - 1;           // cadences differ, so restart at latest
+      state.frame = FRAMES - 1;          // cadences differ, so restart at latest
       goto(state.frame);
     });
 
   buildChips(el.views, cfg.views,
     function (v) { return v === state.view; },
     function (v) { state.view = v; render(); });
+
+  el.boundsBtn.addEventListener('click', function () {
+    state.boundaries = !state.boundaries;
+    try {
+      localStorage.setItem(STORE_KEY, state.boundaries ? 'on' : 'off');
+    } catch (e) { /* private mode - the choice just will not persist */ }
+    renderBoundaries();
+  });
 
   /* -- Scrubbing and playback --------------------------------------------- */
 
@@ -241,9 +342,7 @@
     el.play.querySelector('[data-pause-icon]').hidden = false;
 
     state.timer = setInterval(function () {
-      // Hold a beat on the newest frame before wrapping round.
-      var next = state.frame >= FRAMES - 1 ? 0 : state.frame + 1;
-      goto(next);
+      goto(state.frame >= FRAMES - 1 ? 0 : state.frame + 1);
     }, 700);
   }
 

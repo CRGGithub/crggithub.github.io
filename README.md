@@ -58,7 +58,8 @@ Product lists are data, not markup, so adding a field or a sounding station does
 editing HTML:
 
 - `_data/stations.yml` — the weather station network, its charts and variables
-- `_data/wrf.yml` — domains, physics, dashboards, gridded fields
+- `_data/wrf.yml` — domains, physics, dashboards, gridded fields, and the GFS
+  cycle each run initialises from (`cycle:`)
 - `_data/soundings.yml` — sounding stations by domain, plus the clickable location map
 - `_data/satellite.yml` — EUMETSAT products, layer stacks, cadence and regions
 
@@ -71,14 +72,34 @@ The `blurb` fields in `_data/stations.yml` are deliberately minimal — only wha
 station report itself states. Add siting details (coordinates, elevation, instruments,
 commissioning date) there as you have them.
 
+## The WRF cycle
+
+`cycle:` in `_data/wrf.yml` is the GFS cycle each daily run is initialised from. It feeds
+the home-page badge, the WRF stat tile and the configuration table, so changing the
+operational cycle is one line.
+
+It cannot be detected automatically. The site is static and only rebuilds on push, and
+the model server sends no CORS headers, so the browser cannot read the cycle off the
+portal either. Edit it by hand when the cycle changes.
+
 ## Satellite imagery
 
 `assets/js/satellite.js` builds WMS `GetMap` requests against
-`view.eumetsat.int/geoserver/wms`. Each request pins an explicit `time` slot rather than
-letting the server pick, because an unpinned request is stitched from whatever granules
-happen to be present and shows visible seams. The slot is rounded down to the
-instrument's repeat cycle and stepped back by that product's `lag` so the archive has
-certainly finished ingesting it.
+`view.eumetsat.int/geoserver/wms`. Two quirks of that server shape the code:
+
+- **It renders only the first layer of a multi-layer request.** Ask for
+  `satellite,lightning,coastline,borders` and you get the satellite image back on its
+  own — no error, no warning, and the request looks perfectly valid. So every layer is
+  fetched separately and the browser stacks them. That is why a product in
+  `_data/satellite.yml` has one `base` and at most one `overlay` rather than a
+  comma-separated list. If you ever add a layer, check it actually appears.
+- **An unpinned request is stitched from whatever granules are present**, which shows up
+  as visible seams across the disc. So each request names an explicit `time` slot,
+  rounded down to the instrument's repeat cycle and stepped back by that product's `lag`
+  so the archive has certainly finished ingesting it.
+
+The boundary layers (coastline, national borders, provinces) are vector and carry no
+time dimension, so they are fetched once per region and reused across every frame.
 
 ## Local development
 

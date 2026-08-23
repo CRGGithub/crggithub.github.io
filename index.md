@@ -24,7 +24,7 @@ description: >-
   </span>
   <span class="timebar__item">
     <span class="timebar__label">WRF</span>
-    <span class="badge badge--accent">Daily 06Z &middot; 72 h</span>
+    <span class="badge badge--accent">Daily {{ site.data.wrf.cycle }} &middot; {{ site.data.wrf.length }}</span>
   </span>
 </div>
 
