@@ -1,0 +1,89 @@
+{%- comment -%}
+  A scrubbable forecast loop, rendered on this site rather than on the model
+  server. Frame URLs are built from site.data_host, so the server address is
+  still written in exactly one place.
+
+  Params:
+    frames   required  the frames block from _data/wrf.yml (path/first/last/step)
+    page     required  the equivalent page on the model server - used as the
+                       fallback link, and as the "open the original" escape hatch
+    title    panel heading
+    label    what the fallback button calls this product
+    alt      alt text for the frame image
+    note     small print under the panel
+
+  Mixed content: the frames are http while this page is https, and browsers
+  block that outright - see the data_host_secure note in _config.yml. The panel
+  body therefore carries data-live-embed, which is what site.js looks for when
+  it swaps a blocked embed for a click-through card. Flipping data_host_secure
+  once the server has a certificate makes this load inline with no other change.
+{%- endcomment -%}
+
+{%- assign f = include.frames -%}
+{%- assign portal = site.data_host | append: site.data_paths.wrf_prefix | append: include.page -%}
+{%- assign base = site.data_host | append: f.path -%}
+
+{%- capture frame_json -%}
+[
+{%- for h in (f.first..f.last) -%}
+  {%- assign offset = h | minus: f.first -%}
+  {%- assign m = offset | modulo: f.step -%}
+  {%- if m == 0 -%}
+    {%- unless forloop.first %},{% endunless -%}
+    {%- assign hhh = h | prepend: '00' | slice: -3, 3 -%}
+    {"h":{{ h }},"src":"{{ base }}{{ hhh }}.png"}
+  {%- endif -%}
+{%- endfor -%}
+]
+{%- endcapture -%}
+
+<figure class="panel">
+  {%- if include.title %}
+  <div class="panel__head">
+    <h3 class="panel__title">{{ include.title }}</h3>
+  </div>
+  {%- endif %}
+
+  <div class="panel__body"
+       data-live-embed
+       data-kind="loop"
+       data-url="{{ portal }}"
+       data-label="{{ include.label | default: 'this loop' | escape }}">
+
+    <div class="loop" data-wrf-loop data-frames="{{ frame_json | strip_newlines | escape }}">
+      <img class="loop__img"
+           src="{{ base }}{{ f.first | prepend: '00' | slice: -3, 3 }}.png"
+           alt="{{ include.alt | default: include.title | default: 'Forecast frame' | escape }}"
+           decoding="async">
+
+      <div class="loop__bar">
+        <button type="button" class="loop__btn" data-loop-play
+                aria-label="Play the loop">
+          <svg viewBox="0 0 24 24" aria-hidden="true" data-loop-icon-play><path d="M8 5v14l11-7z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" data-loop-icon-pause hidden><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+        </button>
+        <button type="button" class="loop__btn" data-loop-step="-1" aria-label="Previous frame">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6z"/></svg>
+        </button>
+        <input class="loop__range" type="range" data-loop-range
+               min="0" value="0" step="1" aria-label="Forecast hour">
+        <button type="button" class="loop__btn" data-loop-step="1" aria-label="Next frame">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6z"/></svg>
+        </button>
+        <output class="loop__stamp" data-loop-stamp>T+{{ f.first }} h</output>
+      </div>
+
+      {%- comment -%}
+        Inside the loop, not in the caption: on an https page site.js replaces
+        this whole block with a click-through card, and a caption telling the
+        reader to drag a slider that is no longer there is worse than no hint.
+      {%- endcomment -%}
+      <p class="loop__hint">Drag the slider, step with the arrow keys, or press play.</p>
+    </div>
+  </div>
+
+  <figcaption class="panel__foot">
+    {%- if include.note %}<p>{{ include.note }}</p>{% endif %}
+    <p><a href="{{ portal }}" target="_blank" rel="noopener">Open this plot on the model server &nearr;</a></p>
+  </figcaption>
+</figure>

@@ -7,6 +7,8 @@ tagline: A three-domain operational WRF-ARW forecast, run in house every day.
 description: >-
   The North-West University operational WRF forecast - 18, 9 and 3 km domains
   over Southern Africa, with gridded fields and sector impact dashboards.
+scripts:
+  - /assets/js/wrf-loop.js
 ---
 
 {%- assign wrf = site.data.wrf -%}
@@ -39,21 +41,20 @@ description: >-
 ## Synoptic overview
 
 <p>
-  Before looking at any single field, look at the situation. The overview plot puts the
-  surface analysis and the two upper-air levels that drive it on one page, so the pressure
-  pattern, the steering flow and the moisture supply can be read together.
+  Before looking at any single field, look at the situation.
+  {{ wrf.overview.blurb | strip_newlines | strip }}
+  It is drawn on the <strong>{{ wrf.overview.scale }}</strong> outer domain, so it covers
+  {{ wrf.overview.coverage }} rather than just South Africa. Run time, valid time and the
+  full legend are in the plot itself; the slider labels the forecast hour.
 </p>
 
-<ul class="card-grid card-grid--wide">
-  <li>
-    <a class="card" href="{{ base }}{{ wrf.overview.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ wrf.overview.scale }} domain</p>
-      <h3 class="card__title">{{ wrf.overview.title }}</h3>
-      <p class="card__body">{{ wrf.overview.blurb | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the overview &nearr;</span>
-    </a>
-  </li>
-</ul>
+{% include wrf-loop.html
+   frames=wrf.overview.frames
+   page=wrf.overview.page
+   title="WRF Synoptic Overview &middot; 18 km"
+   label="the synoptic overview"
+   alt="WRF synoptic overview - surface analysis above, 500 and 850 hPa below"
+   note="Frames run T+12 h to T+72 h, three-hourly." %}
 
 ## Impact dashboards
 

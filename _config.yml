@@ -81,8 +81,6 @@ eumetsat:
 # Navigation - explicit order beats alphabetical page discovery
 # ---------------------------------------------------------------------------
 nav:
-  - title: Warnings
-    url: /warnings.html
   - title: Radar
     url: /radar.html
   - title: Stations
