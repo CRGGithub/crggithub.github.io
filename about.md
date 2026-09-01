@@ -3,7 +3,7 @@ layout: page
 title: About
 permalink: /about.html
 eyebrow: Background
-tagline: What the Lekwena radar is, how to read it, and who built it.
+tagline: Interpreting the Lekwena radar imagery, and the background to the facility.
 description: >-
   How to interpret the NWU Lekwena radar imagery, the background to the project,
   its partners, and press coverage of the radar since its 2018 launch.
@@ -13,10 +13,9 @@ description: >-
 
 ### Time
 
-Every product is stamped in **Coordinated Universal Time (UTC)**, not South African
-Standard Time. Add two hours to get SAST &mdash; 12:04 UTC is 14:04 SAST. Use this as
-your first health check: if the stamp on the image is not within about ten minutes of
-the real time, the radar or the webserver is down and you are looking at an old scan.
+Products are stamped in **Coordinated Universal Time (UTC)**; SAST is UTC+2. A stamp
+more than about ten minutes behind real time indicates that the radar or the webserver
+is down.
 
 <figure>
   <img src="{{ '/assets/images/radar/RadarTime.png' | relative_url }}"
@@ -37,11 +36,8 @@ the real time, the radar or the webserver is down and you are looking at an old 
 
 ### Reflectivity (dBZ)
 
-A radar works by sending out a high-frequency pulse and listening for the echo that comes
-back when the pulse hits something large enough to scatter it &mdash; raindrops, hail,
-ice. The strength of that echo is reported as *decibels relative to Z*, or dBZ. Strong
-dBZ means large particles are sending back a strong echo: heavy rain, hail, or ice
-particles high in a storm.
+Echo strength is reported in dBZ. High values indicate large scatterers &mdash; heavy
+rain, hail, or ice aloft.
 
 <figure>
   <img src="{{ '/assets/images/radar/RadarDBZ.png' | relative_url }}"
@@ -51,13 +47,11 @@ particles high in a storm.
 
 ### Interference
 
-The Lekwena radar is licensed to operate at 5.62 GHz. Any WiFi or communication network
-running between 5.55 and 5.67 GHz interferes with it and degrades the data, which is why
-those spikes and streaks appear across otherwise clear scans.
+The radar is licensed at 5.62 GHz. Transmissions between 5.55 and 5.67 GHz degrade the
+data, producing the radial spikes and streaks visible on otherwise clear scans.
 
-The public around Potchefstroom is asked to avoid these bands. The NWU Climatology
-Research Group is happy to advise on installing Dynamic Frequency Selection (DFS)
-equipment, and your service provider can tell you what frequency your own devices use.
+Operators in the Potchefstroom area are asked to avoid these bands. The Climatology
+Research Group can advise on Dynamic Frequency Selection (DFS) configuration.
 
 <figure>
   <img src="{{ '/assets/images/radar/RadarInterf.png' | relative_url }}"
@@ -67,10 +61,9 @@ equipment, and your service provider can tell you what frequency your own device
 
 ### Place markers
 
-Towns are labelled with abbreviations, regional airports in Gauteng carry an aeroplane
-symbol, and the small cloud marks the SAWS Irene weather station. The concentric rings
-show distance from the radar site. The outermost is 200 km, which is about as far as the
-beam is useful before the curvature of the earth and other effects take over.
+Towns are abbreviated, Gauteng regional airports carry an aircraft symbol, and the cloud
+marks the SAWS Irene station. Range rings are centred on the radar; the outermost is
+200 km, beyond which beam height and earth curvature limit usefulness.
 
 <figure>
   <img src="{{ '/assets/images/radar/RadarAirports.png' | relative_url }}"
@@ -86,30 +79,26 @@ beam is useful before the curvature of the earth and other effects take over.
    title="Lekwena C-band reflectivity"
    alt="Latest reflectivity image from the NWU Lekwena radar"
    refresh=120
-   note="The full radar page has the interactive dBZ map and tracked storm cells." %}
+   note="The radar page carries the interactive dBZ map and tracked storm cells." %}
 
 ## Background
 
-Weather and climate touch every part of society, from a slow drive home to loss of life
-and damage to property. Weather radar is the essential tool for watching thunderstorms in
-real time and acting on what you see. South Africa has a long history in radar science and
-runs a world-class national network operated by the South African Weather Service, which is
-part of the country's national infrastructure.
+Weather radar is the primary instrument for real-time convective monitoring. South Africa
+has a long record in radar meteorology and operates a national network under the South
+African Weather Service.
 
 ### Aims
 
-This project exists to support SAWS and national government in sustaining that resource
-and getting more out of it. It does that by giving students from several disciplines
-hands-on experience with the technology, building awareness of what weather radar can do,
-and carrying out applied research that can turn into products and services for the
-national network.
+The facility supports that network by training students across disciplines on operational
+radar systems, and by conducting applied research intended to yield products and services
+for national use.
 
 ### Partners
 
 The North-West University and the Water Research Commission funded the acquisition,
-installation and upgrade of the radar just outside Potchefstroom. Lekwena Wildlife Estate
-provided the site along with access control and security, and Aon Benfield funded the
-communication link that makes real-time access possible.
+installation and upgrade of the radar. Lekwena Wildlife Estate provides the site, access
+control and security; Aon Benfield funded the communication link that makes real-time
+access possible.
 
 ## Disclaimer
 
@@ -162,10 +151,9 @@ communication link that makes real-time access possible.
 ### Press
 
 **Department of Environmental Affairs.** The Minister of Environmental Affairs,
-Dr Edna Molewa, officially launched the state-of-the-art North-West University Lekwena
-weather radar in Potchefstroom on Thursday 22 March 2018, the day before World
-Meteorological Day. That year's theme was "weather-ready, climate-smart."
-*Media release, Department of Environmental Affairs, 22 March 2018 &mdash; no longer online.*
+Dr Edna Molewa, launched the NWU Lekwena weather radar in Potchefstroom on 22 March 2018,
+the day before World Meteorological Day.
+*Media release, 22 March 2018 &mdash; no longer online.*
 
 **North-West University.** The radar is the result of a three-year study commissioned by
 the Water Research Commission to develop a rainfall estimation algorithm using data from
@@ -176,7 +164,6 @@ the new dual-polarised Doppler radar, validated against a dense rain gauge netwo
 weather radars built in the 1970s and 1980s.
 [Read the article](https://www.sabcnews.com/sabcnews/minister-applauds-north-west-universitys-innovation/)
 
-**Traveller24.** South Africa's meteorological science field got a big new shiny weather
-radar, launched by the Environmental Affairs Minister and SAWS in Potchefstroom, just in
-time for World Meteorological Day.
+**Traveller24.** Coverage of the launch by the Minister of Environmental Affairs and SAWS
+in Potchefstroom, timed for World Meteorological Day.
 [Read the archived article](https://web.archive.org/web/20180826090118/https://www.traveller24.com/News/WeatherUpdate/worldmeteorologicalday-sa-university-launches-new-weather-radar-to-monitor-storms-20180322)

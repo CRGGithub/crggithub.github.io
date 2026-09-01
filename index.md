@@ -2,7 +2,7 @@
 layout: page
 title: Home
 eyebrow: North-West University &middot; Potchefstroom
-tagline: A living weather laboratory — C-band radar, convection-permitting WRF and EUMETSAT imagery, run by students.
+tagline: C-band Doppler radar, convection-permitting WRF and EUMETSAT imagery, operated as a teaching and research facility.
 description: >-
   Live C-band weather radar, three-domain WRF forecasts down to 3 km and current
   EUMETSAT satellite imagery for Southern Africa, from the NWU Climatology
@@ -30,10 +30,7 @@ description: >-
 
 {% include radar-notice.html %}
 
-<p>
-  All model and radar products are timestamped in <strong>UTC</strong>. South African
-  Standard Time is two hours ahead, year round.
-</p>
+<p>All products are timestamped in <strong>UTC</strong>; SAST is UTC+2 year-round.</p>
 
 ## Start here
 
@@ -43,9 +40,8 @@ description: >-
       <p class="card__eyebrow">Observed &middot; every few minutes</p>
       <h3 class="card__title">Lekwena Radar</h3>
       <p class="card__body">
-        The university's dual-polarised C-band Doppler radar outside Potchefstroom.
-        Latest reflectivity image, an interactive maximum-dBZ map and automatically
-        tracked storm cells with their characteristics.
+        Dual-polarised C-band Doppler radar at Potchefstroom. Reflectivity imagery, an
+        interactive maximum-dBZ map and automatically tracked storm cells.
       </p>
       <span class="card__foot">Open the radar &rarr;</span>
     </a>
@@ -55,9 +51,8 @@ description: >-
       <p class="card__eyebrow">Observed &middot; hourly</p>
       <h3 class="card__title">Weather stations</h3>
       <p class="card__body">
-        Live readings from the NWU automatic weather stations around Potchefstroom &mdash;
-        temperature, rain, wind, solar radiation and reference evapotranspiration &mdash;
-        plus year-to-date records for every site.
+        Hourly observations from the NWU automatic weather station network, with
+        year-to-date records for each site.
       </p>
       <span class="card__foot">Open the stations &rarr;</span>
     </a>
@@ -67,9 +62,8 @@ description: >-
       <p class="card__eyebrow">Forecast &middot; 72 hours</p>
       <h3 class="card__title">NWU-WRF</h3>
       <p class="card__body">
-        A three-domain WRF-ARW forecast run in house every day, down to a 3 km
-        convection-permitting nest over North West and Gauteng. Gridded fields plus
-        impact dashboards for storms, heat, frost, fire and irrigation.
+        Operational WRF-ARW at 18, 9 and 3 km, run daily to 72 hours. Gridded fields and
+        sector impact dashboards.
       </p>
       <span class="card__foot">Open the forecasts &rarr;</span>
     </a>
@@ -79,9 +73,8 @@ description: >-
       <p class="card__eyebrow">Forecast &middot; vertical profiles</p>
       <h3 class="card__title">Model soundings</h3>
       <p class="card__body">
-        Skew-T / log-p diagrams for 48 locations across Southern Africa, from
-        16 convection-permitting sites on the Highveld out to synoptic stations
-        in Zambia, Mozambique and Madagascar.
+        Forecast Skew-T / log-p profiles for 48 locations, from the 3 km Highveld nest out
+        to the 18 km synoptic domain.
       </p>
       <span class="card__foot">Open the soundings &rarr;</span>
     </a>
@@ -91,9 +84,8 @@ description: >-
       <p class="card__eyebrow">Observed &middot; every 10 minutes</p>
       <h3 class="card__title">Satellite</h3>
       <p class="card__body">
-        Meteosat Third Generation and MSG imagery straight from EUMETSAT -
-        GeoColour with live lightning, Convection RGB, water vapour, airmass,
-        instability and detected thunderstorm cells, with a scrubbable loop.
+        Meteosat Third Generation and MSG imagery from EUMETSAT: GeoColour with lightning,
+        Convection RGB, water vapour, airmass and instability, with a scrubbable loop.
       </p>
       <span class="card__foot">Open the imagery &rarr;</span>
     </a>
@@ -108,12 +100,11 @@ description: >-
    title="Lekwena C-band reflectivity"
    alt="Latest reflectivity image from the NWU Lekwena radar"
    refresh=120
-   note="Reflectivity in dBZ, timestamped UTC. Refreshes automatically every two minutes. If the timestamp on the image is more than about ten minutes behind the clock above, the radar or its link is down." %}
+   note="Reflectivity in dBZ, timestamped UTC, refreshed every two minutes. A stamp more than about ten minutes behind the clock above indicates the radar or its link is down." %}
 
 <p>
-  New to radar imagery? The <a href="{{ '/about.html' | relative_url }}">about page</a>
-  walks through how to read the time stamp, the dBZ scale, the place markers and the
-  interference that a busy 5.6 GHz band puts into the picture.
+  The <a href="{{ '/about.html' | relative_url }}">about page</a> documents the timestamp
+  convention, the dBZ scale, place markers and radio-frequency interference.
 </p>
 
 ## Disclaimer

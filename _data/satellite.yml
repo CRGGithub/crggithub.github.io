@@ -61,8 +61,8 @@ products:
     default: true
     blurb: >-
       True colour by day, an infrared and city-lights blend by night, with
-      Lightning Imager accumulated flash area painted on top. The single best
-      all-hours situational picture.
+      Lightning Imager accumulated flash area overlaid. The primary all-hours
+      situational product.
 
   - id: convection
     title: Convection RGB
@@ -71,8 +71,8 @@ products:
     cadence: 15
     lag: 45
     blurb: >-
-      The classic severe-storm recipe. Vigorous, small-ice-topped convection
-      turns bright yellow; deep but less intense cloud stays white or red.
+      Vigorous, small-ice-topped convection appears bright yellow; deep but
+      less intense cloud remains white or red.
 
   - id: rdt
     title: Rapidly Developing Thunderstorms
@@ -94,9 +94,8 @@ products:
     cadence: 15
     lag: 60
     blurb: >-
-      Satellite-retrieved K-Index in clear air. High values flag the
-      moist, unstable air masses that thunderstorms grow in - a useful
-      cross-check on the WRF CAPE fields.
+      Satellite-retrieved K-Index in clear air. A useful cross-check on the
+      WRF CAPE fields.
 
   - id: wv062
     title: Water Vapour 6.2 µm
@@ -126,8 +125,8 @@ products:
     cadence: 10
     lag: 40
     blurb: >-
-      Brightness temperature of whatever the satellite can see. The coldest,
-      whitest tops are the highest and usually the most active storms.
+      Brightness temperature. The coldest, whitest tops are the highest and
+      generally the most active.
 
   - id: dust
     title: Dust RGB
@@ -147,8 +146,7 @@ products:
     cadence: 10
     lag: 40
     blurb: >-
-      Unenhanced visible imagery, closest to what the eye would see from
-      orbit. Daylight only - it goes black after sunset.
+      Unenhanced visible imagery. Daylight only.
 
   - id: fire
     title: Fire Radiative Power
@@ -160,4 +158,4 @@ products:
     lag: 40
     blurb: >-
       Detected active fires and their radiative power over the GeoColour
-      background - relevant through the dry Highveld burning season.
+      background.

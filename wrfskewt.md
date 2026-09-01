@@ -13,10 +13,7 @@ description: >-
 {%- assign base = site.data_host | append: site.data_paths.wrf_prefix -%}
 
 <p>
-  Each station below opens a forecast sounding stepped through the run. Stations are grouped
-  by the WRF domain that produces them, because resolution changes what the profile can tell
-  you: the 3 km nest resolves individual convective cells, while the 18 km domain only carries
-  the synoptic-scale structure.
+  Forecast profiles stepped through the run, grouped by the domain that produces them.
 </p>
 
 <aside class="callout callout--info" role="note">
@@ -54,9 +51,8 @@ description: >-
 ## Where the stations are
 
 <p>
-  The map covers the 18 km and 9 km stations &mdash; click a place name to open its sounding.
-  The 3 km Highveld stations sit too close together to label at this scale, so use the
-  buttons above for those.
+  18 km and 9 km stations only; the 3 km Highveld sites are too closely spaced to label at
+  this scale.
 </p>
 
 <figure class="hotspot-map">
@@ -74,10 +70,7 @@ description: >-
     </a>
     {%- endfor %}
   </div>
-  <figcaption>
-    Sounding locations in the 18 km and 9 km domains. Hover to highlight a station,
-    click to open its forecast profile.
-  </figcaption>
+  <figcaption>Click a station to open its forecast profile.</figcaption>
 </figure>
 
 ## Practical limits
@@ -85,11 +78,11 @@ description: >-
 <aside class="callout callout--info" role="note">
   <div class="callout__body">
     <ul class="plain-list">
-      <li>Initialisation comes from publicly available GFS data.</li>
-      <li>Discard the first hour of every run &mdash; the model is still spinning up.</li>
-      <li>Customised products are available on request from
+      <li>Initialised from public GFS analyses.</li>
+      <li>Discard the first hour of each run for spin-up.</li>
+      <li>Customised products on request:
           <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.</li>
-      <li>SAWS is the only entity in South Africa that may issue weather warnings.</li>
+      <li>SAWS is the only entity in South Africa mandated to issue weather warnings.</li>
     </ul>
   </div>
 </aside>

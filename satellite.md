@@ -15,11 +15,9 @@ scripts:
 {%- assign sat = site.data.satellite -%}
 
 <p>
-  Every image on this page is requested live from the
-  <a href="https://www.eumetsat.int/">European Organisation for the Exploitation of
-  Meteorological Satellites</a> map service. Pick a product, pick a region, and scrub or
-  animate through the last couple of hours. Nothing is cached here &mdash; you are looking at
-  the archive as it stands right now.
+  Imagery is requested live from the <a href="https://www.eumetsat.int/">EUMETSAT</a> map
+  service and is not cached here. Select a product and region, then scrub or animate the
+  last two hours.
 </p>
 
 <div class="satview" data-satview tabindex="-1">
@@ -83,11 +81,10 @@ scripts:
 <noscript>
   <div class="callout callout--warn">
     <div class="callout__body">
-      <p class="callout__title">The viewer needs JavaScript</p>
+      <p class="callout__title">The viewer requires JavaScript</p>
       <p>
-        Frames are addressed by timestamp, which has to be calculated in the browser.
-        With scripting off, browse the imagery directly at
-        <a href="{{ site.eumetsat.viewer }}">EUMETSAT View</a> instead.
+        Frames are addressed by timestamp, which is computed in the browser. With scripting
+        disabled, use <a href="{{ site.eumetsat.viewer }}">EUMETSAT View</a> directly.
       </p>
     </div>
   </div>
@@ -115,13 +112,11 @@ scripts:
 
 <aside class="callout callout--info" role="note">
   <div class="callout__body">
-    <p class="callout__title">Why the latest frame is 40 minutes old</p>
+    <p class="callout__title">Why the newest frame lags the clock</p>
     <p>
-      The satellite scans the full disc every 10 or 15 minutes depending on the instrument,
-      and EUMETSAT then needs time to process and publish each slot. Asking for the current
-      clock time returns an empty image, so the viewer deliberately steps back far enough
-      that the requested slot is certainly in the archive. Scrub right for the newest frame
-      available.
+      Full-disc repeat cycles are 10 or 15 minutes depending on instrument, and EUMETSAT
+      requires further time to process and publish each slot. Requests are therefore stepped
+      back far enough to fall inside the archive; scrub right for the most recent frame.
     </p>
   </div>
 </aside>
@@ -138,13 +133,13 @@ scripts:
   <li>
     <a href="{{ '/radar.html' | relative_url }}">
       <span class="linklist__name">Lekwena radar</span>
-      <span class="linklist__note">What the storms look like from below</span>
+      <span class="linklist__note">Ground-based reflectivity</span>
     </a>
   </li>
   <li>
     <a href="{{ '/wrf.html' | relative_url }}">
       <span class="linklist__name">NWU-WRF simulated radar and CAPE</span>
-      <span class="linklist__note">What the model expects next</span>
+      <span class="linklist__note">Forecast reflectivity and instability</span>
     </a>
   </li>
 </ul>

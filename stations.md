@@ -31,20 +31,17 @@ scripts:
 </div>
 
 <p>
-  These are <strong>measurements</strong>, not forecasts. Where the
-  <a href="{{ '/wrf.html' | relative_url }}">WRF pages</a> show what the model expects,
-  this page shows what the instruments actually recorded. Station readings are also the
-  yardstick the model gets verified against.
+  Instrument observations, not model output. These records are also the reference against
+  which the <a href="{{ '/wrf.html' | relative_url }}">WRF forecasts</a> are verified.
 </p>
 
 <aside class="callout callout--warn" role="note">
   <div class="callout__body">
-    <p class="callout__title">Raw telemetry</p>
+    <p class="callout__title">Unprocessed telemetry</p>
     <p>
-      These values come straight off station telemetry. They are
-      <strong>not quality-controlled or homogenised</strong>, so a failed sensor, a blocked
-      rain gauge or a communications gap shows up here as data rather than as a gap. Treat
-      them accordingly, and get in touch before using them in published work.
+      Values are raw station telemetry, <strong>neither quality-controlled nor
+      homogenised</strong>, so sensor faults and communication gaps appear as data. Please
+      make contact before use in published work.
     </p>
   </div>
 </aside>
@@ -56,7 +53,7 @@ scripts:
    kind="frame"
    title="Live station readings"
    height="34rem"
-   note="Refreshed hourly on the data server. Times shown in the panel are SAST." %}
+   note="Refreshed hourly. Panel times are SAST." %}
 
 <p>
   <a class="btn btn--ghost" href="{{ live }}" target="_blank" rel="noopener">
@@ -68,8 +65,7 @@ scripts:
 ## Year-to-date trends
 
 <p>
-  Every station carries the same six records for the current calendar year. Pick a station
-  to switch the whole set.
+  The same six records for the current calendar year, per station.
 </p>
 
 <div data-stations>
@@ -153,8 +149,8 @@ scripts:
 <aside class="callout callout--info" role="note">
   <div class="callout__body">
     <p>
-      Station data for research, teaching or a specific site is available on request &mdash;
-      contact <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.
+      Station data for research or teaching is available on request:
+      <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.
     </p>
   </div>
 </aside>
