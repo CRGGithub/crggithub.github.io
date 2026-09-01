@@ -1,0 +1,96 @@
+{%- comment -%}
+  Renders the South African Weather Service warning mirror.
+
+  The data comes from _data/saws_warnings.yml, which is written by
+  .github/scripts/fetch_saws_warnings.py on a schedule - see the header of that
+  file for why this cannot be a fetch() in the browser.
+
+  Every card is stamped with data-expires so assets/js/warnings.js can re-check
+  the expiry against the visitor's own clock. Between two runs of the workflow a
+  warning can lapse, and a stale "in force" badge on a severe-weather page is
+  worse than no badge at all.
+
+  Parameters:
+    limit  - optional, show only the first N warnings
+    compact - optional, "true" to drop impacts and instructions
+{%- endcomment -%}
+
+{%- assign feed = site.data.saws_warnings -%}
+{%- assign all = feed.warnings -%}
+{%- if include.limit -%}{%- assign all = all | slice: 0, include.limit -%}{%- endif -%}
+
+<div class="warnfeed" data-warnfeed data-generated="{{ feed.generated }}">
+  <p class="warnfeed__status" data-warn-summary>
+    {%- if feed.active_count > 0 -%}
+      <span class="badge badge--bad">{{ feed.active_count }} warning{% if feed.active_count != 1 %}s{% endif %} in force</span>
+    {%- else -%}
+      <span class="badge badge--ok">No warnings in force</span>
+    {%- endif -%}
+    <span class="warnfeed__stamp">
+      Checked {{ feed.generated | date: "%-d %b %Y, %H:%M" }} UTC &middot;
+      issued by the <a href="{{ feed.source_page }}">South African Weather Service</a>
+    </span>
+  </p>
+
+  {%- if all.size == 0 -%}
+  <aside class="callout callout--info" role="status">
+    <div class="callout__body">
+      <p class="callout__title">Nothing to show</p>
+      <p>
+        SAWS has issued no warnings in the last two weeks, or the feed could not be
+        reached when this page was last built. The authoritative list is always on the
+        <a href="{{ feed.source_page }}">SAWS website</a>.
+      </p>
+    </div>
+  </aside>
+  {%- else -%}
+
+  <ul class="warnlist">
+    {%- for w in all %}
+    <li class="warncard warncard--{{ w.colour }}{% unless w.active %} is-lapsed{% endunless %}"
+        data-warning data-expires="{{ w.expires }}" data-onset="{{ w.onset }}">
+      <div class="warncard__head">
+        <span class="warncard__level">{{ w.level }}</span>
+        <h3 class="warncard__title">{{ w.event }}</h3>
+        <span class="warncard__region">{{ w.region_name }}</span>
+        <span class="warncard__state" data-warn-state>{% if w.active %}In force{% else %}Lapsed{% endif %}</span>
+      </div>
+
+      <dl class="warncard__meta">
+        {%- if w.onset and w.onset != '' %}
+        <div><dt>From</dt><dd>{{ w.onset | date: "%-d %b, %H:%M" }}</dd></div>
+        {%- endif %}
+        <div><dt>Until</dt><dd>{{ w.expires | date: "%-d %b, %H:%M" }} SAST</dd></div>
+        <div><dt>Certainty</dt><dd>{{ w.certainty | default: "&mdash;" }}</dd></div>
+        <div><dt>Urgency</dt><dd>{{ w.urgency | default: "&mdash;" }}</dd></div>
+      </dl>
+
+      {%- if w.areas and w.areas.size > 0 %}
+      <p class="warncard__areas">
+        {%- for a in w.areas %}<span class="warncard__area">{{ a }}</span>{% endfor -%}
+      </p>
+      {%- endif %}
+
+      {%- unless include.compact %}
+      {%- if w.description and w.description != '' %}
+      <ul class="warncard__impacts">
+        {%- assign lines = w.description | newline_to_br | split: "<br />" -%}
+        {%- for line in lines -%}
+          {%- assign clean = line | strip | remove_first: "- " | strip -%}
+          {%- if clean != '' %}<li>{{ clean }}</li>{% endif -%}
+        {%- endfor -%}
+      </ul>
+      {%- endif %}
+      {%- if w.instruction and w.instruction != '' %}
+      <p class="warncard__advice"><strong>Advice:</strong> {{ w.instruction | strip_newlines | strip }}</p>
+      {%- endif %}
+      {%- endunless %}
+
+      <p class="warncard__foot">
+        <a href="{{ w.link }}" target="_blank" rel="noopener">Original CAP alert &nearr;</a>
+      </p>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif -%}
+</div>

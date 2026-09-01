@@ -11,6 +11,7 @@ from the `master` branch.
 | Path             | Source          | What it is |
 |------------------|-----------------|------------|
 | `/`              | `index.md`      | Landing page: live radar image, clocks, product index |
+| `/warnings.html` | `warnings.md`   | Official SAWS severe-weather warnings, mirrored from the CAP feed |
 | `/radar.html`    | `radar.md`      | Reflectivity image, interactive dBZ map, tracked storm cells |
 | `/stations.html` | `stations.md`   | Live automatic weather station readings and year-to-date records |
 | `/wrf.html`      | `wrf.md`        | WRF impact dashboards, gridded fields, model configuration |
@@ -62,6 +63,7 @@ editing HTML:
   cycle each run initialises from (`cycle:`)
 - `_data/soundings.yml` — sounding stations by domain, plus the clickable location map
 - `_data/satellite.yml` — EUMETSAT products, layer stacks, cadence and regions
+- `_data/saws_warnings.yml` — **generated**, never edit by hand; see below
 
 Adding a WRF field, for example, is one entry in `_data/wrf.yml`; the page renders the
 9 km and 3 km links itself (the 3 km page name is the 9 km one with an `nwgp_` prefix).
@@ -72,15 +74,91 @@ The `blurb` fields in `_data/stations.yml` are deliberately minimal — only wha
 station report itself states. Add siting details (coordinates, elevation, instruments,
 commissioning date) there as you have them.
 
-## The WRF cycle
+## The WRF cycle and model status
 
 `cycle:` in `_data/wrf.yml` is the GFS cycle each daily run is initialised from. It feeds
 the home-page badge, the WRF stat tile and the configuration table, so changing the
 operational cycle is one line.
 
-It cannot be detected automatically. The site is static and only rebuilds on push, and
-the model server sends no CORS headers, so the browser cannot read the cycle off the
-portal either. Edit it by hand when the cycle changes.
+The model server publishes the authoritative values at `{data_host}/wrf/status.json`:
+
+```json
+{"cycle":"06z","init":"2026-08-23T06:00:00Z","forecast_hours":72,
+ "generated":"...","radar_last_scan":"2026-03-10T02:42:01Z"}
+```
+
+**The site does not read it, by choice.** It could not do so from the browser even if it
+wanted to: the endpoint is plain http with no CORS headers, and a `fetch()` from the https
+site is blocked as *active* mixed content before CORS is consulted. Fetching it in CI at
+build time would work today, but was considered and deliberately not adopted.
+
+So `cycle:` and `radar.status` are both hand-maintained. When either changes, check
+`status.json` for the real value and edit to match.
+
+Two things would let the site show all of this live, in this order:
+
+1. **TLS on the data server.** A `fetch()` to plain http from the https site is blocked
+   outright, so nothing else can work until this lands. Needs root:
+   `certbot --apache -d fpt-unx.puk.ac.za`.
+2. **`Access-Control-Allow-Origin: *`** on the data server. Also needs root — `mod_headers`
+   is not loaded (`a2enmod headers`) and `/var/www` is `AllowOverride None`, so the header
+   has to go in the vhost, not a `.htaccess`.
+
+With both in place, `radar.status` can be replaced by a live read of `radar_last_scan` and
+`cycle` by a live read of `cycle`, and neither needs a human again.
+
+## SAWS severe-weather warnings
+
+`/warnings.html` mirrors the official South African Weather Service alert feed. SAWS is the
+only body mandated to issue weather warnings in South Africa; nothing else on this site is
+a warning, and the page says so at the top.
+
+### Why it is a build step and not a fetch
+
+The obvious implementation — fetch the feed from the browser — does not work.
+`https://caps.weathersa.co.za/Home/RssFeed` sends no `Access-Control-Allow-Origin` header,
+so the same-origin policy blocks a `fetch()` from `lekwenaradar.co.za` outright. Checked
+against a live request; the response carries no CORS headers at all.
+
+GitHub Pages builds this branch with its own Jekyll, so there is no build hook of ours to
+fetch it in either. What is left is a scheduled job that fetches the feed, commits the
+result, and lets the resulting push trigger the normal Pages rebuild:
+
+| File | Role |
+|------|------|
+| `.github/workflows/saws-warnings.yml` | Runs every 30 minutes and on demand |
+| `.github/scripts/fetch_saws_warnings.py` | Fetches and parses; stdlib only, nothing to install |
+| `_data/saws_warnings.yml` | The generated result. **Never edit by hand — the next run overwrites it.** |
+| `_includes/warnings-list.html` | The warning cards |
+| `_includes/warning-banner.html` | Landing-page banner; renders nothing when nothing is in force |
+| `assets/js/warnings.js` | Re-checks expiry against the reader's clock |
+
+### What the script does
+
+The RSS feed is a rolling archive going back more than a year and carries only a hazard
+name and an impact paragraph. The real detail — severity, warning level, onset, expiry and
+the affected municipalities — is in the per-item CAP 1.2 document, so recent items are
+followed through to their CAP file. It keeps every warning still in force plus the twelve
+most recently lapsed, because South Africa goes quiet for weeks at a time and a page that
+is blank more often than not reads as broken.
+
+Two details worth knowing before changing it:
+
+- **It does not commit on every run.** The `generated:` stamp changes every time, so
+  committing unconditionally would mean a rebuild every half hour forever. The script
+  rewrites the file only when the warnings themselves changed, or when the existing stamp
+  is more than `STALE_STAMP_HOURS` (6) old.
+- **A SAWS outage leaves the data alone** and exits non-zero, so the run shows up as failed
+  and the page keeps showing its last good state with an honest "checked at" time.
+
+### Freshness
+
+The page is therefore up to half an hour behind the SAWS feed, and GitHub's scheduled runs
+can be delayed further under load. Two things keep that honest rather than dangerous: the
+page always shows when it was last checked, and `assets/js/warnings.js` re-checks each
+card's CAP expiry against the reader's own clock every minute, so a warning that lapsed
+since the last build is re-labelled and the landing-page banner hides itself. With
+JavaScript off the page still works — it just shows the state as of the last build.
 
 ## Satellite imagery
 

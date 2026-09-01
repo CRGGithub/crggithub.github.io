@@ -1,0 +1,63 @@
+# Mirror the South African Weather Service severe-weather warnings into
+# _data/saws_warnings.yml.
+#
+# The site is built by GitHub Pages straight from this branch, so there is no
+# build step of ours to hook into and no way to fetch the feed while Jekyll
+# runs. The browser cannot fetch it either - caps.weathersa.co.za sends no
+# Access-Control-Allow-Origin header, so a fetch() from lekwenaradar.co.za is
+# blocked by the same-origin policy.
+#
+# So this job fetches the feed on a schedule and commits the result. The commit
+# is what triggers the Pages rebuild; there is no second workflow to wire up.
+#
+# It commits only when the data actually changed, so quiet weeks add no history.
+
+name: SAWS warnings
+
+on:
+  schedule:
+    # Every 30 minutes. GitHub queues scheduled runs on shared capacity and can
+    # delay or drop them under load, so treat this as "about every half hour",
+    # not a guarantee - which is why the page always shows its own check time
+    # and assets/js/warnings.js re-checks expiry in the reader's browser.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: saws-warnings
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch the SAWS CAP feed
+        # The script uses only the standard library, so there is nothing to
+        # install. A SAWS outage exits non-zero and leaves the committed data
+        # untouched - a stale page that says when it was last checked beats a
+        # blank one.
+        run: python3 .github/scripts/fetch_saws_warnings.py _data/saws_warnings.yml
+
+      - name: Commit if the warnings changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- _data/saws_warnings.yml; then
+            echo "No change in the SAWS feed - nothing to commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _data/saws_warnings.yml
+          git commit -m "SAWS warnings: refresh feed"
+          # A scheduled run can collide with a push; rebase and retry once
+          # rather than failing the job over it.
+          git push || (git pull --rebase --autostash && git push)

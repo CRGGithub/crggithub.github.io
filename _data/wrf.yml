@@ -6,10 +6,17 @@ length: "72 h"
 
 # The GFS cycle each daily run is initialised from. This is the ONLY place it
 # is written - the home page badge, the WRF stat tile and the configuration
-# table all read it from here. It cannot be detected automatically: the site is
-# static and only rebuilds on push, and the model server sends no CORS headers,
-# so the browser cannot read the cycle off the portal either. Edit this line
-# whenever the operational cycle changes.
+# table all read it from here.
+#
+# It is maintained by hand, by choice. The model server does publish the
+# authoritative value at {site.data_host}/wrf/status.json, but the browser
+# cannot read it: that endpoint is plain http with no CORS headers, so a fetch
+# from the https site is blocked as active mixed content before CORS is even
+# considered. Automating it would mean fetching status.json at build time in
+# CI, which was considered and deliberately not done.
+#
+# So: when the operational cycle changes, check status.json for the real value
+# and edit this line to match.
 cycle: "18Z"
 
 domains:
@@ -58,6 +65,19 @@ physics:
   - name: Initial and boundary conditions
     value: NCEP GFS 0.25 deg, 3-hourly
 
+# The synoptic overview plot. Unlike the gridded fields it is published for
+# the 9 km domain only - there is no nwgp_ (3 km) counterpart - so it lives on
+# its own key rather than in `fields`.
+overview:
+  page: wrfoverview.html
+  title: WRF Synoptic Overview
+  scale: 9 km
+  blurb: >-
+    One plot for the whole weather situation: mean sea-level pressure, surface
+    wind, dew point and 6-hourly precipitation underneath 500 hPa geopotential
+    height and vorticity, and the 850 hPa wind and relative humidity. The place
+    to start a forecast before drilling into individual fields.
+
 dashboards:
   - page: impact_dashboard.html
     title: National Impact Dashboard
@@ -90,6 +110,9 @@ fields:
   - page: wrflfc.html
     title: Level of Free Convection
     blurb: How far air must be lifted before it rises on its own.
+  - page: wrfhail.html
+    title: Hail Forecast
+    blurb: Maximum predicted hailstone diameter at the surface.
   - page: wrfwindspeed.html
     title: Maximum Wind Gust
     blurb: Peak surface gust in each output interval.
