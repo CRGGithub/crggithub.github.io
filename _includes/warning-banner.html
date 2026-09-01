@@ -1,0 +1,33 @@
+{%- comment -%}
+  Compact severe-weather banner for the landing page. Renders nothing at all
+  when SAWS has nothing in force, so a quiet day shows a quiet home page.
+
+  The `active` flags are as of the last workflow run; assets/js/warnings.js
+  re-checks them against the visitor's clock and hides the banner if every
+  warning in it has since lapsed.
+{%- endcomment -%}
+{%- assign feed = site.data.saws_warnings -%}
+{%- if feed.active_count > 0 -%}
+{%- assign live = feed.warnings | where: "active", true -%}
+<aside class="warnbanner" role="status" data-warn-banner>
+  <div class="warnbanner__body">
+    <p class="warnbanner__title">
+      South African Weather Service &mdash;
+      {{ feed.active_count }} warning{% if feed.active_count != 1 %}s{% endif %} in force
+    </p>
+    <ul class="warnbanner__list">
+      {%- for w in live limit: 4 %}
+      <li class="warnbanner__item warnbanner__item--{{ w.colour }}"
+          data-warning data-expires="{{ w.expires }}">
+        <strong>{{ w.event }}</strong>
+        <span>{{ w.region_name }}</span>
+        <span class="warnbanner__level">{{ w.level }}</span>
+      </li>
+      {%- endfor %}
+    </ul>
+    <p class="warnbanner__more">
+      <a href="{{ '/warnings.html' | relative_url }}">All current warnings and affected areas &rarr;</a>
+    </p>
+  </div>
+</aside>
+{%- endif -%}

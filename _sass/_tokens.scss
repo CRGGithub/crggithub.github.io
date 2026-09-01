@@ -80,6 +80,17 @@ $bp-xl: 78em;
   --warn-border:   #edcf92;
   --warn-text:     #6b3d02;
 
+  // SAWS warning levels. Kept separate from --warn-* above, which is the
+  // generic callout colour and has nothing to do with alert severity.
+  --lvl-red:           #a51f18;
+  --lvl-red-bg:        #fdeceb;
+  --lvl-orange:        #a3560a;
+  --lvl-orange-bg:     #fdf0dd;
+  --lvl-yellow:        #7d6300;
+  --lvl-yellow-bg:     #faf4d6;
+  --lvl-advisory:      var(--cyan-700);
+  --lvl-advisory-bg:   var(--cyan-100);
+
   --ok:            var(--green-600);
   --bad:           var(--red-600);
 
@@ -131,6 +142,15 @@ $bp-xl: 78em;
   --warn-bg:       #3a2708;
   --warn-border:   #6b4a10;
   --warn-text:     #f4d79a;
+
+  --lvl-red:           #f0837a;
+  --lvl-red-bg:        #3a1210;
+  --lvl-orange:        #e6a24a;
+  --lvl-orange-bg:     #362305;
+  --lvl-yellow:        #ddc766;
+  --lvl-yellow-bg:     #2f2a0b;
+  --lvl-advisory:      var(--cyan-400);
+  --lvl-advisory-bg:   #10333c;
 
   --ok:            #4bbd7c;
   --bad:           #f0837a;

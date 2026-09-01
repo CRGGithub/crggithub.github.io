@@ -1,0 +1,420 @@
+# GENERATED FILE - do not edit by hand.
+#
+# Written by .github/scripts/fetch_saws_warnings.py, run on a schedule by
+# .github/workflows/saws-warnings.yml. Every push to this file rebuilds the
+# site, which is how the warnings page stays current.
+#
+# Source: South African Weather Service CAP feed, https://caps.weathersa.co.za/Home/RssFeed
+# SAWS is the only body mandated to issue weather warnings in South Africa;
+# this is a verbatim mirror of what they published, not our interpretation.
+
+source: "https://caps.weathersa.co.za/Home/RssFeed"
+source_page: "https://www.weathersa.co.za/"
+generated: "2026-09-01T07:46:48Z"
+fetch_ok: true
+count: 12
+active_count: 0
+
+warnings:
+  - id: "KZN_CAP_DamagingWinds_20260829_110231"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Immediate"
+    certainty: "Observed"
+    region: "KZN"
+    region_name: "KwaZulu-Natal"
+    office: "SAWSKZNRegionalOffice"
+    sent: "2026-08-29T11:02:22+02:00"
+    onset: "2026-08-29T13:02:21+02:00"
+    expires: "2026-08-29T23:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/KZN_CAP_DamagingWinds_20260829_110231.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Ethekwini / M3 Durban"
+      - "KwaDukuza / M4 Tugela Mouth"
+      - "Mandeni / M5 Mtunzini"
+      - "Ray Nkonyeni / M1 Port Shepstone"
+      - "Umdoni / M2 Scottburgh"
+      - "uMlalazi / uMhlathuze / M6 Richards Bay"
+    description: |-
+      - Small vessels at risk of taking on water and capsizing in a locality
+      - Localised disruption of small harbours and/or a port for a short period of time
+      - Difficulty in navigation (eg.Hampered progress due to strong winds)
+      - Some transport routes and travel services affected by wind, falling trees.
+      - Problems for high-sided vehicles on prone routes e.g. due to cross winds on exposed high level roads/bridges.
+      - Localised damage to infrastructure and settlements.
+    instruction: |-
+      The public is advised to take necessary precautions.
+  - id: "WC_CAP_DamagingWinds_20260827_091813"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "WC"
+    region_name: "Western Cape"
+    office: "SAWSWesternCapeRegionalOffice"
+    sent: "2026-08-27T09:13:50+02:00"
+    onset: "2026-08-28T12:00:00+02:00"
+    expires: "2026-08-29T23:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/WC_CAP_DamagingWinds_20260827_091813.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Khâi-Ma / Pofadder"
+      - "Prince Albert"
+      - "Hantam / Calvinia"
+      - "Beaufort West"
+      - "Karoo Hoogland / Sutherland"
+      - "Laingsburg"
+    description: |-
+      Localised damage to settlements (formal and informal) and temporary structures.
+      Some transport routes and travel services will be affected by wind while some journeys may require longer travel times.
+      Localised problems for high-sided vehicles on prone routes due to cross winds on exposed high-level roads
+      Localised reduced visibility due to blowing dust.
+      Risk to localised runway fires.
+    instruction: |-
+      Stay indoors where possible away from the windows that open towards the severe winds. Be aware of the following: - sudden cross winds if traveling especially between buildings, fallen trees or power lines and flying debris.
+      Parked aircraft should be pointed into the direction of the wind and secured.
+      Ensure that all temporary structures are well anchored.
+  - id: "EC_CAP_DamagingWinds_20260829_083829"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 1"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Immediate"
+    certainty: "Likely"
+    region: "EC"
+    region_name: "Eastern Cape"
+    office: "SAWSEasternCapeRegionalOffice"
+    sent: "2026-08-29T08:37:49+02:00"
+    onset: "2026-08-29T11:00:00+02:00"
+    expires: "2026-08-29T22:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/EC_CAP_DamagingWinds_20260829_083829.xml"
+    level_num: 1
+    active: false
+    areas:
+      - "Dr Beyers Naude - Baviaans / Willowmore"
+      - "Blue Crane Route / KwaNojoli / Somerset East"
+      - "Raymond Mhlaba - Adelaide / Adelaide"
+      - "Raymond Mhlaba - Fort Beaufort / KwaMaqoma / Fort"
+      - "Dr Beyers Naude - Jansenville / Jansenville"
+      - "Amahlathi / Stutterheim"
+      - "Dr Beyers Naude - Graaff-Reinet / Graaff - Reinet"
+      - "Inxuba Yethemba / Nxuba / Cradock"
+    description: |-
+      Localised damage to settlements, temporary structures and aged infrastructure.
+      Localised interruptions to power and communications.
+      Localised problems for high-sided vehicles on routes prone to cross winds.
+    instruction: |-
+      Keep structures/infrastructure and settlements well secured.
+      Park away from trees/tall objects that could fall over.
+      Drivers to be aware of fallen objects and sudden cross winds.
+  - id: "FS_CAP_DamagingWinds_20260829_091623"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Immediate"
+    certainty: "Observed"
+    region: "FS"
+    region_name: "Free State"
+    office: "SAWSFreeStateRegionalOffice"
+    sent: "2026-08-29T09:14:06+02:00"
+    onset: "2026-08-29T11:14:06+02:00"
+    expires: "2026-08-29T20:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/FS_CAP_DamagingWinds_20260829_091623.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Tsantsabane / Postmasburg"
+      - "Emthanjeni / De Aar"
+      - "Siyancuma / Griquastad"
+      - "!Kheis / Groblershoop"
+      - "Siyathemba / Prieska"
+      - "Kai !Garib / Augrabies Falls"
+      - "Thembelihle / Hopetown"
+      - "Ubuntu / Victoria West"
+      - "Dawid Kruiper - Upington / Upington"
+      - "Renosterberg / Petrusville"
+      - "Umsobomvu / Noupoort"
+      - "Dawid Kruiper - Twee Rivieren / Twee Rivieren"
+      - "Kareeberg / VanWyksvlei"
+    description: |-
+      Localised damage to settlements (formal and informal).
+      Risk of runaway fires.
+      Localised power and communication interruptions
+      Localised problems for high-sided vehicles on prone routes
+    instruction: |-
+      At first sign of smoke, every possible measure should be taken in order to bring the fire under control in the shortest possible time. Take extra caution when driving high sided vehicles due to cross winds. Remove loose debris from open areas as it may be blown away.
+  - id: "FS_CAP_DamagingWinds_20260828_103354"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "FS"
+    region_name: "Free State"
+    office: "SAWSFreeStateRegionalOffice"
+    sent: "2026-08-28T10:31:43+02:00"
+    onset: "2026-08-29T08:00:00+02:00"
+    expires: "2026-08-29T20:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/FS_CAP_DamagingWinds_20260828_103354.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Ubuntu / Victoria West"
+      - "Dawid Kruiper - Upington / Upington"
+      - "Umsobomvu / Noupoort"
+      - "Dawid Kruiper - Twee Rivieren / Twee Rivieren"
+      - "Renosterberg / Petrusville"
+      - "!Kheis / Groblershoop"
+      - "Siyancuma / Griquastad"
+      - "Siyathemba / Prieska"
+      - "Kareeberg / VanWyksvlei"
+      - "Emthanjeni / De Aar"
+      - "Kai !Garib / Augrabies Falls"
+      - "Thembelihle / Hopetown"
+      - "Tsantsabane / Postmasburg"
+    description: |-
+      Localised damage to settlements (formal and informal).
+      Risk of runaway fires.
+      Localised power and communication interruptions
+      Localised problems for high-sided vehicles on prone routes
+    instruction: |-
+      At first sign of smoke, every possible measure should be taken in order to bring the fire under control in the shortest possible time. Take extra caution when driving high sided vehicles due to cross winds. Remove loose debris from open areas as it may be blown away.
+  - id: "KZN_CAP_DamagingWaves_20260827_075254"
+    event: "Damaging Waves"
+    headline: "Damaging Waves"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "KZN"
+    region_name: "KwaZulu-Natal"
+    office: "SAWSKZNRegionalOffice"
+    sent: "2026-08-27T07:52:13+02:00"
+    onset: "2026-08-27T14:00:00+02:00"
+    expires: "2026-08-28T03:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/KZN_CAP_DamagingWaves_20260827_075254.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Ethekwini / M3 Durban"
+      - "KwaDukuza / M4 Tugela Mouth"
+      - "Mandeni / M5 Mtunzini"
+      - "Ray Nkonyeni / M1 Port Shepstone"
+      - "Umdoni / M2 Scottburgh"
+      - "uMlalazi / uMhlathuze / M6 Richards Bay"
+    description: |-
+      - Localised disruption of small harbours and/or ports for a short period of time.
+      - Difficulty in navigation.
+      - Small vessels at risk of taking on water and capsizing in a locality.
+      - Localised disruptions to beachfront activities.
+    instruction: |-
+      Small to medium boats are advised to stay away from the open sea and seek the shelter of a harbour. In the harbour, moor the boats properly with ample fenders. Avoid going to beaches.
+  - id: "KZN_CAP_DamagingWinds_20260827_075034"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "KZN"
+    region_name: "KwaZulu-Natal"
+    office: "SAWSKZNRegionalOffice"
+    sent: "2026-08-27T07:48:53+02:00"
+    onset: "2026-08-27T12:00:00+02:00"
+    expires: "2026-08-27T23:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/KZN_CAP_DamagingWinds_20260827_075034.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Ethekwini / King Shaka Airport"
+      - "KwaDukuza / KwaDukusa/Stanger"
+      - "Mandeni / Mandini"
+      - "Maphumulo"
+      - "Ethekwini / M3 Durban"
+      - "KwaDukuza / M4 Tugela Mouth"
+      - "Mandeni / M5 Mtunzini"
+      - "Ray Nkonyeni / M1 Port Shepstone"
+      - "Umdoni / M2 Scottburgh"
+      - "uMlalazi / uMhlathuze / M6 Richards Bay"
+      - "Ndwedwe"
+      - "Ray Nkonyeni / Paddock / Margate"
+      - "Umdoni / Dumisa/Pennington"
+      - "uMhlathuze/uMfolozi / Kwa Mbonambi / Richards Bay"
+      - "uMlalazi / Eshowe"
+      - "Umzumbe / St Faith's (Cathula)"
+    description: |-
+      - Small vessels at risk of taking on water and capsizing in a locality
+      - Localised disruption of small harbours and/or a port for a short period of time
+      - Difficulty in navigation (eg.Hampered progress due to strong winds)
+      - Some transport routes and travel services affected by wind, falling trees.
+      - Problems for high-sided vehicles on prone routes e.g. due to cross winds on exposed high level roads/bridges.
+      - Localised damage to infrastructure and settlements.
+    instruction: |-
+      The public is advised to take necessary precautions.
+  - id: "EC_CAP_DamagingWinds_20260826_083358"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "EC"
+    region_name: "Eastern Cape"
+    office: "SAWSEasternCapeRegionalOffice"
+    sent: "2026-08-26T08:33:04+02:00"
+    onset: "2026-08-27T00:00:00+02:00"
+    expires: "2026-08-27T23:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/EC_CAP_DamagingWinds_20260826_083358.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Mbhashe / The Haven"
+      - "Ngqushwa / Ngqushwa"
+      - "Mbizana / Wild Coast Sun"
+      - "Ngquza Hill / Mkambati"
+      - "Great Kei / Kei River"
+      - "Mnquma / Wavecrest"
+      - "Port St Johns / Port St Johns"
+      - "Nyandeni/King Sabata / Coffee Bay"
+      - "Buffalo City / Buffalo City"
+      - "Ndlambe / Port Alfred"
+    description: |-
+      Localised disruption to small harbours and/or ports.
+      Localised disruptions to beachfront activities.
+      Difficulty in navigation for vessels at sea.
+      Small vessels at risk of taking on water and capsizing within a locality.
+      Some vessels at risk of dragging anchor.
+    instruction: |-
+      Small vessels are advised to seek shelter in harbours, bays or inlets and monitor their mooring/anchor lines.
+      The public is advised to be aware of large waves and large tidal variations along the beach and harbours/ports.
+  - id: "WC_CAP_DamagingWinds_20260826_052056"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "WC"
+    region_name: "Western Cape"
+    office: "SAWSWesternCapeRegionalOffice"
+    sent: "2026-08-26T05:20:46+02:00"
+    onset: "2026-08-26T12:00:00+02:00"
+    expires: "2026-08-26T23:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/WC_CAP_DamagingWinds_20260826_052056.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Mossel Bay / Mossel Bay"
+      - "George / George"
+      - "Hessequa / Still Bay"
+      - "Bitou / Plettenberg Bay"
+      - "Knysna / Knysna"
+    description: |-
+      Difficulty in navigation at sea for small vessels and personal water crafts, that are at risk of taking in water and capsizing in locality.
+    instruction: |-
+      The public are advised to take the necessary precaution to ensure their safety and stay updated on weather forecasts and warnings.
+  - id: "WC_CAP_DamagingWinds_20260826_023252"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "WC"
+    region_name: "Western Cape"
+    office: "SAWSWesternCapeRegionalOffice"
+    sent: "2026-08-26T02:31:02+02:00"
+    onset: "2026-08-26T12:00:00+02:00"
+    expires: "2026-08-26T23:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/WC_CAP_DamagingWinds_20260826_023252.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Mossel Bay / Mossel Bay"
+      - "George / George"
+      - "Hessequa / Still Bay"
+      - "Bitou / Plettenberg Bay"
+      - "Knysna / Knysna"
+    description: |-
+      Difficulty in navigation at sea for small vessels and personal water crafts, that are at risk of taking in water and capsizing in locality.
+    instruction: |-
+      The public are advised to take the necessary precaution to ensure their safety and stay updated on weather forecasts and warnings.
+  - id: "WC_CAP_DamagingWinds_20260825_060642"
+    event: "Damaging Winds"
+    headline: "Damaging Winds"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "WC"
+    region_name: "Western Cape"
+    office: "SAWSWesternCapeRegionalOffice"
+    sent: "2026-08-25T06:03:12+02:00"
+    onset: "2026-08-26T12:00:00+02:00"
+    expires: "2026-08-26T23:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/WC_CAP_DamagingWinds_20260825_060642.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Mossel Bay / Mossel Bay"
+      - "George / George"
+      - "Hessequa / Still Bay"
+      - "Bitou / Plettenberg Bay"
+      - "Knysna / Knysna"
+    description: |-
+      Difficulty in navigation at sea for small vessels and personal water crafts, that are at risk of taking in water and capsizing in locality.
+    instruction: |-
+      The public are advised to take the necessary precaution to ensure their safety and stay updated on weather forecasts and warnings.
+  - id: "KZN_CAP_DamagingWaves_20260821_125304"
+    event: "Damaging Waves"
+    headline: "Damaging Waves"
+    level: "Warning Level 2"
+    colour: "yellow"
+    severity: "Minor"
+    urgency: "Future"
+    certainty: "Observed"
+    region: "KZN"
+    region_name: "KwaZulu-Natal"
+    office: "SAWSKZNRegionalOffice"
+    sent: "2026-08-21T12:48:04+02:00"
+    onset: "2026-08-22T18:00:00+02:00"
+    expires: "2026-08-23T23:59:59+02:00"
+    link: "https://www.weathersa.co.za/Documents/Warnings/KZN_CAP_DamagingWaves_20260821_125304.xml"
+    level_num: 2
+    active: false
+    areas:
+      - "Big Five Hlabisa / M8 Cape Vidal"
+      - "Ethekwini / M3 Durban"
+      - "KwaDukuza / M4 Tugela Mouth"
+      - "Mandeni / M5 Mtunzini"
+      - "Mfolozi / M7 Nhlabane"
+      - "Ray Nkonyeni / M1 Port Shepstone"
+      - "Umdoni / M2 Scottburgh"
+      - "uMlalazi / uMhlathuze / M6 Richards Bay"
+    description: |-
+      - Localised disruption of small harbours and/or ports for a short period of time.
+      - Difficulty in navigation.
+      - Small vessels at risk of taking on water and capsizing in a locality.
+      - Localised disruptions to beachfront activities.
+    instruction: |-
+      Small to medium boats are advised to stay away from the open sea and seek the shelter of a harbour. In the harbour, moor the boats properly with ample fenders. Avoid going to beaches.

@@ -7,6 +7,8 @@ description: >-
   Live C-band weather radar, three-domain WRF forecasts down to 3 km and current
   EUMETSAT satellite imagery for Southern Africa, from the NWU Climatology
   Research Group in Potchefstroom.
+scripts:
+  - /assets/js/warnings.js
 ---
 
 <div class="timebar">
@@ -28,6 +30,8 @@ description: >-
   </span>
 </div>
 
+{% include warning-banner.html %}
+
 {% include radar-notice.html %}
 
 <p>
@@ -38,6 +42,19 @@ description: >-
 ## Start here
 
 <ul class="card-grid card-grid--wide">
+  <li>
+    <a class="card" href="{{ '/warnings.html' | relative_url }}">
+      <p class="card__eyebrow">Official &middot; SAWS</p>
+      <h3 class="card__title">Severe-weather warnings</h3>
+      <p class="card__body">
+        Every warning currently in force in South Africa, mirrored from the South
+        African Weather Service alert feed &mdash; hazard, warning level, affected
+        municipalities and expected impacts. SAWS is the only body mandated to issue
+        these; nothing else on this site is a warning.
+      </p>
+      <span class="card__foot">See the warnings &rarr;</span>
+    </a>
+  </li>
   <li>
     <a class="card" href="{{ '/radar.html' | relative_url }}">
       <p class="card__eyebrow">Observed &middot; every few minutes</p>
