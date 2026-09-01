@@ -79,6 +79,17 @@ overview:
     over 500 hPa geopotential height and vorticity and the 850 hPa wind and
     relative humidity.
 
+# Not a WRF product. The model server mirrors the official South African
+# Weather Service warnings alongside the forecast, filtered to the current
+# cycle's window, and this links to that page. Kept off `overview` and `fields`
+# so nothing on our side presents it as model output.
+warnings:
+  page: wrfwarnings.html
+  title: SAWS Severe Weather Warnings
+  blurb: >-
+    Official impact-based warnings on a basemap, with validity period, severity
+    and affected municipalities, filtered to the current forecast window.
+
 dashboards:
   - page: impact_dashboard.html
     title: National Impact Dashboard

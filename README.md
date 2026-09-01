@@ -59,7 +59,8 @@ editing HTML:
 
 - `_data/stations.yml` — the weather station network, its charts and variables
 - `_data/wrf.yml` — domains, physics, dashboards, gridded fields, the synoptic
-  overview, and the GFS cycle each run initialises from (`cycle:`)
+  overview, the SAWS warning mirror, and the GFS cycle each run initialises
+  from (`cycle:`)
 - `_data/soundings.yml` — sounding stations by domain, plus the clickable location map
 - `_data/satellite.yml` — EUMETSAT products, layer stacks, cadence and regions
 
