@@ -54,9 +54,7 @@ description: >-
 ## Official warnings
 
 <p>
-  Issued by the <a href="https://www.weathersa.co.za/">South African Weather Service</a>,
-  the only body in South Africa mandated to do so, and mirrored unaltered next to the model
-  output. Nothing else on this site is a warning.
+  Issued by the <a href="https://www.weathersa.co.za/">South African Weather Service</a>.
 </p>
 
 <ul class="card-grid card-grid--wide">
