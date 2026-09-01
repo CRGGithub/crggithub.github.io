@@ -87,8 +87,9 @@ warnings:
   page: wrfwarnings.html
   title: SAWS Severe Weather Warnings
   blurb: >-
-    Official impact-based warnings on a basemap, with validity period, severity
-    and affected municipalities, filtered to the current forecast window.
+    Official impact-based warnings on a basemap, with validity period, severity,
+    affected municipalities and expected impacts, filtered to the current
+    forecast window.
 
 dashboards:
   - page: impact_dashboard.html
