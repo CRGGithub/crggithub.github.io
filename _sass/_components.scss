@@ -276,11 +276,17 @@ a.card:hover {
 .panel__body { padding: 0; }
 .panel__body--pad { padding: 1rem; }
 .panel__foot {
+  // A panel foot is a figcaption, and _base.scss caps those at the reading
+  // measure. That is right for a figure in prose and wrong here: it left the
+  // foot's top rule stopping short of the panel edge.
+  max-width: none;
+  margin-top: 0;
   padding: 0.7rem 1rem;
   border-top: 1px solid var(--border);
   font-size: 0.84rem;
   color: var(--text-muted);
   p { margin: 0; max-width: none; }
+  p + p { margin-top: 0.35rem; }
 }
 
 // Image that fills the panel edge to edge, on a neutral plate so that

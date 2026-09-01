@@ -65,18 +65,38 @@ physics:
   - name: Initial and boundary conditions
     value: NCEP GFS 0.25 deg, 3-hourly
 
-# The synoptic overview plot. Unlike the gridded fields it is published for
-# the 9 km domain only - there is no nwgp_ (3 km) counterpart - so it lives on
-# its own key rather than in `fields`.
+# The synoptic overview plot. Unlike the gridded fields it is drawn on the
+# outer 18 km domain and has no nwgp_ (3 km) counterpart, so it lives on its own
+# key rather than in `fields`, which assumes both resolutions exist.
 overview:
   page: wrfoverview.html
   title: WRF Synoptic Overview
-  scale: 9 km
+  scale: 18 km
+  domain: d01
+  coverage: Southern Africa
   blurb: >-
     One plot for the whole weather situation: mean sea-level pressure, surface
     wind, dew point and 6-hourly precipitation underneath 500 hPa geopotential
     height and vorticity, and the 850 hPa wind and relative humidity. The place
     to start a forecast before drilling into individual fields.
+
+  # The frames the loop steps through, so the slider can be rendered on our own
+  # page instead of sending the reader off to the model server.
+  #
+  # This is a contract with the model server: the plot script writes
+  # {{ site.data_host }}{{ path }}<HHH>.png, three-hourly, from T+first to
+  # T+last. Nothing on this side can discover the range - the page that knows it
+  # cannot be read from the browser - so if the plotting script's output range
+  # changes, change these numbers to match. Frames outside the published range
+  # simply 404 and the loop shows a broken frame, which is the visible symptom.
+  #
+  # Run time and valid time are drawn into the image itself, so the slider only
+  # has to label the forecast hour.
+  frames:
+    path: "/wrf/wrf/overview_f"
+    first: 12
+    last: 72
+    step: 3
 
 dashboards:
   - page: impact_dashboard.html
