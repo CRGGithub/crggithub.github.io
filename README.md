@@ -195,6 +195,27 @@ sass --scss --load-path _sass /tmp/entry.scss /tmp/out.css
 Switching the `Gemfile` to the `github-pages` gem would remove this trap by making
 local builds match production.
 
+### Dependabot alerts
+
+The same version gap means `Gemfile.lock` never runs in production &mdash; Pages builds
+with its own gems, and there is no Actions workflow. So a Dependabot alert here is about
+a developer's local `jekyll serve`, not about the published site, and the exposure is a
+static-site generator processing this repository's own content.
+
+Keep it patched anyway; it is cheap. To bump only the flagged gems without churning the
+rest of the tree:
+
+```bash
+bundle lock --update=<gem> --conservative
+```
+
+Check what is actually outstanding against the locked versions with the GitHub advisory
+API, which takes a `name@version` and returns only advisories that version is subject to:
+
+```bash
+curl -s "https://api.github.com/advisories?ecosystem=rubygems&affects=rexml@3.4.4"
+```
+
 ## Contact
 
 Product requests and collaboration: Dr Henno Havenga, <henno.havenga@nwu.ac.za>.
