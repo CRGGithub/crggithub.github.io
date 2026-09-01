@@ -7,8 +7,6 @@ tagline: A three-domain operational WRF-ARW forecast, run in house every day.
 description: >-
   The North-West University operational WRF forecast - 18, 9 and 3 km domains
   over Southern Africa, with gridded fields and sector impact dashboards.
-scripts:
-  - /assets/js/wrf-loop.js
 ---
 
 {%- assign wrf = site.data.wrf -%}
@@ -23,12 +21,9 @@ scripts:
 </ul>
 
 <p>
-  The Weather Research and Forecasting model is an open, community-built weather model used
-  for both operational forecasting and research. Running it in house alongside the Lekwena
-  radar puts NWU Potchefstroom at the front of numerical weather prediction research in
-  Africa &mdash; it is the only university on the continent operating a student-driven
-  weather radar and an operational NWP model side by side. The model background is documented
-  on the <a href="https://www2.mmm.ucar.edu/wrf/users/">official WRF user page</a>.
+  An operational WRF-ARW configuration run in house each day and co-located with the Lekwena
+  radar and the NWU station network for verification. Model documentation is maintained by the
+  <a href="https://www2.mmm.ucar.edu/wrf/users/">WRF user community</a>.
 </p>
 
 <p>
@@ -41,27 +36,26 @@ scripts:
 ## Synoptic overview
 
 <p>
-  Before looking at any single field, look at the situation.
-  {{ wrf.overview.blurb | strip_newlines | strip }}
-  It is drawn on the <strong>{{ wrf.overview.scale }}</strong> outer domain, so it covers
-  {{ wrf.overview.coverage }} rather than just South Africa. Run time, valid time and the
-  full legend are in the plot itself; the slider labels the forecast hour.
+  Surface analysis with the two upper-air levels that drive it, on the {{ wrf.overview.coverage }}
+  domain. Stepped three-hourly from T+12 h to T+72 h.
 </p>
 
-{% include wrf-loop.html
-   frames=wrf.overview.frames
-   page=wrf.overview.page
-   title="WRF Synoptic Overview &middot; 18 km"
-   label="the synoptic overview"
-   alt="WRF synoptic overview - surface analysis above, 500 and 850 hPa below"
-   note="Frames run T+12 h to T+72 h, three-hourly." %}
+<ul class="card-grid card-grid--wide">
+  <li>
+    <a class="card" href="{{ base }}{{ wrf.overview.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">{{ wrf.overview.scale }} domain</p>
+      <h3 class="card__title">{{ wrf.overview.title }}</h3>
+      <p class="card__body">{{ wrf.overview.blurb | strip_newlines | strip }}</p>
+      <span class="card__foot">Open the overview &nearr;</span>
+    </a>
+  </li>
+</ul>
 
 ## Impact dashboards
 
 <p>
-  The dashboards translate raw model output into decisions. Rather than reading a CAPE field
-  and a wind field separately, each location is scored for the things that actually cost
-  money and time.
+  Model output scored per location against storm, heat, frost, fire and agricultural
+  decision thresholds.
 </p>
 
 <ul class="card-grid card-grid--wide">
@@ -80,11 +74,8 @@ scripts:
 ## Gridded fields
 
 <p>
-  Every field below is published at both resolutions. The <strong>9 km</strong> domain covers
-  South Africa, Lesotho and Eswatini and is the one to use for synoptic and next-day planning.
-  The <strong>3 km</strong> nest covers North West and Gauteng, resolves convection explicitly
-  rather than parameterising it, and is the better guide to thunderstorm timing, placement
-  and mode over the Highveld.
+  Each field is published at both resolutions. The 3 km nest resolves convection explicitly
+  and is the better guide to thunderstorm timing, placement and mode over the Highveld.
 </p>
 
 <ul class="card-grid">
@@ -131,9 +122,8 @@ scripts:
 </div>
 
 <p>
-  The domains are two-way nested: the 3 km nest sits inside the 9 km domain, which sits inside
-  the 18 km domain, and each nest feeds its solution back to its parent. The outer domain
-  exists to supply lateral boundary conditions and its gridded fields are not published.
+  The domains are two-way nested. The outer domain supplies lateral boundary conditions only;
+  its gridded fields are not published.
 </p>
 
 ## Configuration
@@ -155,16 +145,15 @@ scripts:
 <aside class="callout callout--info" role="note">
   <div class="callout__body">
     <ul class="plain-list">
-      <li>Initialisation comes from publicly available GFS data, so the forecast inherits
-          whatever errors GFS starts with.</li>
-      <li>The model needs spin-up time to become numerically stable. Discard the first hour
-          of every run.</li>
-      <li>Observed soundings for verification are in the
+      <li>Initialised from public GFS analyses, so GFS initial-condition error propagates
+          into the forecast.</li>
+      <li>Discard the first hour of each run for spin-up.</li>
+      <li>Verify against observed profiles in the
           <a href="https://weather.uwyo.edu/upperair/sounding.shtml">University of Wyoming
           upper-air database</a>.</li>
-      <li>Customised forecast products can be produced on request &mdash; contact
+      <li>Customised products on request:
           <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.</li>
-      <li>SAWS is the only entity in South Africa that may issue weather warnings.</li>
+      <li>SAWS is the only entity in South Africa mandated to issue weather warnings.</li>
     </ul>
   </div>
 </aside>

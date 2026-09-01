@@ -6,7 +6,7 @@ short_title: Lekwena Radar
 description: >-
   Live weather radar, WRF numerical forecasts and EUMETSAT satellite imagery
   from the North-West University Climatology Research Group, Potchefstroom.
-tagline: A Living Weather Laboratory
+tagline: Radar, numerical forecasting and satellite meteorology
 lang: en
 
 url: "https://www.lekwenaradar.co.za"
@@ -57,9 +57,8 @@ data_host_secure: false
 radar:
   status: offline
   note: >-
-    The radar is currently down and the image below is the last scan it
-    produced, on 10 March 2026. The WRF forecasts, the weather stations and the
-    satellite imagery are unaffected and still updating normally.
+    The radar is offline; the image below is its last scan, from 10 March 2026.
+    WRF forecasts, station observations and satellite imagery are unaffected.
 
 # Paths on the data server
 data_paths:

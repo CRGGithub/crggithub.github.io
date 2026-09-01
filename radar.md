@@ -31,10 +31,9 @@ description: >-
 {% include radar-notice.html %}
 
 <p>
-  Compare the time stamp burnt into the image below with the UTC clock above. If they are
-  more than roughly ten minutes apart, the radar or the link back to campus is down and you
-  are looking at a stale scan. That check is always worth doing &mdash; the status badge
-  above is set by hand, so it can lag reality.
+  The scan time is burnt into the image. If it differs from the UTC clock by more than about
+  ten minutes, the radar or its link to campus is down; the status badge above is set manually
+  and may lag.
 </p>
 
 ## Latest reflectivity
@@ -45,13 +44,12 @@ description: >-
    title="Maximum reflectivity, dBZ"
    alt="Latest reflectivity image from the NWU Lekwena radar"
    refresh=120
-   note="Refreshes automatically every two minutes. Colour scale, place markers and interference patterns are explained on the about page." %}
+   note="Refreshes every two minutes. Colour scale, place markers and interference are documented on the about page." %}
 
 ## Maximum dBZ map
 
 <p>
-  Pan and zoom the reflectivity field over a basemap. Use the layer control in the corner of
-  the map to switch the radar overlay on and off. Refresh the page if the map does not appear.
+  Reflectivity over a basemap; the layer control toggles the radar overlay.
 </p>
 
 {% include live-embed.html
@@ -64,16 +62,15 @@ description: >-
   <img src="{{ '/assets/images/radar/radardbz.png' | relative_url }}"
        alt="Colour scale mapping reflectivity in dBZ onto the viridis colour map"
        loading="lazy" decoding="async">
-  <figcaption>Reflectivity scale used by the map above. Higher dBZ means larger particles &mdash;
-  heavy rain, hail or ice aloft.</figcaption>
+  <figcaption>Reflectivity scale used by the map above.</figcaption>
 </figure>
 
 ## Storm characteristics
 
 <p>
-  Storm cells are identified and tracked automatically. Click a red polygon or a black track
-  to read that cell's characteristics. It is worth checking the static image above at the same
-  time: interference is sometimes picked up and tracked as though it were a storm.
+  Cells are identified and tracked automatically; click a polygon or track for its
+  characteristics. Radio-frequency interference is occasionally tracked as a cell, so
+  cross-check against the reflectivity image above.
 </p>
 
 {% include live-embed.html

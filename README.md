@@ -59,7 +59,7 @@ editing HTML:
 
 - `_data/stations.yml` — the weather station network, its charts and variables
 - `_data/wrf.yml` — domains, physics, dashboards, gridded fields, the synoptic
-  overview loop, and the GFS cycle each run initialises from (`cycle:`)
+  overview, and the GFS cycle each run initialises from (`cycle:`)
 - `_data/soundings.yml` — sounding stations by domain, plus the clickable location map
 - `_data/satellite.yml` — EUMETSAT products, layer stacks, cadence and regions
 
@@ -71,39 +71,6 @@ publishes its charts under the usual `<station>_<variable>.png` naming.
 The `blurb` fields in `_data/stations.yml` are deliberately minimal — only what the
 station report itself states. Add siting details (coordinates, elevation, instruments,
 commissioning date) there as you have them.
-
-## The synoptic overview loop
-
-`/wrf.html` plays the 18 km synoptic overview inline rather than sending the reader to
-`wrfoverview.html` on the model server. `_includes/wrf-loop.html` builds the frame URLs
-from `site.data_host`, so the server address is still written in exactly one place, and
-`assets/js/wrf-loop.js` drives the slider.
-
-The frame range is a **contract with the model server**, declared in `_data/wrf.yml`:
-
-```yaml
-overview:
-  frames:
-    path: "/wrf/wrf/overview_f"
-    first: 12
-    last: 72
-    step: 3
-```
-
-Nothing on this side can discover that range — the page that knows it,
-`wrfoverview.html`, cannot be read from the browser for the same mixed-content reason as
-`status.json`. If the plotting script's output range changes, change these numbers. The
-visible symptom of a mismatch is a broken frame in the loop.
-
-Run time and valid time are drawn into the plot itself, so the slider only labels the
-forecast hour and never has to guess at a date.
-
-**On https this loop does not play.** The frames are `http://`, so the browser blocks
-them; the panel carries `data-live-embed`, which is what `assets/js/site.js` looks for
-when it swaps a blocked embed for a click-through card. This is the same TLS blocker
-described below — flipping `data_host_secure` once the server has a certificate makes the
-loop work inline with no other change. There is no way around it from this side: mirroring
-the frames into the repo would be ~14 MB a day.
 
 ## The WRF cycle and model status
 

@@ -75,61 +75,40 @@ overview:
   domain: d01
   coverage: Southern Africa
   blurb: >-
-    One plot for the whole weather situation: mean sea-level pressure, surface
-    wind, dew point and 6-hourly precipitation underneath 500 hPa geopotential
-    height and vorticity, and the 850 hPa wind and relative humidity. The place
-    to start a forecast before drilling into individual fields.
-
-  # The frames the loop steps through, so the slider can be rendered on our own
-  # page instead of sending the reader off to the model server.
-  #
-  # This is a contract with the model server: the plot script writes
-  # {{ site.data_host }}{{ path }}<HHH>.png, three-hourly, from T+first to
-  # T+last. Nothing on this side can discover the range - the page that knows it
-  # cannot be read from the browser - so if the plotting script's output range
-  # changes, change these numbers to match. Frames outside the published range
-  # simply 404 and the loop shows a broken frame, which is the visible symptom.
-  #
-  # Run time and valid time are drawn into the image itself, so the slider only
-  # has to label the forecast hour.
-  frames:
-    path: "/wrf/wrf/overview_f"
-    first: 12
-    last: 72
-    step: 3
+    Mean sea-level pressure, 10 m wind, dew point and 6-hourly precipitation,
+    over 500 hPa geopotential height and vorticity and the 850 hPa wind and
+    relative humidity.
 
 dashboards:
   - page: impact_dashboard.html
     title: National Impact Dashboard
     scale: 9 km
     blurb: >-
-      Thirty-two cities scored for storms and lightning, rainfall, wind, Heat
-      Index, athlete heat stress (WBGT), livestock heat load (THI, broken out
-      for cattle, sheep, goats, pigs and poultry), frost with nightly
-      hours-below-threshold, fire danger, spray windows and irrigation
-      scheduling.
+      Thirty-two cities scored for convection, rainfall, wind, heat stress
+      (Heat Index and WBGT), livestock heat load (THI, by species), frost,
+      fire danger, spray windows and irrigation scheduling.
   - page: nwu_dashboard.html
     title: NWU Campus Dashboard
     scale: 3 km
     blurb: >-
-      Convection-permitting guidance for the three NWU campuses -
-      Potchefstroom, Mahikeng and Vanderbijlpark (Vaal).
+      Convection-permitting guidance for the Potchefstroom, Mahikeng and
+      Vanderbijlpark (Vaal) campuses.
 
 # Gridded fields. `page` is the 9 km product; the 3 km nest uses the same
 # name with an nwgp_ prefix.
 fields:
   - page: wrfradar.html
     title: Simulated Radar
-    blurb: Model reflectivity - where the model is putting storms.
+    blurb: Model-simulated radar reflectivity.
   - page: wrfrainfall.html
     title: Accumulated Precipitation
-    blurb: Running rainfall total through the forecast.
+    blurb: Precipitation accumulated from model initialisation.
   - page: wrfcape.html
     title: Simulated CAPE
-    blurb: Convective available potential energy - storm fuel.
+    blurb: Convective available potential energy.
   - page: wrflfc.html
     title: Level of Free Convection
-    blurb: How far air must be lifted before it rises on its own.
+    blurb: Height at which a lifted parcel becomes positively buoyant.
   - page: wrfhail.html
     title: Hail Forecast
     blurb: Maximum predicted hailstone diameter at the surface.
@@ -141,10 +120,10 @@ fields:
     blurb: Screen-level (2 m) air temperature.
   - page: wrfhi.html
     title: Heat Index
-    blurb: Apparent temperature combining heat and humidity.
+    blurb: Apparent temperature from dry-bulb temperature and humidity.
   - page: wrfcf.html
     title: Cloud Fraction
     blurb: Total column cloud cover.
   - page: wrfpet.html
     title: Potential Evapotranspiration
-    blurb: Atmospheric demand for water - irrigation planning.
+    blurb: Atmospheric evaporative demand.
