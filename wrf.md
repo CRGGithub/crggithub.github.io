@@ -51,6 +51,25 @@ description: >-
   </li>
 </ul>
 
+## Official warnings
+
+<p>
+  Issued by the <a href="https://www.weathersa.co.za/">South African Weather Service</a>,
+  the only body in South Africa mandated to do so, and mirrored unaltered next to the model
+  output. Nothing else on this site is a warning.
+</p>
+
+<ul class="card-grid card-grid--wide">
+  <li>
+    <a class="card" href="{{ base }}{{ wrf.warnings.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">Official &middot; SAWS</p>
+      <h3 class="card__title">{{ wrf.warnings.title }}</h3>
+      <p class="card__body">{{ wrf.warnings.blurb | strip_newlines | strip }}</p>
+      <span class="card__foot">Open the warnings &nearr;</span>
+    </a>
+  </li>
+</ul>
+
 ## Impact dashboards
 
 <p>
