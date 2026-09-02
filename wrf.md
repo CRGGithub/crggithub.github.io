@@ -88,23 +88,6 @@ description: >-
   {%- endfor %}
 </ul>
 
-## Severe convective environment
-
-<p>
-  {{ wrf.severe.blurb | strip_newlines | strip }}
-</p>
-
-<ul class="card-grid card-grid--wide">
-  <li>
-    <a class="card" href="{{ base }}{{ wrf.severe.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ wrf.severe.scale }} domain</p>
-      <h3 class="card__title">{{ wrf.severe.title }}</h3>
-      <p class="card__body">{{ wrf.severe.note | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the forecast &nearr;</span>
-    </a>
-  </li>
-</ul>
-
 ## Gridded fields
 
 <p>
