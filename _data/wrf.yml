@@ -107,23 +107,6 @@ dashboards:
       Vanderbijlpark (Vaal) campuses, with livestock heat load broken out by
       species.
 
-# Impact-based severe convective forecast. 9 km only - there is no nwgp_
-# counterpart - so it sits on its own key rather than in `fields`.
-#
-# `note` carries the model server's own statement of how each axis is derived.
-# Reproduce it: one axis is verified and the other is a proxy, and a reader who
-# does not know which is which will over-read the product.
-severe:
-  page: wrfimpactconv.html
-  title: Impact-Based Severe Convective Forecast
-  scale: 9 km
-  blurb: >-
-    Convective likelihood combined with settlement exposure, stepped
-    three-hourly through the run.
-  note: >-
-    The likelihood axis is fitted, with a leave-one-day-out AUC of 0.913. The
-    exposure axis is a declared settlement-population proxy and is not fitted.
-
 # Leaflet versions of three gridded fields on an OpenStreetMap basemap, with a
 # frame slider and an opacity control. Also 9 km only.
 maps:
