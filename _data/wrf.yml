@@ -97,14 +97,42 @@ dashboards:
     scale: 9 km
     blurb: >-
       Thirty-two cities scored for convection, rainfall, wind, heat stress
-      (Heat Index and WBGT), livestock heat load (THI, by species), frost,
-      fire danger, spray windows and irrigation scheduling.
+      (Heat Index and WBGT), livestock heat load (THI), frost, fire danger,
+      spray windows and irrigation scheduling.
   - page: nwu_dashboard.html
     title: NWU Campus Dashboard
     scale: 3 km
     blurb: >-
       Convection-permitting guidance for the Potchefstroom, Mahikeng and
-      Vanderbijlpark (Vaal) campuses.
+      Vanderbijlpark (Vaal) campuses, with livestock heat load broken out by
+      species.
+
+# Impact-based severe convective forecast. 9 km only - there is no nwgp_
+# counterpart - so it sits on its own key rather than in `fields`.
+#
+# `note` carries the model server's own statement of how each axis is derived.
+# Reproduce it: one axis is verified and the other is a proxy, and a reader who
+# does not know which is which will over-read the product.
+severe:
+  page: wrfimpactconv.html
+  title: Impact-Based Severe Convective Forecast
+  scale: 9 km
+  blurb: >-
+    Convective likelihood combined with settlement exposure, stepped
+    three-hourly through the run.
+  note: >-
+    The likelihood axis is fitted, with a leave-one-day-out AUC of 0.913. The
+    exposure axis is a declared settlement-population proxy and is not fitted.
+
+# Leaflet versions of three gridded fields on an OpenStreetMap basemap, with a
+# frame slider and an opacity control. Also 9 km only.
+maps:
+  - page: wrfradar_map.html
+    title: Simulated Radar
+  - page: wrfhi_map.html
+    title: Heat Index
+  - page: wrfhail_map.html
+    title: Hail Forecast
 
 # Gridded fields. `page` is the 9 km product; the 3 km nest uses the same
 # name with an nwgp_ prefix.
@@ -118,9 +146,6 @@ fields:
   - page: wrfcape.html
     title: Simulated CAPE
     blurb: Convective available potential energy.
-  - page: wrflfc.html
-    title: Level of Free Convection
-    blurb: Height at which a lifted parcel becomes positively buoyant.
   - page: wrfhail.html
     title: Hail Forecast
     blurb: Maximum predicted hailstone diameter at the surface.
@@ -136,6 +161,6 @@ fields:
   - page: wrfcf.html
     title: Cloud Fraction
     blurb: Total column cloud cover.
-  - page: wrfpet.html
-    title: Potential Evapotranspiration
-    blurb: Atmospheric evaporative demand.
+  - page: wrfevap.html
+    title: Accumulated Evaporation
+    blurb: Actual evapotranspiration accumulated from model initialisation.

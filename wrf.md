@@ -88,6 +88,23 @@ description: >-
   {%- endfor %}
 </ul>
 
+## Severe convective environment
+
+<p>
+  {{ wrf.severe.blurb | strip_newlines | strip }}
+</p>
+
+<ul class="card-grid card-grid--wide">
+  <li>
+    <a class="card" href="{{ base }}{{ wrf.severe.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">{{ wrf.severe.scale }} domain</p>
+      <h3 class="card__title">{{ wrf.severe.title }}</h3>
+      <p class="card__body">{{ wrf.severe.note | strip_newlines | strip }}</p>
+      <span class="card__foot">Open the forecast &nearr;</span>
+    </a>
+  </li>
+</ul>
+
 ## Gridded fields
 
 <p>
@@ -114,6 +131,24 @@ description: >-
   Vertical profiles for 48 locations are on the
   <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
 </p>
+
+### Interactive maps
+
+<p>
+  Three of the fields above on an OpenStreetMap basemap, with a frame slider and an
+  opacity control. 9 km only.
+</p>
+
+<ul class="chips">
+  {%- for m in wrf.maps %}
+  <li>
+    <a class="chip" href="{{ base }}{{ m.page }}" target="_blank" rel="noopener">
+      {{ m.title }}
+      <svg class="chip__ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+  </li>
+  {%- endfor %}
+</ul>
 
 ## Model domains
 
