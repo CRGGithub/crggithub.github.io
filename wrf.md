@@ -66,6 +66,14 @@ description: >-
       <span class="card__foot">Open the warnings &nearr;</span>
     </a>
   </li>
+  <li>
+    <a class="card" href="{{ base }}{{ wrf.warnings.map_page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">Official &middot; SAWS</p>
+      <h3 class="card__title">Warnings map</h3>
+      <p class="card__body">The same warnings as an interactive map, on the 9 km domain.</p>
+      <span class="card__foot">Open the map &nearr;</span>
+    </a>
+  </li>
 </ul>
 
 ## Impact dashboards
@@ -86,6 +94,23 @@ description: >-
     </a>
   </li>
   {%- endfor %}
+</ul>
+
+## Severe convective environment
+
+<p>
+  {{ wrf.severe.blurb | strip_newlines | strip }}
+</p>
+
+<ul class="card-grid card-grid--wide">
+  <li>
+    <a class="card" href="{{ base }}{{ wrf.severe.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">{{ wrf.severe.scale }} domain &middot; {{ wrf.severe.status }}</p>
+      <h3 class="card__title">{{ wrf.severe.title }}</h3>
+      <p class="card__body">{{ wrf.severe.note | strip_newlines | strip }}</p>
+      <span class="card__foot">Open the diagnostic &nearr;</span>
+    </a>
+  </li>
 </ul>
 
 ## Gridded fields
