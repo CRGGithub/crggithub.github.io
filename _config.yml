@@ -87,7 +87,18 @@ data_paths:
 # JavaScript language redirector that picks the UI language from the visitor's
 # browser, which would drop a German or French menu into an English page.
 #
-# `view` is the map hash: #zoom/latitude/longitude.
+# `view` is the map hash: #zoom/latitude/longitude. It frames Southern Africa.
+#
+# The embed is deliberately NOT interactive. Their URL API has no maxBounds or
+# minZoom parameter, so there is no way to let a visitor zoom while keeping
+# them over Southern Africa - the only way to hold the frame on the region is
+# to disable interaction outright (MapInteractive maps straight onto MapLibre's
+# `interactive` flag). NavigationControl goes with it, because those buttons
+# call map.zoomIn()/zoomOut() programmatically and would otherwise walk the
+# view off the region regardless.
+#
+# `full_url` is the escape hatch: the same view on their own site, fully
+# interactive, linked from the panel caption.
 #
 # `params` are documented at the link above. Most defaults are already right
 # (strikes on, strike circles on, detector lines off, sound off) and are set
@@ -101,7 +112,8 @@ lightning:
   provider: Blitzortung.org
   provider_url: "https://www.blitzortung.org/"
   embed: "https://maps.blitzortung.org/en/"
-  view: "#5/-28.5/25.0"
+  full_url: "https://maps.blitzortung.org/en/#5/-27.0/25.0"
+  view: "#5/-27.0/25.0"
   params:
     # No cookie banner inside the frame, and no cookies set on our visitors.
     Cookies: 0
@@ -116,15 +128,16 @@ lightning:
     MapStyle: 1
     MapProjection: mercator
     MapLanguage: en
-    # Keep north up, and never let the frame swallow a page scroll.
-    MapInteractive: 1
+    # Locked to the Southern Africa frame - see the note above.
+    MapInteractive: 0
     MapScrollZoom: 0
     MapDragRotate: 0
     MapTouchRotate: 0
-    # Controls worth keeping: zoom buttons (scroll zoom is off), scale,
-    # full screen. No compass (rotation is disabled), no globe, and no
-    # geolocation, which would prompt the visitor for their position.
-    NavigationControl: 1
+    # Zoom buttons and the compass are off: the first would defeat the lock,
+    # the second is meaningless with rotation disabled. Scale stays because it
+    # tells the reader what they are looking at, and full screen stays because
+    # it is the only way to see the frame properly on a phone.
+    NavigationControl: 0
     NavigationControlCompass: 0
     ScaleControl: 1
     FullScreenControl: 1
