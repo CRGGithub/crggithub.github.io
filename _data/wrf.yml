@@ -143,6 +143,8 @@ maps:
     title: Hail Forecast
   - page: wrfscep_map.html
     title: SCEP
+  - page: wrfscep_radar_map.html
+    title: SCEP with simulated radar
 
 # Gridded fields. `page` is the 9 km product; the 3 km nest uses the same
 # name with an nwgp_ prefix.
@@ -160,8 +162,10 @@ fields:
     title: Hail Forecast
     blurb: Maximum predicted hailstone diameter at the surface.
   - page: wrfwindspeed.html
-    title: Maximum Wind Gust
-    blurb: Peak surface gust in each output interval.
+    title: Max Wind Gust (Beaufort)
+    blurb: >-
+      Peak surface gust in each output interval, banded by Beaufort force from
+      0 (calm) to 12 (hurricane force).
   - page: wrftemp.html
     title: Temperature
     blurb: Screen-level (2 m) air temperature.
