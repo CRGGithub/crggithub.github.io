@@ -120,12 +120,6 @@ Three things there are deliberate and easy to undo by accident:
 - **`LinksChecked: 0`.** The vendor's own example embed sets this to `1`. It is not the
   lightning layer — it is "Detector lines", which draws a line from every strike to each
   station that received it. The strike layer is `LightningChecked`.
-- **The map is not interactive.** Their URL API has no `maxBounds` or `minZoom`, so there is
-  no way to let a visitor zoom while keeping them over Southern Africa. `MapInteractive: 0`
-  (which maps onto MapLibre's `interactive` flag) is the only way to hold the frame on the
-  region, and `NavigationControl: 0` goes with it because those buttons zoom
-  programmatically and would walk the view off the region anyway. The caption links to the
-  full interactive map on their site for anyone who wants to pan.
 - **The iframe is `loading="lazy"`.** Their terms ask that the websocket servers not be hit
   from high-traffic pages, so a visitor who never scrolls to the map never opens a
   connection.

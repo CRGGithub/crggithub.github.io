@@ -89,7 +89,7 @@ description: >-
 
 {% include lightning-map.html
    title="Live lightning strikes"
-   note="Strike locations are triangulated from a volunteer detector network, so coverage and accuracy vary with detector density." %}
+   note="Opens on Southern Africa; pan and zoom from there. Scroll-zoom is off, so use the zoom buttons or open the map full screen. Strike locations are triangulated from a volunteer detector network, so coverage and accuracy vary with detector density." %}
 
 ## Disclaimer
 
