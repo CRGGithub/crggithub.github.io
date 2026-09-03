@@ -79,6 +79,18 @@ description: >-
    title="Tracked storm cells"
    height="32rem" %}
 
+## Lightning
+
+<p>
+  Total-lightning detections from the volunteer-operated
+  <a href="https://www.blitzortung.org/">Blitzortung</a> network, in near-real time and
+  independent of the radar. Useful for locating active convection while the radar is out.
+</p>
+
+{% include lightning-map.html
+   title="Live lightning strikes"
+   note="Strike locations are triangulated from a volunteer detector network, so coverage and accuracy vary with detector density. Scroll-zoom is disabled; use the zoom controls or open the map full screen." %}
+
 ## Disclaimer
 
 {% include disclaimer.html %}

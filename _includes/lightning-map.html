@@ -1,0 +1,42 @@
+{%- comment -%}
+  Live lightning map from Blitzortung.org.
+
+  Everything configurable lives in the `lightning` block in _config.yml,
+  including why the /en/ URL is used and which vendor defaults are pinned. Read
+  that before changing anything here - the licence terms are documented there.
+
+  The frame is https, so it needs none of the mixed-content handling the campus
+  data server embeds do. It is lazy-loaded so that a visitor who never scrolls
+  this far never opens a connection to their websocket servers.
+
+  Params:
+    title   panel heading
+    note    small print under the panel
+{%- endcomment -%}
+
+{%- assign lt = site.lightning -%}
+{%- capture query -%}
+{%- for p in lt.params -%}{% unless forloop.first %}&{% endunless %}{{ p[0] }}={{ p[1] }}{%- endfor -%}
+{%- endcapture -%}
+
+<figure class="panel">
+  {%- if include.title %}
+  <div class="panel__head">
+    <h3 class="panel__title">{{ include.title }}</h3>
+  </div>
+  {%- endif %}
+
+  <div class="panel__body">
+    <iframe class="panel__frame"
+            src="{{ lt.embed }}?{{ query }}{{ lt.view }}"
+            title="Live lightning strike map from {{ lt.provider }}"
+            loading="lazy"></iframe>
+  </div>
+
+  <figcaption class="panel__foot">
+    {%- if include.note %}<p>{{ include.note }}</p>{% endif %}
+    <p>
+      Data and map by <a href="{{ lt.provider_url }}">{{ lt.provider }}</a> and contributors.
+    </p>
+  </figcaption>
+</figure>
