@@ -85,6 +85,7 @@ overview:
 # so nothing on our side presents it as model output.
 warnings:
   page: wrfwarnings.html
+  map_page: wrfwarnings_map.html
   title: SAWS Severe Weather Warnings
   blurb: >-
     Official impact-based warnings on a basemap, with validity period, severity,
@@ -107,15 +108,41 @@ dashboards:
       Vanderbijlpark (Vaal) campuses, with livestock heat load broken out by
       species.
 
+# Severe Convective Environment Potential. 9 km only, and the successor to the
+# withdrawn impact-based convective forecast - but built the opposite way: SCEP
+# is an ingredients diagnostic scored against fixed physical thresholds, where
+# the old product was statistically fitted.
+#
+# `note` reproduces the model server's own caveat. It matters more here than on
+# most products: a 0-100 number invites reading as a probability, and this one
+# is not calibrated against any storm record. Do not paraphrase it away.
+severe:
+  page: wrfscep.html
+  map_page: wrfscep_map.html
+  title: SCEP - Severe Convective Environment Potential
+  scale: 9 km
+  status: Experimental
+  blurb: >-
+    How supportive the atmosphere would be for a storm that forms at each
+    point, on a 0-100 scale, from instability aloft, wind shear, low-level
+    moisture and freezing level, reduced where capping would suppress
+    convection.
+  note: >-
+    It does not say whether a storm will form. Not historically trained, not a
+    calibrated probability and not a warning service - a planning aid to read
+    alongside the simulated radar and the official SAWS warnings.
+
 # Leaflet versions of three gridded fields on an OpenStreetMap basemap, with a
 # frame slider and an opacity control. Also 9 km only.
 maps:
   - page: wrfradar_map.html
     title: Simulated Radar
-  - page: wrfhi_map.html
-    title: Heat Index
+  - page: wrfutci_map.html
+    title: UTCI
   - page: wrfhail_map.html
     title: Hail Forecast
+  - page: wrfscep_map.html
+    title: SCEP
 
 # Gridded fields. `page` is the 9 km product; the 3 km nest uses the same
 # name with an nwgp_ prefix.
@@ -138,9 +165,11 @@ fields:
   - page: wrftemp.html
     title: Temperature
     blurb: Screen-level (2 m) air temperature.
-  - page: wrfhi.html
-    title: Heat Index
-    blurb: Apparent temperature from dry-bulb temperature and humidity.
+  - page: wrfutci.html
+    title: UTCI
+    blurb: >-
+      Universal Thermal Climate Index: equivalent temperature accounting for
+      humidity, wind and radiation as well as air temperature.
   - page: wrfcf.html
     title: Cloud Fraction
     blurb: Total column cloud cover.
