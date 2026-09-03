@@ -70,6 +70,79 @@ data_paths:
   wrf_prefix: "/wrf/"
 
 # ---------------------------------------------------------------------------
+# Blitzortung.org live lightning map, embedded on the radar page
+#
+# Blitzortung is a volunteer-operated total-lightning detection network. The
+# embed is served over https, so unlike the campus data server it loads inline
+# here with no mixed-content fallback needed.
+#
+# TERMS (https://www.limaps.org/live-data.html): attribution is required, live
+# data may not be demonstrated on commercial sites or via apps, and their
+# websocket servers must not be hit from high-traffic pages. A non-commercial
+# university research and teaching site is within that; keep it that way. The
+# iframe is also lazy-loaded, so no connection is opened for a visitor who
+# never scrolls to it.
+#
+# `embed` points at /en/ rather than the site root on purpose: the root is a
+# JavaScript language redirector that picks the UI language from the visitor's
+# browser, which would drop a German or French menu into an English page.
+#
+# `view` is the map hash: #zoom/latitude/longitude.
+#
+# `params` are documented at the link above. Most defaults are already right
+# (strikes on, strike circles on, detector lines off, sound off) and are set
+# explicitly anyway so a change of vendor default cannot alter this page.
+# Note the vendor's own example switches Detector lines ON, which draws a web
+# of lines from every strike to the stations that received it - not wanted.
+#
+#   MapStyle  0 satellite, 1 Blitzortung base map, 2 shaded relief
+# ---------------------------------------------------------------------------
+lightning:
+  provider: Blitzortung.org
+  provider_url: "https://www.blitzortung.org/"
+  embed: "https://maps.blitzortung.org/en/"
+  view: "#5/-28.5/25.0"
+  params:
+    # No cookie banner inside the frame, and no cookies set on our visitors.
+    Cookies: 0
+    CookiesPredefined: 0
+    CookiesStatistics: 0
+    CookiesAdvertisements: 0
+    CookiesMaps: 0
+    # Their own menu and info panels; we present the map, not their site.
+    MenuDiv: 0
+    InfoDiv: 0
+    # Base map and projection.
+    MapStyle: 1
+    MapProjection: mercator
+    MapLanguage: en
+    # Keep north up, and never let the frame swallow a page scroll.
+    MapInteractive: 1
+    MapScrollZoom: 0
+    MapDragRotate: 0
+    MapTouchRotate: 0
+    # Controls worth keeping: zoom buttons (scroll zoom is off), scale,
+    # full screen. No compass (rotation is disabled), no globe, and no
+    # geolocation, which would prompt the visitor for their position.
+    NavigationControl: 1
+    NavigationControlCompass: 0
+    ScaleControl: 1
+    FullScreenControl: 1
+    GlobeControl: 0
+    GeolocateControl: 0
+    # Data layers.
+    LightningChecked: 1
+    LightningRange: 23
+    CirclesChecked: 1
+    LinksChecked: 0
+    DetectorsChecked: 0
+    CoverageChecked: 0
+    DayNightChecked: 0
+    TimeZonesChecked: 0
+    CountingChecked: 0
+    AudioChecked: 0
+
+# ---------------------------------------------------------------------------
 # EUMETSAT WMS (view.eumetsat.int)
 # ---------------------------------------------------------------------------
 eumetsat:

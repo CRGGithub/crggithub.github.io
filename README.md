@@ -106,6 +106,27 @@ Two things would let the site show all of this live, in this order:
 With both in place, `radar.status` can be replaced by a live read of `radar_last_scan` and
 `cycle` by a live read of `cycle`, and neither needs a human again.
 
+## Lightning map
+
+The radar page embeds the Blitzortung.org live lightning map. Everything about it is in the
+`lightning` block in `_config.yml` — the URL, the map hash (`#zoom/lat/lon`) and every query
+parameter, each commented.
+
+Three things there are deliberate and easy to undo by accident:
+
+- **The URL points at `/en/`, not the site root.** The root is a JavaScript language
+  redirector that picks the UI language from `navigator.language`, which would put a German
+  or French menu inside an English page.
+- **`LinksChecked: 0`.** The vendor's own example embed sets this to `1`. It is not the
+  lightning layer — it is "Detector lines", which draws a line from every strike to each
+  station that received it. The strike layer is `LightningChecked`.
+- **The iframe is `loading="lazy"`.** Their terms ask that the websocket servers not be hit
+  from high-traffic pages, so a visitor who never scrolls to the map never opens a
+  connection.
+
+Their terms also require attribution (in the panel caption) and forbid showing live data on
+commercial sites. A non-commercial university page is within that.
+
 ## Satellite imagery
 
 `assets/js/satellite.js` builds WMS `GetMap` requests against
