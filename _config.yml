@@ -87,18 +87,13 @@ data_paths:
 # JavaScript language redirector that picks the UI language from the visitor's
 # browser, which would drop a German or French menu into an English page.
 #
-# `view` is the map hash: #zoom/latitude/longitude. It frames Southern Africa.
+# `view` is the map hash: #zoom/latitude/longitude. It sets the opening view,
+# framing Southern Africa; the visitor is free to pan and zoom from there.
 #
-# The embed is deliberately NOT interactive. Their URL API has no maxBounds or
-# minZoom parameter, so there is no way to let a visitor zoom while keeping
-# them over Southern Africa - the only way to hold the frame on the region is
-# to disable interaction outright (MapInteractive maps straight onto MapLibre's
-# `interactive` flag). NavigationControl goes with it, because those buttons
-# call map.zoomIn()/zoomOut() programmatically and would otherwise walk the
-# view off the region regardless.
-#
-# `full_url` is the escape hatch: the same view on their own site, fully
-# interactive, linked from the panel caption.
+# Note that the view cannot be *confined* to the region. Their URL API exposes
+# no maxBounds or minZoom, so the only way to hold the frame would be to switch
+# interaction off entirely (MapInteractive, which they pass straight to
+# MapLibre's `interactive` flag) - which was tried and deliberately reverted.
 #
 # `params` are documented at the link above. Most defaults are already right
 # (strikes on, strike circles on, detector lines off, sound off) and are set
@@ -112,7 +107,6 @@ lightning:
   provider: Blitzortung.org
   provider_url: "https://www.blitzortung.org/"
   embed: "https://maps.blitzortung.org/en/"
-  full_url: "https://maps.blitzortung.org/en/#5/-27.0/25.0"
   view: "#5/-27.0/25.0"
   params:
     # No cookie banner inside the frame, and no cookies set on our visitors.
@@ -128,16 +122,17 @@ lightning:
     MapStyle: 1
     MapProjection: mercator
     MapLanguage: en
-    # Locked to the Southern Africa frame - see the note above.
-    MapInteractive: 0
+    # Pan and zoom stay on. Scroll zoom does not: a map that swallows the
+    # page scroll as the reader passes over it is worse than one that needs a
+    # button. Rotation is off so north stays up.
+    MapInteractive: 1
     MapScrollZoom: 0
     MapDragRotate: 0
     MapTouchRotate: 0
-    # Zoom buttons and the compass are off: the first would defeat the lock,
-    # the second is meaningless with rotation disabled. Scale stays because it
-    # tells the reader what they are looking at, and full screen stays because
-    # it is the only way to see the frame properly on a phone.
-    NavigationControl: 0
+    # Zoom buttons are the way in without scroll zoom, so they stay, as do the
+    # scale bar and full screen. No compass (rotation is disabled), no globe,
+    # and no geolocation, which would prompt the visitor for their position.
+    NavigationControl: 1
     NavigationControlCompass: 0
     ScaleControl: 1
     FullScreenControl: 1
