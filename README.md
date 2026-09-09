@@ -57,7 +57,8 @@ The real fix is a TLS certificate on the data server. Once it has one:
 Product lists are data, not markup, so adding a field or a sounding station does not mean
 editing HTML:
 
-- `_data/stations.yml` — the weather station network, its charts and variables
+- `_data/stations.yml` — the weather station network, its charts and variables, plus
+  the `soil` block for the AquaCheck probe (a single profile, not a per-station product)
 - `_data/wrf.yml` — domains, physics, dashboards, gridded fields, the synoptic
   overview, the SAWS warning mirror, and the GFS cycle each run initialises
   from (`cycle:`)

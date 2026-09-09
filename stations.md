@@ -116,6 +116,44 @@ scripts:
 }
 </script>
 
+## Soil moisture
+
+<p>
+  A single {{ st.soil.probe }} at {{ st.soil.site }}, reading moisture and temperature at
+  {{ st.soil.sensors }} depths, with rainfall from {{ st.soil.rain_from }} plotted behind it.
+</p>
+
+<aside class="callout callout--info" role="note">
+  <div class="callout__body">
+    <p class="callout__title">Scaled Frequency, not water content</p>
+    <p>
+      SF is an instrument index where 0 is air and 100 is water at factory calibration. It
+      tracks wetting and drying well, but it is <strong>not</strong> volumetric water content
+      and should not be read as a percentage of water in the soil. Site-specific calibration
+      is needed for that.
+    </p>
+  </div>
+</aside>
+
+<div class="chart-grid"
+     data-live-embed
+     data-kind="frame"
+     data-url="{{ live }}"
+     data-label="the soil moisture charts">
+  {%- for c in st.soil.charts %}
+  <figure class="panel">
+    <div class="panel__head">
+      <h3 class="panel__title">{{ c.title }}</h3>
+      <span class="badge">{{ c.period }}</span>
+    </div>
+    <img class="panel__media" loading="lazy" decoding="async" referrerpolicy="no-referrer"
+         src="{{ site.data_host }}{{ st.img_prefix }}soil_{{ c.suffix }}.png"
+         alt="{{ c.title }}, {{ c.period | downcase }}, at {{ st.soil.site }}">
+    <figcaption class="panel__foot"><p>{{ c.note }}</p></figcaption>
+  </figure>
+  {%- endfor %}
+</div>
+
 ## The network
 
 <div class="table-scroll">

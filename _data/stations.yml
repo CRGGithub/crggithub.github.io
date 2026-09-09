@@ -60,6 +60,46 @@ charts:
     title: Solar radiation
     note: Daily incoming shortwave energy.
 
+# Soil moisture and temperature from the AquaCheck capacitance probe at
+# Potchefstroom. One profile rather than a per-station product, so it has its
+# own block instead of joining `charts`, which is rendered once per station.
+#
+# Filenames are soil_<suffix>.png under the same img_prefix as the station
+# charts.
+#
+# The SF caveat is not decoration. Scaled Frequency is a relative wetness index
+# on an instrument scale - 0 is air, 100 is water at factory calibration - and
+# is NOT volumetric water content. Read as "percent water in the soil" it is
+# simply wrong, and the number is in the eighties often enough for someone to
+# do exactly that. Keep the caveat next to the charts.
+soil:
+  site: Potchefstroom
+  probe: AquaCheck capacitance probe
+  rtu: "1201693"
+  sensors: 6
+  rain_from: Pienaarskamp
+  charts:
+    - suffix: sf_7d
+      title: Soil moisture by depth
+      period: Last 7 days
+      note: Scaled Frequency at each sensor, with daily rainfall behind it.
+    - suffix: sf_full
+      title: Soil moisture by depth
+      period: Since deployment
+      note: The full record, showing the wetting and drying cycles.
+    - suffix: sf_relative
+      title: Moisture relative to maximum recorded
+      period: Since deployment
+      note: Each sensor against the wettest value it has recorded.
+    - suffix: temp_7d
+      title: Soil temperature by depth
+      period: Last 7 days
+      note: Diurnal wave and its damping with depth.
+    - suffix: temp_full
+      title: Soil temperature by depth
+      period: Since deployment
+      note: Seasonal trend at each sensor.
+
 # Variables carried in the hourly current-conditions feed.
 variables:
   - { name: Temperature,            unit: "°C",     note: Air temperature at screen height. }
