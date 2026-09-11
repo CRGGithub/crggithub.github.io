@@ -60,7 +60,7 @@ charts:
     title: Solar radiation
     note: Daily incoming shortwave energy.
 
-# Soil moisture and temperature from the AquaCheck capacitance probe at
+# Soil moisture and temperature from the capacitance probe at
 # Potchefstroom. One profile rather than a per-station product, so it has its
 # own block instead of joining `charts`, which is rendered once per station.
 #
@@ -74,7 +74,7 @@ charts:
 # do exactly that. Keep the caveat next to the charts.
 soil:
   site: Potchefstroom
-  probe: AquaCheck capacitance probe
+  probe: capacitance probe
   rtu: "1201693"
   sensors: 6
   rain_from: Pienaarskamp
