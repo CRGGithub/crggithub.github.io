@@ -14,7 +14,7 @@ from the `master` branch.
 | `/radar.html`    | `radar.md`      | Reflectivity image, interactive dBZ map, tracked storm cells |
 | `/stations.html` | `stations.md`   | Live automatic weather station readings and year-to-date records |
 | `/wrf.html`      | `wrf.md`        | WRF impact dashboards, gridded fields, model configuration |
-| `/wrfskewt.html` | `wrfskewt.md`   | Forecast Skew-T soundings for 48 locations |
+| `/wrfskewt.html` | `wrfskewt.md`   | Forecast Skew-T soundings for 34 locations |
 | `/satellite.html`| `satellite.md`  | EUMETSAT imagery viewer |
 | `/about.html`    | `about.md`      | How to read the radar, project background, press |
 | `/404.html`      | `404.md`        | Not-found page |

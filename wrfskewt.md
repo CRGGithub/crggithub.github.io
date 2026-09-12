@@ -3,10 +3,10 @@ layout: page
 title: Soundings
 permalink: /wrfskewt.html
 eyebrow: Forecast
-tagline: Forecast Skew-T / log-p diagrams for 48 locations across Southern Africa.
+tagline: Forecast Skew-T / log-p diagrams for 34 locations across South Africa and its neighbours.
 description: >-
-  WRF forecast Skew-T / log-p soundings for 48 Southern African locations,
-  from a 3 km convection-permitting nest out to the 18 km synoptic domain.
+  WRF forecast Skew-T / log-p soundings for 34 locations, from a 3 km
+  convection-permitting nest over the Highveld out to the 9 km outer domain.
 ---
 
 {%- assign snd = site.data.soundings -%}
@@ -47,31 +47,6 @@ description: >-
   {%- endfor %}
 </ul>
 {%- endfor %}
-
-## Where the stations are
-
-<p>
-  18 km and 9 km stations only; the 3 km Highveld sites are too closely spaced to label at
-  this scale.
-</p>
-
-<figure class="hotspot-map">
-  <div class="hotspot-map__frame"
-       style="aspect-ratio: {{ snd.map_image.width }} / {{ snd.map_image.height }}">
-    <img src="{{ snd.map_image.src | relative_url }}"
-         width="{{ snd.map_image.width }}" height="{{ snd.map_image.height }}"
-         alt="Map of Southern Africa showing the forecast sounding locations"
-         loading="lazy" decoding="async">
-    {%- for a in snd.map_image.areas %}
-    <a class="hotspot" href="{{ base }}{{ a.page }}" target="_blank" rel="noopener"
-       title="{{ a.title }} sounding"
-       style="left:{{ a.left }}%;top:{{ a.top }}%;width:{{ a.width }}%;height:{{ a.height }}%">
-      <span class="visually-hidden">{{ a.title }} sounding</span>
-    </a>
-    {%- endfor %}
-  </div>
-  <figcaption>Click a station to open its forecast profile.</figcaption>
-</figure>
 
 ## Practical limits
 

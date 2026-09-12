@@ -428,6 +428,12 @@ a.card:hover {
 
 // ---- Clickable location map ------------------------------------------------
 //
+// CURRENTLY UNUSED. The sounding location map came off wrfskewt.md when the
+// model dropped to two domains: assets/images/sounding_locations_2.png labels
+// fourteen stations that are no longer produced. Kept, with the image, for
+// whenever a two-domain map is drawn - the percentage hotspots in
+// _data/soundings.yml were deleted, since a re-framed image invalidates them.
+//
 // Hotspots are positioned in percentages rather than with <map>/<area>, whose
 // pixel coordinates silently drift the moment the image is scaled down to fit
 // a narrow screen.

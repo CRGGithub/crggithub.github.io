@@ -4,7 +4,7 @@ title: Home
 eyebrow: North-West University &middot; Potchefstroom
 tagline: C-band Doppler radar, convection-permitting WRF and EUMETSAT imagery, operated as a teaching and research facility.
 description: >-
-  Live C-band weather radar, three-domain WRF forecasts down to 3 km and current
+  Live C-band weather radar, two-domain WRF forecasts down to 3 km and current
   EUMETSAT satellite imagery for Southern Africa, from the NWU Climatology
   Research Group in Potchefstroom.
 ---
@@ -62,7 +62,7 @@ description: >-
       <p class="card__eyebrow">Forecast &middot; 72 hours</p>
       <h3 class="card__title">NWU-WRF</h3>
       <p class="card__body">
-        Operational WRF-ARW at 18, 9 and 3 km, run daily to 72 hours. Gridded fields and
+        Operational WRF-ARW at 9 and 3 km, run daily to 72 hours. Gridded fields and
         sector impact dashboards.
       </p>
       <span class="card__foot">Open the forecasts &rarr;</span>
@@ -73,8 +73,8 @@ description: >-
       <p class="card__eyebrow">Forecast &middot; vertical profiles</p>
       <h3 class="card__title">Model soundings</h3>
       <p class="card__body">
-        Forecast Skew-T / log-p profiles for 48 locations, from the 3 km Highveld nest out
-        to the 18 km synoptic domain.
+        Forecast Skew-T / log-p profiles for 34 locations, from the 3 km Highveld nest out
+        to the 9 km outer domain.
       </p>
       <span class="card__foot">Open the soundings &rarr;</span>
     </a>

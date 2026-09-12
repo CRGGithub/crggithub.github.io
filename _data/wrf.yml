@@ -20,27 +20,19 @@ length: "72 h"
 cycle: "18Z"
 
 domains:
-  - id: d01
-    label: Outer domain
-    resolution: 18 km
-    grid: 279 x 219
-    extent: "0.4-49.6E, 5.4-40.3S"
-    coverage: Southern Africa
-    note: Lateral boundary forcing only - not published as gridded fields
-    published: false
   - id: d02
-    label: Regional domain
+    label: Outer domain
     resolution: 9 km
     grid: 214 x 200
-    extent: "15.9-34.8E, 21.2-36.5S"
+    extent: "14.7-36.1E, 20.5-36.9S"
     coverage: South Africa, Lesotho and Eswatini
-    note: Cumulus parameterised
+    note: Forced directly from GFS at the lateral boundary; cumulus parameterised
     published: true
   - id: d03
     label: Convection-permitting nest
     resolution: 3 km
     grid: 246 x 156
-    extent: "22.0-29.2E, 24.1-28.2S"
+    extent: "21.9-29.4E, 23.6-27.9S"
     coverage: North West and Gauteng
     note: Cumulus scheme off - convection resolved explicitly
     published: true
@@ -48,10 +40,12 @@ domains:
 physics:
   - name: Dynamical core
     value: WRF-ARW v4.8.0, non-hydrostatic
+  - name: Map projection
+    value: Lambert Conformal (true latitudes -23.7 and -34.0)
   - name: Microphysics
     value: Thompson (mp_physics = 6)
   - name: Cumulus
-    value: Kain-Fritsch on d01/d02, off on d03
+    value: Kain-Fritsch on d02, off on d03
   - name: Longwave radiation
     value: RRTMG (ra_lw_physics = 3)
   - name: Shortwave radiation
@@ -65,19 +59,31 @@ physics:
   - name: Initial and boundary conditions
     value: NCEP GFS 0.25 deg, 3-hourly
 
-# The synoptic overview plot. Unlike the gridded fields it is drawn on the
-# outer 18 km domain and has no nwgp_ (3 km) counterpart, so it lives on its own
-# key rather than in `fields`, which assumes both resolutions exist.
+# The synoptic overview plot. It has no nwgp_ (3 km) counterpart, so it lives
+# on its own key rather than in `fields`, which assumes both resolutions exist.
 overview:
   page: wrfoverview.html
   title: WRF Synoptic Overview
-  scale: 18 km
-  domain: d01
-  coverage: Southern Africa
+  scale: 9 km
+  domain: d02
+  coverage: South Africa, Lesotho and Eswatini
   blurb: >-
     Mean sea-level pressure, 10 m wind, dew point and 6-hourly precipitation,
     over 500 hPa geopotential height and vorticity and the 850 hPa wind and
     relative humidity.
+
+# Not a WRF product either: the same overview layout drawn straight from the
+# GFS fields that force the model, over a far wider region than any WRF domain.
+# It took over the synoptic-scale job when the 18 km outer domain was retired.
+gfs_overview:
+  page: gfsoverview.html
+  title: GFS Large-Scale Overview
+  scale: 0.25 deg
+  coverage: "10W-65E, 48S-15N"
+  blurb: >-
+    The same surface and upper-air layout as the WRF overview, rendered from
+    the raw NCEP GFS boundary-forcing data across the wider region the model
+    sits inside.
 
 # Not a WRF product. The model server mirrors the official South African
 # Weather Service warnings alongside the forecast, filtered to the current

@@ -3,10 +3,10 @@ layout: page
 title: NWU-WRF
 permalink: /wrf.html
 eyebrow: Forecast
-tagline: A three-domain operational WRF-ARW forecast, run in house every day.
+tagline: A two-domain operational WRF-ARW forecast, run in house every day.
 description: >-
-  The North-West University operational WRF forecast - 18, 9 and 3 km domains
-  over Southern Africa, with gridded fields and sector impact dashboards.
+  The North-West University operational WRF forecast - 9 and 3 km domains over
+  South Africa, with gridded fields and sector impact dashboards.
 ---
 
 {%- assign wrf = site.data.wrf -%}
@@ -36,8 +36,9 @@ description: >-
 ## Synoptic overview
 
 <p>
-  Surface analysis with the two upper-air levels that drive it, on the {{ wrf.overview.coverage }}
-  domain. Stepped three-hourly from T+12 h to T+72 h.
+  Surface analysis with the two upper-air levels that drive it, stepped three-hourly from
+  T+12 h to T+72 h &mdash; on the model's own {{ wrf.overview.scale }} domain, and on the
+  wider GFS fields that force it.
 </p>
 
 <ul class="card-grid card-grid--wide">
@@ -46,6 +47,14 @@ description: >-
       <p class="card__eyebrow">{{ wrf.overview.scale }} domain</p>
       <h3 class="card__title">{{ wrf.overview.title }}</h3>
       <p class="card__body">{{ wrf.overview.blurb | strip_newlines | strip }}</p>
+      <span class="card__foot">Open the overview &nearr;</span>
+    </a>
+  </li>
+  <li>
+    <a class="card" href="{{ base }}{{ wrf.gfs_overview.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">GFS {{ wrf.gfs_overview.scale }} &middot; {{ wrf.gfs_overview.coverage }}</p>
+      <h3 class="card__title">{{ wrf.gfs_overview.title }}</h3>
+      <p class="card__body">{{ wrf.gfs_overview.blurb | strip_newlines | strip }}</p>
       <span class="card__foot">Open the overview &nearr;</span>
     </a>
   </li>
@@ -136,7 +145,7 @@ description: >-
 </ul>
 
 <p>
-  Vertical profiles for 48 locations are on the
+  Vertical profiles for 34 locations are on the
   <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
 </p>
 
@@ -182,8 +191,8 @@ description: >-
 </div>
 
 <p>
-  The domains are two-way nested. The outer domain supplies lateral boundary conditions only;
-  its gridded fields are not published.
+  The two domains are two-way nested. The 9 km domain takes its lateral boundary conditions
+  directly from GFS; both are published.
 </p>
 
 ## Configuration
