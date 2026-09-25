@@ -22,7 +22,7 @@
   'use strict';
 
   var root = document.querySelector('[data-satview]');
-  if (!root) { return; }
+  if (!root || !window.LekwenaWMS) { return; }
 
   var cfgNode = document.getElementById('satview-config');
   if (!cfgNode) { return; }
@@ -73,61 +73,22 @@
     timer: null
   };
 
-  /* -- Time --------------------------------------------------------------- */
+  /* -- Time and request building ----------------------------------------
+   * The pure helpers live in wms.js, shared with the home page frame. */
 
-  function latestSlot(cadence, lag) {
-    var step = cadence * MINUTE;
-    return new Date(Math.floor((Date.now() - lag * MINUTE) / step) * step);
-  }
+  var W = window.LekwenaWMS;
+  var latestSlot = W.latestSlot;
+  var alignTo = W.alignTo;
+  var isoZ = W.isoZ;
+  var sast = W.sast;
 
   function slotForFrame(product, frame) {
     var back = (FRAMES - 1 - frame) * product.cadence * MINUTE;
     return new Date(latestSlot(product.cadence, product.lag).getTime() - back);
   }
 
-  function pad(n) { return n < 10 ? '0' + n : String(n); }
-
-  function isoZ(d) {
-    return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) +
-      'T' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':00Z';
-  }
-
-  /* SAST is UTC+2 with no daylight saving, so a flat offset is exact. */
-  function sast(d) {
-    var t = new Date(d.getTime() + 2 * 60 * MINUTE);
-    return pad(t.getUTCHours()) + ':' + pad(t.getUTCMinutes());
-  }
-
-  /* Round a base slot onto an overlay's own, usually finer, cadence grid. */
-  function alignTo(when, cadence) {
-    var step = cadence * MINUTE;
-    return new Date(Math.floor(when.getTime() / step) * step);
-  }
-
-  /* -- Request building --------------------------------------------------- */
-
   function buildUrl(layer, view, when, width, opaque) {
-    var w = width || view.width;
-    var h = Math.round(w * (view.height / view.width));
-
-    var params = [
-      'service=WMS',
-      'version=1.3.0',
-      'request=GetMap',
-      'styles=',
-      'format=' + (opaque ? 'image/jpeg' : 'image/png'),
-      'transparent=' + (opaque ? 'false' : 'true'),
-      // WMS 1.3.0 renamed SRS to CRS, but this GeoServer still addresses the
-      // AUTO projections the old way.
-      (view.crs.indexOf('AUTO') === 0 ? 'srs=' : 'crs=') + encodeURIComponent(view.crs),
-      'bbox=' + encodeURIComponent(view.bbox),
-      'width=' + w,
-      'height=' + h,
-      'layers=' + encodeURIComponent(layer)
-    ];
-    if (opaque) { params.push('bgcolor=0x000000'); }
-    if (when) { params.push('time=' + encodeURIComponent(isoZ(when))); }
-    return cfg.wms + '?' + params.join('&');
+    return W.buildUrl(cfg.wms, layer, view, when, width, opaque);
   }
 
   /* -- Boundary layers ---------------------------------------------------- */

@@ -91,39 +91,57 @@
     '<path d="M15 3h6v6"></path><path d="M10 14 21 3"></path>' +
     '<path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"></path></svg>';
 
-  /* The data server has no TLS yet. Rather than let the browser blank the
-   * frame with a console-only mixed-content error, show what happened and
-   * hand the visitor a working link. Remove nothing here - flip
-   * data_host_secure in _config.yml once the server has a certificate. */
+  /* The data server has no TLS yet, and a browser on https will not load
+   * http content into the page - not even when the visitor follows an http://
+   * link, because current Chrome and Safari silently upgrade that navigation
+   * straight back to https. So each blocked view becomes a single row with a
+   * link that opens it in its own tab, and the reason is given once per page
+   * rather than repeated in every panel.
+   *
+   * None of this runs once data_host in _config.yml is https:// - the check
+   * below is on the URL's scheme, so that one line is the whole switch. */
+  var blocked = [];
+
   var replaceWithFallback = function (host, url, label) {
     var box = doc.createElement('div');
     box.className = 'embed-fallback';
 
     var p = doc.createElement('p');
-    p.textContent =
-      'This live view is served over an unencrypted connection while the page you are ' +
-      'reading is encrypted, so your browser blocks it. Open it in its own tab instead:';
+    p.textContent = 'Published on the NWU data server.';
 
     var a = doc.createElement('a');
-    a.className = 'btn btn--primary';
+    a.className = 'btn btn--ghost btn--sm';
     a.href = url;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
-    a.innerHTML = 'Open ' + label + ' ' + iconExternal;
-
-    var alt = doc.createElement('p');
-    var altLink = doc.createElement('a');
-    altLink.href = window.location.href.replace(/^https:/, 'http:');
-    altLink.textContent = 'view this whole page over http instead';
-    alt.appendChild(doc.createTextNode('Or '));
-    alt.appendChild(altLink);
-    alt.appendChild(doc.createTextNode(', which lets the embeds load inline.'));
+    a.setAttribute('aria-label', 'Open ' + label + ' in a new tab');
+    a.innerHTML = 'Open in a new tab ' + iconExternal;
 
     box.appendChild(p);
     box.appendChild(a);
-    box.appendChild(alt);
-
     host.replaceChildren(box);
+    host.classList.add('is-fallback');
+
+    // A "last updated" stamp for an image that will never load is noise.
+    var panel = host.closest ? host.closest('.panel') : null;
+    var stamp = panel ? panel.querySelector('[data-refresh-stamp]') : null;
+    if (stamp) { stamp.hidden = true; }
+
+    blocked.push(panel || host);
+  };
+
+  var explainBlocked = function () {
+    if (!blocked.length) { return; }
+    var note = doc.createElement('aside');
+    note.className = 'callout callout--info blocked-notice';
+    note.setAttribute('role', 'note');
+    note.innerHTML =
+      '<div class="callout__body">' +
+      '<p class="callout__title">Some views on this page open in a new tab</p>' +
+      '<p>They are published on the NWU data server, which does not yet support ' +
+      'secure connections, and browsers will not show insecure content inside a ' +
+      'secure page.</p></div>';
+    blocked[0].parentNode.insertBefore(note, blocked[0]);
   };
 
   var bust = function (url) {
@@ -151,7 +169,8 @@
     var markUpdated = function () {
       if (!stamp) { return; }
       var d = new Date();
-      stamp.textContent = 'updated ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+      stamp.textContent = 'updated ' + pad((d.getUTCHours() + 2) % 24) + ':' +
+        pad(d.getUTCMinutes()) + ' SAST';
     };
 
     img.addEventListener('load', markUpdated);
@@ -163,4 +182,6 @@
       img.src = bust(url);
     }, every * 1000);
   });
+
+  explainBlocked();
 })();

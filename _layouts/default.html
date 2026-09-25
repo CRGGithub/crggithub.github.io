@@ -46,7 +46,15 @@
           document.documentElement.setAttribute('data-theme', t);
         }
       } catch (e) { /* private mode - fall through to system preference */ }
-      document.documentElement.classList.add('has-js');
+      var root = document.documentElement;
+      root.classList.add('has-js');
+      // On https the browser will block every embed from an http data server.
+      // Knowing that before first paint lets the stylesheet hide controls that
+      // could only act on those embeds, instead of flashing them.
+      if (location.protocol === 'https:' &&
+          (root.getAttribute('data-data-host') || '').indexOf('http:') === 0) {
+        root.classList.add('has-blocked-embeds');
+      }
     })();
   </script>
 </head>
@@ -70,10 +78,21 @@
       <h1 class="hero__title">{{ hero_title }}</h1>
       {%- if hero_tagline %}<p class="hero__tagline">{{ hero_tagline }}</p>{% endif -%}
       {%- if page.url == '/' %}
+      {%- include radar-state.html -%}
+      {%- comment -%}
+        Lead with what is working. While the radar is off, its button would
+        open onto a months-old scan.
+      {%- endcomment %}
       <div class="hero__actions">
+        {%- if radar_status == 'offline' %}
+        <a class="btn btn--solid-on-dark" href="{{ '/wrf.html' | relative_url }}">WRF forecasts</a>
+        <a class="btn btn--on-dark" href="{{ '/satellite.html' | relative_url }}">Satellite</a>
+        <a class="btn btn--on-dark" href="{{ '/stations.html' | relative_url }}">Weather stations</a>
+        {%- else %}
         <a class="btn btn--solid-on-dark" href="{{ '/radar.html' | relative_url }}">Live radar</a>
         <a class="btn btn--on-dark" href="{{ '/wrf.html' | relative_url }}">WRF forecasts</a>
         <a class="btn btn--on-dark" href="{{ '/satellite.html' | relative_url }}">Satellite</a>
+        {%- endif %}
       </div>
       {%- endif %}
     </div>

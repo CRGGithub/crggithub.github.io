@@ -43,14 +43,20 @@ iframe on the page as mixed content, so the radar image and the map frames would
 blank.
 
 `assets/js/site.js` handles that: when the page is https and `data_host` is http, each
-embed is replaced with a card that explains the problem and links out to the product in
-its own tab.
+embed collapses to a single row with a link that opens it in its own tab, and a note above
+the first of them explains why, once per page. Controls that could only act on blocked
+embeds, such as the station switcher, are hidden before first paint.
+
+Note that offering visitors an `http://` link to this site does not help: current Chrome
+and Safari silently upgrade that navigation straight back to `https://`. Tested against the
+live site — requesting the http URL in Chrome still lands on https, with every embed
+blocked.
 
 The real fix is a TLS certificate on the data server. Once it has one:
 
-1. change `data_host` to `https://...`
-2. set `data_host_secure: true` in `_config.yml`
-3. turn on **Enforce HTTPS** in the repository's GitHub Pages settings
+1. change `data_host` to `https://...` — that is the whole switch; `site.js` keys off
+   the scheme, and every embed loads inline again
+2. turn on **Enforce HTTPS** in the repository's GitHub Pages settings
 
 ## Content that lives in `_data`
 
@@ -92,8 +98,9 @@ wanted to: the endpoint is plain http with no CORS headers, and a `fetch()` from
 site is blocked as *active* mixed content before CORS is consulted. Fetching it in CI at
 build time would work today, but was considered and deliberately not adopted.
 
-So `cycle:` and `radar.status` are both hand-maintained. When either changes, check
-`status.json` for the real value and edit to match.
+So `cycle:` is hand-maintained: when the operational cycle changes, check `status.json`
+for the real value and edit to match. The radar status is not - see below; it no longer
+depends on `radar_last_scan`, which has been `null` since early September.
 
 Two things would let the site show all of this live, in this order:
 
@@ -104,8 +111,35 @@ Two things would let the site show all of this live, in this order:
    is not loaded (`a2enmod headers`) and `/var/www` is `AllowOverride None`, so the header
    has to go in the vhost, not a `.htaccess`.
 
-With both in place, `radar.status` can be replaced by a live read of `radar_last_scan` and
-`cycle` by a live read of `cycle`, and neither needs a human again.
+With both in place, `cycle` could be replaced by a live read of `status.json` and would not
+need a human again.
+
+## Radar status
+
+The site follows the radar on and off by itself. `.github/workflows/radar-status.yml` runs
+every half hour and reads the `Last-Modified` header of the radar image on the data server
+— the one reliable signal available, since the scan time is otherwise only burnt into the
+GIF's pixels. It records `online` or `offline` in `_data/radar_status.yml`, and everything
+that mentions the radar reads that file through `_includes/radar-state.html`: the status
+badges, the offline notice (which gives the date of the last scan), the home page's hero
+buttons and card order, and whether the home page shows the radar image at all.
+
+- **Commits only when the status flips.** A radar that stays off adds nothing to the history;
+  the day it comes back, the site follows within about half an hour.
+- **Hysteresis.** Online means a scan within 30 minutes, offline means nothing for two hours,
+  and in between the last state holds, so one late upload does not flap the site.
+- **Unreachable is not offline.** If GitHub cannot reach the data server, the run fails
+  visibly and the recorded state is left alone.
+- **Monthly keepalive.** GitHub disables scheduled workflows in a public repository after 60
+  days without a commit, and the radar can be off for longer than that. So the file is also
+  refreshed at least every 30 days, which keeps the schedule alive.
+- **Manual override.** `radar.status` in `_config.yml` is normally `auto`. Set it to
+  `online`, `limited` or `offline` to force a state, and `radar.note` to replace the
+  automatic banner text.
+
+The workflow needs Actions enabled with write access, and `pages: write` to request a
+rebuild; both are declared in the workflow file. Run it by hand from the Actions tab
+(**Radar status → Run workflow**) to check it can reach the data server from GitHub.
 
 ## Lightning map
 

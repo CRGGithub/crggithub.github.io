@@ -9,6 +9,7 @@ description: >-
   GeoColour with lightning, Convection RGB, water vapour, airmass, instability
   and detected thunderstorm cells, with a scrubbable loop.
 scripts:
+  - /assets/js/wms.js
   - /assets/js/satellite.js
 ---
 

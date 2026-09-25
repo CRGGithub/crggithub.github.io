@@ -1,0 +1,56 @@
+# Keep the site's radar status honest without anyone having to remember to.
+#
+# Every half hour, .github/scripts/radar_status.py reads the Last-Modified
+# header of the radar image on the data server and records online/offline in
+# _data/radar_status.yml. Every radar mention on the site - the status badges,
+# the offline notice, the home page layout - is driven by that file.
+#
+# It commits only when the status flips (plus a keepalive at most monthly - see
+# the script), so a radar that stays off adds nothing to the history, and the
+# day it comes back on the site follows within about half an hour.
+
+name: Radar status
+
+on:
+  schedule:
+    # Off the hour: GitHub queues scheduled runs on shared capacity and the top
+    # of the hour is the busiest slot. Runs can still be delayed under load.
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: radar-status
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Standard library only, and ubuntu-latest ships Python 3.
+      - name: Check the radar
+        run: python3 .github/scripts/radar_status.py
+
+      - name: Record the change and rebuild the site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- _data/radar_status.yml; then
+            echo "Radar status unchanged."
+            exit 0
+          fi
+          status=$(sed -n 's/^status: //p' _data/radar_status.yml)
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _data/radar_status.yml
+          git commit -m "Radar status: ${status}"
+          git push || (git pull --rebase && git push)
+          # The push normally triggers the Pages build on its own. Ask for one
+          # explicitly as well, so a change of status never waits on it.
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" >/dev/null || true

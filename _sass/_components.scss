@@ -116,6 +116,13 @@
   grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
   @include md-down { grid-template-columns: 1fr; }
 }
+// Fixed columns, for a set whose size is known. auto-fill packs as many as
+// fit, which for six cards on a wide screen means four and an orphaned two.
+.card-grid--thirds {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  @include md-down { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include sm-down { grid-template-columns: 1fr; }
+}
 
 .card {
   display: flex;
@@ -310,13 +317,29 @@ a.card:hover {
 // Placeholder shown in place of an http:// embed when the page is https://
 .embed-fallback {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.8rem;
-  padding: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  padding: 0.85rem 1rem;
   background: var(--bg-inset);
-  p { margin: 0; font-size: 0.9rem; color: var(--text-muted); }
+  p { margin: 0; font-size: 0.88rem; color: var(--text-muted); max-width: none; }
 }
+// A grid that has been swapped for a fallback is a single row, not a grid.
+.chart-grid.is-fallback {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+// Explains the fallbacks once, above the first of them.
+.blocked-notice { margin-bottom: 1rem; }
+
+// Anything that only makes sense alongside an embed the browser is blocking -
+// a switcher for charts that are not there, a second link to what the
+// fallback already links to. The class is set before first paint by the
+// inline script in default.html, so these never flash.
+.has-blocked-embeds [data-hide-when-blocked] { display: none; }
 
 // ---- Clock ----------------------------------------------------------------
 

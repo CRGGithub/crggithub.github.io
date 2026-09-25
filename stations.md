@@ -55,7 +55,7 @@ scripts:
    height="34rem"
    note="Refreshed hourly. Panel times are SAST." %}
 
-<p>
+<p data-hide-when-blocked>
   <a class="btn btn--ghost" href="{{ live }}" target="_blank" rel="noopener">
     Open the full station report
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
@@ -69,7 +69,7 @@ scripts:
 </p>
 
 <div data-stations>
-  <ul class="chips" data-station-chips role="group" aria-label="Station">
+  <ul class="chips" data-station-chips data-hide-when-blocked role="group" aria-label="Station">
     {%- for s in st.stations %}
     <li>
       <button type="button" class="chip" data-station="{{ s.id }}"
@@ -81,7 +81,7 @@ scripts:
   {%- assign fallback = st.stations | where: "default", true | first -%}
   {%- assign fallback = fallback | default: st.stations[0] -%}
 
-  <p data-station-blurb class="card__body">{{ fallback.blurb | strip_newlines | strip }}</p>
+  <p data-station-blurb data-hide-when-blocked class="card__body">{{ fallback.blurb | strip_newlines | strip }}</p>
 
   <div class="chart-grid"
        data-live-embed

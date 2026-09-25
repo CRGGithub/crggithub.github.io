@@ -83,6 +83,10 @@ hr {
 }
 
 img, svg, video, iframe { max-width: 100%; }
+
+// normalize.css hides [hidden] without !important, so any component that sets
+// its own display - a callout is flex - quietly shows through it.
+[hidden] { display: none !important; }
 img { height: auto; border-radius: var(--radius-sm); }
 
 figure { margin-inline: 0; }

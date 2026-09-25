@@ -32,8 +32,8 @@ description: >-
 
 <p>
   The scan time is burnt into the image. If it differs from the UTC clock by more than about
-  ten minutes, the radar or its link to campus is down; the status badge above is set manually
-  and may lag.
+  ten minutes, the radar or its link to campus is down. The status badge above is checked
+  automatically every half hour.
 </p>
 
 ## Latest reflectivity

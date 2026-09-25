@@ -28,37 +28,36 @@ contact_email: henno.havenga@nwu.ac.za
 #
 # Currently the campus hostname is used instead of the bare IP. To move to a
 # vanity name, add a DNS A record (e.g. wrf.lekwenaradar.co.za -> the server)
-# and change data_host to match. If TLS is ever terminated on that server,
-# switch the scheme to https:// here and every embed on the site starts
-# working for visitors on https as well - see data_host_secure below.
+# and change data_host to match.
+#
+# While this is http://, browsers on the https site block every embed from it,
+# and assets/js/site.js swaps each for a link that opens it in a new tab. Once
+# the server has a TLS certificate, change the scheme here to https:// - that
+# one edit is the whole switch, and every embed loads inline again.
 # ---------------------------------------------------------------------------
 data_host: "http://fpt-unx.puk.ac.za"
-
-# Set to true once the data server serves valid HTTPS. While false, the site
-# swaps embedded radar/WRF frames for click-through cards when a visitor is on
-# https://, because browsers block http:// content inside an https:// page.
-data_host_secure: false
 
 # ---------------------------------------------------------------------------
 # Radar status
 #
-# MAINTAINER: this is the one thing on the site that a machine cannot work out
-# for itself. The radar's timestamp is burnt into the GIF as pixels, and the
-# server sends no CORS headers, so the browser cannot read how old a scan is.
-# Set `status` by hand whenever the radar's state changes.
+# Detected automatically. The radar-status workflow checks the radar image's
+# Last-Modified header every half hour and records online/offline in
+# _data/radar_status.yml; the badges, the offline notice and the home page
+# layout all follow it. See .github/scripts/radar_status.py.
 #
-#   online  - scanning and publishing fresh images
-#   limited - reachable but degraded (e.g. static image only, no live products)
-#   offline - down for maintenance or fault
+# `status` overrides the detection when set to anything other than auto:
 #
-# `note` appears as a banner on the home and radar pages. Leave it blank for
-# no banner.
+#   auto    - follow the detected state (the normal setting)
+#   online  - force online
+#   limited - reachable but degraded, e.g. scanning but products unreliable
+#   offline - force offline, e.g. images still arriving but known to be bad
+#
+# `note` replaces the automatic banner text. Leave it empty to let the site
+# write its own, which for an offline radar gives the date of the last scan.
 # ---------------------------------------------------------------------------
 radar:
-  status: offline
-  note: >-
-    The radar is offline; the image below is its last scan, from 10 March 2026.
-    WRF forecasts, station observations and satellite imagery are unaffected.
+  status: auto
+  note: ""
 
 # Paths on the data server
 data_paths:

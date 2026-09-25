@@ -1,0 +1,23 @@
+{%- comment -%}
+  Resolves the radar's state once, for every template that mentions it.
+
+  Sets, for the including template:
+    radar_status     online | limited | offline
+    radar_last_scan  ISO time of the newest radar image on the data server
+    radar_note       banner text; empty means no banner
+
+  _data/radar_status.yml is the source. The radar-status workflow rewrites it
+  from the radar image's Last-Modified header, so the site follows the radar
+  on and off without anyone editing anything. radar.status in _config.yml can
+  still force a state: anything other than `auto` wins over the file.
+{%- endcomment -%}
+{%- assign radar_auto = site.data.radar_status -%}
+{%- assign radar_status = site.radar.status | default: 'auto' -%}
+{%- if radar_status == 'auto' -%}
+  {%- assign radar_status = radar_auto.status | default: 'limited' -%}
+{%- endif -%}
+{%- assign radar_last_scan = radar_auto.last_scan -%}
+{%- assign radar_note = site.radar.note | strip_newlines | strip -%}
+{%- if radar_note == '' and radar_status == 'offline' and radar_last_scan -%}
+  {%- capture radar_note -%}Its most recent scan is from {{ radar_last_scan | date: "%-d %B %Y" }}. WRF forecasts, station observations, satellite imagery and lightning are unaffected.{%- endcapture -%}
+{%- endif -%}
