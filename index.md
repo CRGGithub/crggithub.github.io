@@ -27,7 +27,7 @@ scripts:
   </span>
   <span class="timebar__item">
     <span class="timebar__label">WRF</span>
-    <span class="badge badge--accent">Daily {{ site.data.wrf.cycle }} &middot; {{ site.data.wrf.length }}</span>
+    <span class="badge badge--accent">{{ site.data.wrf.cycles | join: ' &amp; ' }} &middot; {{ site.data.wrf.length }}</span>
   </span>
 </div>
 
@@ -66,8 +66,8 @@ scripts:
       <p class="card__eyebrow">Forecast &middot; 72 hours</p>
       <h3 class="card__title">NWU-WRF</h3>
       <p class="card__body">
-        Operational WRF-ARW at 9 and 3 km, run daily to 72 hours. Gridded fields and
-        sector impact dashboards.
+        Operational WRF-ARW at 9 and 3 km, run twice daily to 72 hours. Gridded fields,
+        farm forecasts and sector impact dashboards.
       </p>
       <span class="card__foot">Open the forecasts &rarr;</span>
     </a>

@@ -1,12 +1,13 @@
 /* ---------------------------------------------------------------------------
  * NWU Lekwena Radar - shared site behaviour
  *
- * Four small jobs, none of which need a framework:
+ * Five small jobs, none of which need a framework:
  *   1. the mobile navigation drawer
  *   2. the light/dark theme toggle
  *   3. live UTC/SAST clocks
  *   4. keeping embeds of the http:// data server from silently breaking when
  *      the visitor is on https://, and refreshing live images in place
+ *   5. retiring time-limited items, such as event forecasts, when they lapse
  * ------------------------------------------------------------------------- */
 (function () {
   'use strict';
@@ -184,4 +185,21 @@
   });
 
   explainBlocked();
+
+  /* -- 5. Time-limited items ---------------------------------------------- */
+
+  /* The build already leaves out anything past its date, but the site is
+   * only rebuilt when something is committed, so an item can lapse between
+   * builds. data-until holds an ISO time with its offset; a group marked
+   * data-until-group goes too once everything in it has. */
+  var now = Date.now();
+  Array.prototype.forEach.call(doc.querySelectorAll('[data-until]'), function (el) {
+    var until = Date.parse(el.getAttribute('data-until'));
+    if (!isNaN(until) && until <= now) { el.hidden = true; }
+  });
+  Array.prototype.forEach.call(doc.querySelectorAll('[data-until-group]'), function (group) {
+    var items = group.querySelectorAll('[data-until]');
+    var live = Array.prototype.filter.call(items, function (el) { return !el.hidden; });
+    if (items.length && !live.length) { group.hidden = true; }
+  });
 })();

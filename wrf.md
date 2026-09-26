@@ -17,7 +17,7 @@ description: >-
   <li class="stat"><span class="stat__value">{{ wrf.version | remove: 'WRF-ARW ' }}</span><span class="stat__label">WRF-ARW version</span></li>
   <li class="stat"><span class="stat__value">3 km</span><span class="stat__label">Finest nest</span></li>
   <li class="stat"><span class="stat__value">{{ wrf.length }}</span><span class="stat__label">Forecast length</span></li>
-  <li class="stat"><span class="stat__value">{{ wrf.cycle }}</span><span class="stat__label">Daily GFS cycle</span></li>
+  <li class="stat"><span class="stat__value">{{ wrf.cycles | join: ' &amp; ' }}</span><span class="stat__label">GFS cycles, twice daily</span></li>
 </ul>
 
 <p>
@@ -32,6 +32,36 @@ description: >-
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
   </a>
 </p>
+
+{%- assign now_s = site.time | date: '%s' | plus: 0 -%}
+{%- assign live_events = '' | split: '' -%}
+{%- for e in wrf.events -%}
+  {%- assign until_s = e.until | date: '%s' | plus: 0 -%}
+  {%- if until_s > now_s -%}{%- assign live_events = live_events | push: e -%}{%- endif -%}
+{%- endfor -%}
+{%- if live_events.size > 0 %}
+
+<section data-until-group>
+
+<h2 id="event-forecasts">Event forecasts</h2>
+
+<p>Short-lived forecasts for specific upcoming events.</p>
+
+<ul class="card-grid card-grid--wide">
+  {%- for e in live_events %}
+  <li data-until="{{ e.until }}">
+    <a class="card" href="{{ base }}{{ e.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">{{ e.dates }}</p>
+      <h3 class="card__title">{{ e.title }}</h3>
+      <p class="card__body">{{ e.place }}.</p>
+      <span class="card__foot">Open the outlook &nearr;</span>
+    </a>
+  </li>
+  {%- endfor %}
+</ul>
+
+</section>
+{%- endif %}
 
 ## Synoptic overview
 
@@ -104,6 +134,38 @@ description: >-
   </li>
   {%- endfor %}
 </ul>
+
+## Farm forecast
+
+<p>
+  Developed under the {{ wrf.farm.project }} project. Start with the town dashboard, or open
+  a regional map for a single decision.
+</p>
+
+<ul class="card-grid card-grid--wide">
+  <li>
+    <a class="card" href="{{ base }}{{ wrf.farm.dashboard.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">{{ wrf.farm.dashboard.scale }} domain</p>
+      <h3 class="card__title">{{ wrf.farm.dashboard.title }}</h3>
+      <p class="card__body">{{ wrf.farm.dashboard.blurb | strip_newlines | strip }}</p>
+      <span class="card__foot">Open the dashboard &nearr;</span>
+    </a>
+  </li>
+</ul>
+
+<div class="table-scroll">
+  <table>
+    <thead><tr><th>Regional map</th><th>What it shows</th></tr></thead>
+    <tbody>
+      {%- for m in wrf.farm.maps %}
+      <tr>
+        <td><a href="{{ base }}{{ m.page }}" target="_blank" rel="noopener"><strong>{{ m.title }}</strong></a></td>
+        <td>{{ m.blurb }}</td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
 
 ## Severe convective environment
 
@@ -204,7 +266,7 @@ description: >-
       <tr><th scope="row">{{ p.name }}</th><td>{{ p.value }}</td></tr>
       {%- endfor %}
       <tr><th scope="row">Forecast length</th><td>{{ wrf.length }}</td></tr>
-      <tr><th scope="row">Cycle</th><td>Daily, from the {{ wrf.cycle }} GFS cycle</td></tr>
+      <tr><th scope="row">Cycles</th><td>Twice daily, from the {{ wrf.cycles | join: ' and ' }} GFS cycles</td></tr>
     </tbody>
   </table>
 </div>

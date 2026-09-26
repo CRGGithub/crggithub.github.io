@@ -4,20 +4,17 @@ version: "WRF-ARW 4.8.0"
 init: "NCEP GFS 0.25 deg, 3-hourly"
 length: "72 h"
 
-# The GFS cycle each daily run is initialised from. This is the ONLY place it
-# is written - the home page badge, the WRF stat tile and the configuration
-# table all read it from here.
+# The GFS cycles the model is initialised from each day, in run order. This
+# is the ONLY place they are written - the home page badge, the WRF stat tile
+# and the configuration table all read them from here.
 #
-# It is maintained by hand, by choice. The model server does publish the
-# authoritative value at {site.data_host}/wrf/status.json, but the browser
-# cannot read it: that endpoint is plain http with no CORS headers, so a fetch
-# from the https site is blocked as active mixed content before CORS is even
-# considered. Automating it would mean fetching status.json at build time in
-# CI, which was considered and deliberately not done.
+# Maintained by hand, by choice. The model server's status.json reports only
+# the cycle of the *latest* run, so it cannot describe a twice-daily schedule
+# on its own, and in any case the browser cannot read it: plain http, no CORS
+# headers, blocked on the https site before CORS is even considered.
 #
-# So: when the operational cycle changes, check status.json for the real value
-# and edit this line to match.
-cycle: "18Z"
+# So: when the operational schedule changes, edit this list.
+cycles: ["00Z", "12Z"]
 
 domains:
   - id: d02
@@ -103,16 +100,73 @@ dashboards:
     title: National Impact Dashboard
     scale: 9 km
     blurb: >-
-      Thirty-two cities scored for convection, rainfall, wind, heat stress
-      (Heat Index and WBGT), livestock heat load (THI), frost, fire danger,
-      spray windows and irrigation scheduling.
+      Eighteen towns - the 9 km sounding sites - scored for convection,
+      rainfall, wind, heat stress (Heat Index and WBGT), livestock heat load
+      (THI), frost, fire danger, spray windows and irrigation scheduling.
   - page: nwu_dashboard.html
     title: NWU Campus Dashboard
     scale: 3 km
     blurb: >-
       Convection-permitting guidance for the Potchefstroom, Mahikeng and
-      Vanderbijlpark (Vaal) campuses, with livestock heat load broken out by
-      species.
+      Vanderbijlpark (Vaal) campuses, scored against the same hazards as the
+      national dashboard.
+
+# Farm forecast, developed under the Maize Trust Early Warning for Farmers
+# project. A town dashboard for the summer-grain region plus regional maps, all
+# on the 9 km domain, so like the overview it sits on its own key rather than
+# in `fields`. Keep the project credit: it is how the work is funded.
+farm:
+  project: Maize Trust Early Warning for Farmers
+  dashboard:
+    page: agri_dashboard.html
+    title: Farm forecast
+    scale: 9 km
+    blurb: >-
+      Twenty-nine grain towns in the summer-grain region over the next three
+      days: spray windows, planting rain, field access, irrigation need,
+      crop-disease weather, frost and crop heat.
+  maps:
+    - page: agri_rain.html
+      title: Rain per day
+      blurb: Gauge-day rainfall against the 25 mm planting-rain threshold.
+    - page: agri_spray.html
+      title: Spray conditions
+      blurb: Hourly Delta-T, wind and rain against spraying limits.
+    - page: agri_access.html
+      title: Field access
+      blurb: Topsoil moisture against field capacity, for trafficability.
+    - page: agri_irrigation.html
+      title: Irrigation need
+      blurb: Mid-season maize water use (FAO-56) less effective rain.
+    - page: agri_leafwet.html
+      title: Leaf-wetness hours
+      blurb: Hours of likely leaf wetness, against rust and leaf-blight thresholds.
+    - page: agri_soiltemp.html
+      title: Soil temperature
+      blurb: 0-10 cm at 08:00 SAST, against germination and emergence bases.
+    - page: agri_tmin.html
+      title: Night minimum
+      blurb: Lowest overnight temperature, against frost thresholds.
+    - page: agri_tmax.html
+      title: Day maximum
+      blurb: Highest daytime temperature, against crop heat-stress thresholds.
+
+# Temporary forecasts for specific events. Each disappears on its own once
+# `until` has passed - omitted at build time, and hidden in the browser if it
+# expires between builds - so an old entry does no harm, but prune them now and
+# then. Give `until` with its offset so the last day counts in SAST.
+#
+# Not every event on the model server belongs here. Deliberately omitted:
+#   event_godswindow.html  God's Window Hiking Week, 27 Sep - 4 Oct 2026
+#                          (owner's decision, 26 Sep 2026)
+#
+# Entry shape, for when one is wanted:
+#   - page: event_example.html
+#     title: Event name
+#     place: Where it is
+#     dates: 1 - 7 January
+#     until: "2027-01-07T23:59:00+02:00"
+events: []
 
 # Severe Convective Environment Potential. 9 km only, and the successor to the
 # withdrawn impact-based convective forecast - but built the opposite way: SCEP

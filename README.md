@@ -66,8 +66,8 @@ editing HTML:
 - `_data/stations.yml` — the weather station network, its charts and variables, plus
   the `soil` block for the soil probe (a single profile, not a per-station product)
 - `_data/wrf.yml` — domains, physics, dashboards, gridded fields, the synoptic
-  overview, the SAWS warning mirror, and the GFS cycle each run initialises
-  from (`cycle:`)
+  overview, the SAWS warning mirror, the farm forecast, time-limited event
+  forecasts (`events:`), and the GFS cycles the model runs from (`cycles:`)
 - `_data/soundings.yml` — sounding stations by domain, plus the clickable location map
 - `_data/satellite.yml` — EUMETSAT products, layer stacks, cadence and regions
 
@@ -82,9 +82,9 @@ commissioning date) there as you have them.
 
 ## The WRF cycle and model status
 
-`cycle:` in `_data/wrf.yml` is the GFS cycle each daily run is initialised from. It feeds
-the home-page badge, the WRF stat tile and the configuration table, so changing the
-operational cycle is one line.
+`cycles:` in `_data/wrf.yml` lists the GFS cycles the model is initialised from each day
+— currently `00Z` and `12Z`, twice daily. It feeds the home-page badge, the WRF stat tile and
+the configuration table, so changing the schedule is one line.
 
 The model server publishes the authoritative values at `{data_host}/wrf/status.json`:
 
@@ -98,8 +98,9 @@ wanted to: the endpoint is plain http with no CORS headers, and a `fetch()` from
 site is blocked as *active* mixed content before CORS is consulted. Fetching it in CI at
 build time would work today, but was considered and deliberately not adopted.
 
-So `cycle:` is hand-maintained: when the operational cycle changes, check `status.json`
-for the real value and edit to match. The radar status is not - see below; it no longer
+So `cycles:` is hand-maintained. Note that `status.json` reports only the cycle of the
+*latest* run, so it cannot describe a twice-daily schedule on its own; when the schedule
+changes, edit the list. The radar status is not - see below; it no longer
 depends on `radar_last_scan`, which has been `null` since early September.
 
 Two things would let the site show all of this live, in this order:
@@ -111,8 +112,7 @@ Two things would let the site show all of this live, in this order:
    is not loaded (`a2enmod headers`) and `/var/www` is `AllowOverride None`, so the header
    has to go in the vhost, not a `.htaccess`.
 
-With both in place, `cycle` could be replaced by a live read of `status.json` and would not
-need a human again.
+With both in place, the site could show the latest run's time live from `status.json`.
 
 ## Radar status
 
