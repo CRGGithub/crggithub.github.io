@@ -33,36 +33,6 @@ description: >-
   </a>
 </p>
 
-{%- assign now_s = site.time | date: '%s' | plus: 0 -%}
-{%- assign live_events = '' | split: '' -%}
-{%- for e in wrf.events -%}
-  {%- assign until_s = e.until | date: '%s' | plus: 0 -%}
-  {%- if until_s > now_s -%}{%- assign live_events = live_events | push: e -%}{%- endif -%}
-{%- endfor -%}
-{%- if live_events.size > 0 %}
-
-<section data-until-group>
-
-<h2 id="event-forecasts">Event forecasts</h2>
-
-<p>Short-lived forecasts for specific upcoming events.</p>
-
-<ul class="card-grid card-grid--wide">
-  {%- for e in live_events %}
-  <li data-until="{{ e.until }}">
-    <a class="card" href="{{ base }}{{ e.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ e.dates }}{% if e.scale %} &middot; {{ e.scale }} domain{% endif %}</p>
-      <h3 class="card__title">{{ e.title }}</h3>
-      <p class="card__body">{{ e.place }}.</p>
-      <span class="card__foot">Open the outlook &nearr;</span>
-    </a>
-  </li>
-  {%- endfor %}
-</ul>
-
-</section>
-{%- endif %}
-
 ## Synoptic overview
 
 <p>
@@ -90,6 +60,35 @@ description: >-
   </li>
 </ul>
 
+## Interactive maps
+
+<p>
+  Zoomable maps over a street basemap, with a frame slider through the run. Pick a field and a
+  resolution: the 3 km nest resolves convection explicitly and is the better guide to
+  thunderstorm timing, placement and mode over the Highveld.
+</p>
+
+<ul class="card-grid">
+  {%- for f in wrf.fields %}
+  <li>
+    <div class="card">
+      <h3 class="card__title">{{ f.title }}</h3>
+      <p class="card__body">{{ f.blurb }}</p>
+      <p class="card__actions">
+        {%- assign interactive = f.page | replace: '.html', '_map.html' %}
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ interactive }}" target="_blank" rel="noopener">9 km</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ interactive }}" target="_blank" rel="noopener">3 km</a>
+      </p>
+    </div>
+  </li>
+  {%- endfor %}
+</ul>
+
+<p>
+  Vertical profiles for 34 locations are on the
+  <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
+</p>
+
 ## Official warnings
 
 <p>
@@ -98,18 +97,10 @@ description: >-
 
 <ul class="card-grid card-grid--wide">
   <li>
-    <a class="card" href="{{ base }}{{ wrf.warnings.page }}" target="_blank" rel="noopener">
+    <a class="card" href="{{ base }}{{ wrf.warnings.map_page }}" target="_blank" rel="noopener">
       <p class="card__eyebrow">Official &middot; SAWS</p>
       <h3 class="card__title">{{ wrf.warnings.title }}</h3>
       <p class="card__body">{{ wrf.warnings.blurb | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the warnings &nearr;</span>
-    </a>
-  </li>
-  <li>
-    <a class="card" href="{{ base }}{{ wrf.warnings.map_page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">Official &middot; SAWS</p>
-      <h3 class="card__title">Warnings map</h3>
-      <p class="card__body">The same warnings as an interactive map, on the 9 km domain.</p>
       <span class="card__foot">Open the map &nearr;</span>
     </a>
   </li>
@@ -135,19 +126,19 @@ description: >-
   {%- endfor %}
 </ul>
 
-## Farm forecast
+## Agri forecast
 
 <p>
-  Developed under the {{ wrf.farm.project }} project. Start with the town dashboard, or open
+  Developed under the {{ wrf.agri.project }} project. Start with the town dashboard, or open
   a regional map for a single decision.
 </p>
 
 <ul class="card-grid card-grid--wide">
   <li>
-    <a class="card" href="{{ base }}{{ wrf.farm.dashboard.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ wrf.farm.dashboard.scale }} domain</p>
-      <h3 class="card__title">{{ wrf.farm.dashboard.title }}</h3>
-      <p class="card__body">{{ wrf.farm.dashboard.blurb | strip_newlines | strip }}</p>
+    <a class="card" href="{{ base }}{{ wrf.agri.dashboard.page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">{{ wrf.agri.dashboard.scale }} domain</p>
+      <h3 class="card__title">{{ wrf.agri.dashboard.title }}</h3>
+      <p class="card__body">{{ wrf.agri.dashboard.blurb | strip_newlines | strip }}</p>
       <span class="card__foot">Open the dashboard &nearr;</span>
     </a>
   </li>
@@ -157,7 +148,7 @@ description: >-
   <table>
     <thead><tr><th>Regional map</th><th>What it shows</th></tr></thead>
     <tbody>
-      {%- for m in wrf.farm.maps %}
+      {%- for m in wrf.agri.maps %}
       <tr>
         <td><a href="{{ base }}{{ m.page | replace: '.html', '_map.html' }}" target="_blank" rel="noopener"><strong>{{ m.title }}</strong></a></td>
         <td>{{ m.blurb }}</td>
@@ -175,60 +166,23 @@ description: >-
 
 <ul class="card-grid card-grid--wide">
   <li>
-    <a class="card" href="{{ base }}{{ wrf.severe.page }}" target="_blank" rel="noopener">
+    <a class="card" href="{{ base }}{{ wrf.severe.map_page }}" target="_blank" rel="noopener">
       <p class="card__eyebrow">{{ wrf.severe.scale }} domain &middot; {{ wrf.severe.status }}</p>
       <h3 class="card__title">{{ wrf.severe.title }}</h3>
       <p class="card__body">{{ wrf.severe.note | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the diagnostic &nearr;</span>
+      <span class="card__foot">Open the map &nearr;</span>
     </a>
   </li>
 </ul>
 
 <ul class="chips">
   <li>
-    <a class="chip" href="{{ base }}{{ wrf.severe.map_page }}" target="_blank" rel="noopener">
-      Interactive map
-      <svg class="chip__ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
-    </a>
-  </li>
-  <li>
     <a class="chip" href="{{ base }}{{ wrf.severe.radar_map_page }}" target="_blank" rel="noopener">
-      With simulated radar
+      With simulated radar contours
       <svg class="chip__ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
     </a>
   </li>
 </ul>
-
-## Gridded fields
-
-<p>
-  Each field is an interactive map at both resolutions, zoomable over a street basemap with a
-  frame slider. The 3 km nest resolves convection explicitly and is the better guide to
-  thunderstorm timing, placement and mode over the Highveld.
-</p>
-
-<ul class="card-grid">
-  {%- for f in wrf.fields %}
-  <li>
-    <div class="card">
-      <h3 class="card__title">{{ f.title }}</h3>
-      <p class="card__body">{{ f.blurb }}</p>
-      <p class="card__actions">
-        {%- assign interactive = f.page | replace: '.html', '_map.html' %}
-        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ interactive }}" target="_blank" rel="noopener">9 km</a>
-        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ interactive }}" target="_blank" rel="noopener">3 km</a>
-      </p>
-    </div>
-  </li>
-  {%- endfor %}
-</ul>
-
-<p>
-  Plain image versions of every field and farm map, without the basemap, are listed on the
-  <a href="{{ base }}{{ wrf.static_maps }}" target="_blank" rel="noopener">static images page</a>.
-  Vertical profiles for 34 locations are on the
-  <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
-</p>
 
 ## Model domains
 
@@ -289,3 +243,10 @@ description: >-
     </ul>
   </div>
 </aside>
+
+<p class="page-footnote">
+  Static image versions, without the interactive basemap:
+  <a href="{{ base }}{{ wrf.static_maps }}" target="_blank" rel="noopener">gridded and agri fields</a>,
+  <a href="{{ base }}{{ wrf.severe.page }}" target="_blank" rel="noopener">SCEP</a> and the
+  <a href="{{ base }}{{ wrf.warnings.page }}" target="_blank" rel="noopener">SAWS warnings list</a>.
+</p>

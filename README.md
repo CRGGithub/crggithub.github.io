@@ -66,8 +66,9 @@ editing HTML:
 - `_data/stations.yml` — the weather station network, its charts and variables, plus
   the `soil` block for the soil probe (a single profile, not a per-station product)
 - `_data/wrf.yml` — domains, physics, dashboards, gridded fields, the synoptic
-  overview, the SAWS warning mirror, the farm forecast, time-limited event
-  forecasts (`events:`), and the GFS cycles the model runs from (`cycles:`)
+  overview, the SAWS warning mirror, the agri forecast, and the GFS cycles the
+  model runs from (`cycles:`). Products are linked by their interactive `_map.html`
+  versions; the static ones sit behind one footnote link on the WRF page
 - `_data/soundings.yml` — sounding stations by domain, plus the clickable location map
 - `_data/satellite.yml` — EUMETSAT products, layer stacks, cadence and regions
 

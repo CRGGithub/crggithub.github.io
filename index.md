@@ -67,7 +67,7 @@ scripts:
       <h3 class="card__title">NWU-WRF</h3>
       <p class="card__body">
         Operational WRF-ARW at 9 and 3 km, run twice daily to 72 hours. Gridded fields,
-        farm forecasts and sector impact dashboards.
+        agri forecasts and sector impact dashboards.
       </p>
       <span class="card__foot">Open the forecasts &rarr;</span>
     </a>

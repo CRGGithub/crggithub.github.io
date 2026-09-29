@@ -91,9 +91,8 @@ warnings:
   map_page: wrfwarnings_map.html
   title: SAWS Severe Weather Warnings
   blurb: >-
-    Official impact-based warnings on a basemap, with validity period, severity,
-    affected municipalities and expected impacts, filtered to the current
-    forecast window.
+    Official impact-based warnings on an interactive map, filtered to the
+    current forecast window.
 
 dashboards:
   - page: impact_dashboard.html
@@ -111,18 +110,18 @@ dashboards:
       Vanderbijlpark (Vaal) campuses, scored against the same hazards as the
       national dashboard.
 
-# Farm forecast, developed under the Maize Trust Early Warning for Farmers
+# Agri forecast, developed under the Maize Trust Early Warning for Farmers
 # project. A town dashboard for the summer-grain region plus regional maps, all
 # on the 9 km domain, so like the overview it sits on its own key rather than
 # in `fields`. Keep the project credit: it is how the work is funded.
 #
 # Map `page`s name the static image page. The site links to its interactive
 # twin, the same name with _map before .html - see `static_maps` below.
-farm:
+agri:
   project: Maize Trust Early Warning for Farmers
   dashboard:
     page: agri_dashboard.html
-    title: Farm forecast
+    title: Agri forecast
     scale: 9 km
     blurb: >-
       Twenty-nine grain towns in the Maize Triangle, the summer-grain
@@ -154,28 +153,9 @@ farm:
       title: Day maximum
       blurb: Highest daytime temperature, against crop heat-stress thresholds.
 
-# Temporary forecasts for specific events. Each disappears on its own once
-# `until` has passed - omitted at build time, and hidden in the browser if it
-# expires between builds - so an old entry does no harm, but prune them now and
-# then. Give `until` with its offset so the last day counts in SAST.
-#
-# Not every event on the model server belongs here. Deliberately omitted:
-#   event_godswindow.html  God's Window Hiking Week, 27 Sep - 4 Oct 2026
-#                          (owner's decision, 26 Sep 2026)
-#
-events:
-  - page: event_aardklop.html
-    title: Aardklop National Arts Festival
-    place: Potchefstroom, town-wide including the NWU campus
-    dates: 29 September - 4 October
-    scale: 3 km
-    until: "2026-10-04T23:00:00+02:00"
-  - page: event_sa_aus_odi3.html
-    title: South Africa vs Australia, 3rd ODI
-    place: JB Marks Oval (Senwes Park), Potchefstroom
-    dates: 30 September
-    scale: 3 km
-    until: "2026-09-30T22:00:00+02:00"
+# Event forecasts (event_*.html on the model server - God's Window, Aardklop,
+# a cricket ODI and so on) are deliberately NOT mirrored on this site: the
+# owner's decision, September 2026. Leave them out when syncing with the portal.
 
 # Severe Convective Environment Potential. 9 km only, and the successor to the
 # withdrawn impact-based convective forecast - but built the opposite way: SCEP
@@ -202,7 +182,7 @@ severe:
     calibrated probability and not a warning service - a planning aid to read
     alongside the simulated radar and the official SAWS warnings.
 
-# Every gridded field and every farm map now has an interactive twin - a
+# Every gridded field and every agri map now has an interactive twin - a
 # Leaflet map over an OpenStreetMap basemap, with a frame slider - named like
 # its static page with _map before .html (wrftemp.html -> wrftemp_map.html,
 # nwgp_wrftemp.html -> nwgp_wrftemp_map.html). The site links the interactive

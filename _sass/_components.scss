@@ -332,6 +332,13 @@ a.card:hover {
   border-radius: var(--radius);
   overflow: hidden;
 }
+// A small closing note under the last section of a page.
+.page-footnote {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
 // Explains the fallbacks once, above the first of them.
 .blocked-notice { margin-bottom: 1rem; }
 
