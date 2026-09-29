@@ -51,7 +51,7 @@ description: >-
   {%- for e in live_events %}
   <li data-until="{{ e.until }}">
     <a class="card" href="{{ base }}{{ e.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ e.dates }}</p>
+      <p class="card__eyebrow">{{ e.dates }}{% if e.scale %} &middot; {{ e.scale }} domain{% endif %}</p>
       <h3 class="card__title">{{ e.title }}</h3>
       <p class="card__body">{{ e.place }}.</p>
       <span class="card__foot">Open the outlook &nearr;</span>
@@ -159,7 +159,7 @@ description: >-
     <tbody>
       {%- for m in wrf.farm.maps %}
       <tr>
-        <td><a href="{{ base }}{{ m.page }}" target="_blank" rel="noopener"><strong>{{ m.title }}</strong></a></td>
+        <td><a href="{{ base }}{{ m.page | replace: '.html', '_map.html' }}" target="_blank" rel="noopener"><strong>{{ m.title }}</strong></a></td>
         <td>{{ m.blurb }}</td>
       </tr>
       {%- endfor %}
@@ -184,11 +184,27 @@ description: >-
   </li>
 </ul>
 
+<ul class="chips">
+  <li>
+    <a class="chip" href="{{ base }}{{ wrf.severe.map_page }}" target="_blank" rel="noopener">
+      Interactive map
+      <svg class="chip__ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+  </li>
+  <li>
+    <a class="chip" href="{{ base }}{{ wrf.severe.radar_map_page }}" target="_blank" rel="noopener">
+      With simulated radar
+      <svg class="chip__ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+  </li>
+</ul>
+
 ## Gridded fields
 
 <p>
-  Each field is published at both resolutions. The 3 km nest resolves convection explicitly
-  and is the better guide to thunderstorm timing, placement and mode over the Highveld.
+  Each field is an interactive map at both resolutions, zoomable over a street basemap with a
+  frame slider. The 3 km nest resolves convection explicitly and is the better guide to
+  thunderstorm timing, placement and mode over the Highveld.
 </p>
 
 <ul class="card-grid">
@@ -198,8 +214,9 @@ description: >-
       <h3 class="card__title">{{ f.title }}</h3>
       <p class="card__body">{{ f.blurb }}</p>
       <p class="card__actions">
-        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ f.page }}" target="_blank" rel="noopener">9 km</a>
-        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ f.page }}" target="_blank" rel="noopener">3 km</a>
+        {%- assign interactive = f.page | replace: '.html', '_map.html' %}
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ interactive }}" target="_blank" rel="noopener">9 km</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ interactive }}" target="_blank" rel="noopener">3 km</a>
       </p>
     </div>
   </li>
@@ -207,27 +224,11 @@ description: >-
 </ul>
 
 <p>
+  Plain image versions of every field and farm map, without the basemap, are listed on the
+  <a href="{{ base }}{{ wrf.static_maps }}" target="_blank" rel="noopener">static images page</a>.
   Vertical profiles for 34 locations are on the
   <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
 </p>
-
-### Interactive maps
-
-<p>
-  Three of the fields above on an OpenStreetMap basemap, with a frame slider and an
-  opacity control. 9 km only.
-</p>
-
-<ul class="chips">
-  {%- for m in wrf.maps %}
-  <li>
-    <a class="chip" href="{{ base }}{{ m.page }}" target="_blank" rel="noopener">
-      {{ m.title }}
-      <svg class="chip__ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
-    </a>
-  </li>
-  {%- endfor %}
-</ul>
 
 ## Model domains
 

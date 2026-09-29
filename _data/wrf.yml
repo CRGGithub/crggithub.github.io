@@ -115,6 +115,9 @@ dashboards:
 # project. A town dashboard for the summer-grain region plus regional maps, all
 # on the 9 km domain, so like the overview it sits on its own key rather than
 # in `fields`. Keep the project credit: it is how the work is funded.
+#
+# Map `page`s name the static image page. The site links to its interactive
+# twin, the same name with _map before .html - see `static_maps` below.
 farm:
   project: Maize Trust Early Warning for Farmers
   dashboard:
@@ -122,9 +125,9 @@ farm:
     title: Farm forecast
     scale: 9 km
     blurb: >-
-      Twenty-nine grain towns in the summer-grain region over the next three
-      days: spray windows, planting rain, field access, irrigation need,
-      crop-disease weather, frost and crop heat.
+      Twenty-nine grain towns in the Maize Triangle, the summer-grain
+      region, over the next three days: spray windows, planting rain, field
+      access, irrigation need, crop-disease weather, frost and crop heat.
   maps:
     - page: agri_rain.html
       title: Rain per day
@@ -160,13 +163,19 @@ farm:
 #   event_godswindow.html  God's Window Hiking Week, 27 Sep - 4 Oct 2026
 #                          (owner's decision, 26 Sep 2026)
 #
-# Entry shape, for when one is wanted:
-#   - page: event_example.html
-#     title: Event name
-#     place: Where it is
-#     dates: 1 - 7 January
-#     until: "2027-01-07T23:59:00+02:00"
-events: []
+events:
+  - page: event_aardklop.html
+    title: Aardklop National Arts Festival
+    place: Potchefstroom, town-wide including the NWU campus
+    dates: 29 September - 4 October
+    scale: 3 km
+    until: "2026-10-04T23:00:00+02:00"
+  - page: event_sa_aus_odi3.html
+    title: South Africa vs Australia, 3rd ODI
+    place: JB Marks Oval (Senwes Park), Potchefstroom
+    dates: 30 September
+    scale: 3 km
+    until: "2026-09-30T22:00:00+02:00"
 
 # Severe Convective Environment Potential. 9 km only, and the successor to the
 # withdrawn impact-based convective forecast - but built the opposite way: SCEP
@@ -179,6 +188,7 @@ events: []
 severe:
   page: wrfscep.html
   map_page: wrfscep_map.html
+  radar_map_page: wrfscep_radar_map.html
   title: SCEP - Severe Convective Environment Potential
   scale: 9 km
   status: Experimental
@@ -192,22 +202,17 @@ severe:
     calibrated probability and not a warning service - a planning aid to read
     alongside the simulated radar and the official SAWS warnings.
 
-# Leaflet versions of three gridded fields on an OpenStreetMap basemap, with a
-# frame slider and an opacity control. Also 9 km only.
-maps:
-  - page: wrfradar_map.html
-    title: Simulated Radar
-  - page: wrfutci_map.html
-    title: UTCI
-  - page: wrfhail_map.html
-    title: Hail Forecast
-  - page: wrfscep_map.html
-    title: SCEP
-  - page: wrfscep_radar_map.html
-    title: SCEP with simulated radar
+# Every gridded field and every farm map now has an interactive twin - a
+# Leaflet map over an OpenStreetMap basemap, with a frame slider - named like
+# its static page with _map before .html (wrftemp.html -> wrftemp_map.html,
+# nwgp_wrftemp.html -> nwgp_wrftemp_map.html). The site links the interactive
+# version. The static image pages are still generated every run, and the model
+# server indexes all of them on this one page.
+static_maps: static_maps.html
 
-# Gridded fields. `page` is the 9 km product; the 3 km nest uses the same
-# name with an nwgp_ prefix.
+# Gridded fields. `page` is the 9 km static product; the 3 km nest uses the
+# same name with an nwgp_ prefix. The site links the interactive twins - see
+# `static_maps` above.
 fields:
   - page: wrfradar.html
     title: Simulated Radar
@@ -220,7 +225,7 @@ fields:
     blurb: Convective available potential energy.
   - page: wrfhail.html
     title: Hail Forecast
-    blurb: Maximum predicted hailstone diameter at the surface.
+    blurb: Maximum hailstone diameter at the surface, from the HAILCAST model.
   - page: wrfwindspeed.html
     title: Max Wind Gust (Beaufort)
     blurb: >-
