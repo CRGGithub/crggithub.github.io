@@ -169,18 +169,15 @@ severe:
   page: wrfscep.html
   map_page: wrfscep_map.html
   radar_map_page: wrfscep_radar_map.html
-  title: SCEP - Severe Convective Environment Potential
+  title: Severe Convective Environment (SCEP)
   scale: 9 km
   status: Experimental
   blurb: >-
-    How supportive the atmosphere would be for a storm that forms at each
-    point, on a 0-100 scale, from instability aloft, wind shear, low-level
-    moisture and freezing level, reduced where capping would suppress
-    convection.
+    How supportive the atmosphere is for a storm that forms to turn severe, on
+    a 0-100 scale, from instability aloft, shear, low-level moisture and
+    freezing level.
   note: >-
-    It does not say whether a storm will form. Not historically trained, not a
-    calibrated probability and not a warning service - a planning aid to read
-    alongside the simulated radar and the official SAWS warnings.
+    Not historically trained, not a calibrated probability, not a warning.
 
 # Every gridded field and every agri map now has an interactive twin - a
 # Leaflet map over an OpenStreetMap basemap, with a frame slider - named like

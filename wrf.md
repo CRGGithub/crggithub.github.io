@@ -33,6 +33,23 @@ description: >-
   </a>
 </p>
 
+## Official warnings
+
+<p>
+  Issued by the <a href="https://www.weathersa.co.za/">South African Weather Service</a>.
+</p>
+
+<ul class="card-grid card-grid--wide">
+  <li>
+    <a class="card" href="{{ base }}{{ wrf.warnings.map_page }}" target="_blank" rel="noopener">
+      <p class="card__eyebrow">Official &middot; SAWS</p>
+      <h3 class="card__title">{{ wrf.warnings.title }}</h3>
+      <p class="card__body">{{ wrf.warnings.blurb | strip_newlines | strip }}</p>
+      <span class="card__foot">Open the map &nearr;</span>
+    </a>
+  </li>
+</ul>
+
 ## Synoptic overview
 
 <p>
@@ -56,52 +73,6 @@ description: >-
       <h3 class="card__title">{{ wrf.gfs_overview.title }}</h3>
       <p class="card__body">{{ wrf.gfs_overview.blurb | strip_newlines | strip }}</p>
       <span class="card__foot">Open the overview &nearr;</span>
-    </a>
-  </li>
-</ul>
-
-## Interactive maps
-
-<p>
-  Zoomable maps over a street basemap, with a frame slider through the run. Pick a field and a
-  resolution: the 3 km nest resolves convection explicitly and is the better guide to
-  thunderstorm timing, placement and mode over the Highveld.
-</p>
-
-<ul class="card-grid">
-  {%- for f in wrf.fields %}
-  <li>
-    <div class="card">
-      <h3 class="card__title">{{ f.title }}</h3>
-      <p class="card__body">{{ f.blurb }}</p>
-      <p class="card__actions">
-        {%- assign interactive = f.page | replace: '.html', '_map.html' %}
-        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ interactive }}" target="_blank" rel="noopener">9 km</a>
-        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ interactive }}" target="_blank" rel="noopener">3 km</a>
-      </p>
-    </div>
-  </li>
-  {%- endfor %}
-</ul>
-
-<p>
-  Vertical profiles for 34 locations are on the
-  <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
-</p>
-
-## Official warnings
-
-<p>
-  Issued by the <a href="https://www.weathersa.co.za/">South African Weather Service</a>.
-</p>
-
-<ul class="card-grid card-grid--wide">
-  <li>
-    <a class="card" href="{{ base }}{{ wrf.warnings.map_page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">Official &middot; SAWS</p>
-      <h3 class="card__title">{{ wrf.warnings.title }}</h3>
-      <p class="card__body">{{ wrf.warnings.blurb | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the map &nearr;</span>
     </a>
   </li>
 </ul>
@@ -158,31 +129,48 @@ description: >-
   </table>
 </div>
 
-## Severe convective environment
+## Interactive maps
 
 <p>
-  {{ wrf.severe.blurb | strip_newlines | strip }}
+  Zoomable maps over a street basemap, with a frame slider through the run. Pick a field and a
+  resolution: the 3 km nest resolves convection explicitly and is the better guide to
+  thunderstorm timing, placement and mode over the Highveld.
 </p>
 
-<ul class="card-grid card-grid--wide">
+<ul class="card-grid">
+  {%- for f in wrf.fields %}
   <li>
-    <a class="card" href="{{ base }}{{ wrf.severe.map_page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ wrf.severe.scale }} domain &middot; {{ wrf.severe.status }}</p>
+    <div class="card">
+      <h3 class="card__title">{{ f.title }}</h3>
+      <p class="card__body">{{ f.blurb }}</p>
+      <p class="card__actions">
+        {%- assign interactive = f.page | replace: '.html', '_map.html' %}
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ interactive }}" target="_blank" rel="noopener">9 km</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ interactive }}" target="_blank" rel="noopener">3 km</a>
+      </p>
+    </div>
+  </li>
+  {%- endfor %}
+  <li>
+    <div class="card">
+      <p class="card__eyebrow">{{ wrf.severe.status }} &middot; {{ wrf.severe.scale }} only</p>
       <h3 class="card__title">{{ wrf.severe.title }}</h3>
-      <p class="card__body">{{ wrf.severe.note | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the map &nearr;</span>
-    </a>
+      <p class="card__body">
+        {{ wrf.severe.blurb | strip_newlines | strip }}
+        <em>{{ wrf.severe.note | strip_newlines | strip }}</em>
+      </p>
+      <p class="card__actions">
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ wrf.severe.map_page }}" target="_blank" rel="noopener">9 km</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ wrf.severe.radar_map_page }}" target="_blank" rel="noopener">With radar</a>
+      </p>
+    </div>
   </li>
 </ul>
 
-<ul class="chips">
-  <li>
-    <a class="chip" href="{{ base }}{{ wrf.severe.radar_map_page }}" target="_blank" rel="noopener">
-      With simulated radar contours
-      <svg class="chip__ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
-    </a>
-  </li>
-</ul>
+<p>
+  Vertical profiles for 34 locations are on the
+  <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
+</p>
 
 ## Model domains
 
