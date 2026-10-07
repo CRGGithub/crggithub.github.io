@@ -61,8 +61,33 @@
     return wms + '?' + params.join('&');
   }
 
+  /* EUMETSAT drops the odd request. Give a layer image one retry after a short
+   * pause, and if that fails too, hide it rather than leave the browser's
+   * broken-image icon on the map. */
+  function loadLayer(img, url) {
+    var retried = false;
+    // The same <img> is reused frame after frame. A retry or error that
+    // belongs to an earlier frame must not touch it once it wants another URL,
+    // or the previous frame's layer would land on the current one.
+    img.setAttribute('data-want', url);
+    var current = function () { return img.getAttribute('data-want') === url; };
+    img.onerror = function () {
+      if (!current()) { return; }
+      if (retried) { img.hidden = true; return; }
+      retried = true;
+      setTimeout(function () {
+        if (!current()) { return; }
+        img.removeAttribute('src');
+        img.src = url;
+      }, 3000);
+    };
+    img.onload = function () { if (current()) { img.hidden = false; } };
+    img.src = url;
+  }
+
   window.LekwenaWMS = {
     MINUTE: MINUTE,
+    loadLayer: loadLayer,
     latestSlot: latestSlot,
     alignTo: alignTo,
     isoZ: isoZ,

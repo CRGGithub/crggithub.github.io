@@ -36,8 +36,8 @@
     img.alt = '';
     img.setAttribute('aria-hidden', 'true');
     img.decoding = 'async';
-    img.src = W.buildUrl(cfg.wms, b.layer, view, null, null, false);
     bounds.appendChild(img);
+    W.loadLayer(img, W.buildUrl(cfg.wms, b.layer, view, null, null, false));
   });
 
   var shown = null;
@@ -63,9 +63,7 @@
 
       if (product.overlay) {
         var oWhen = W.alignTo(when, product.overlay_cadence || product.cadence);
-        overlay.onerror = function () { overlay.hidden = true; };   // no lightning is normal
-        overlay.onload = function () { overlay.hidden = false; };
-        overlay.src = W.buildUrl(cfg.wms, product.overlay, view, oWhen, null, false);
+        W.loadLayer(overlay, W.buildUrl(cfg.wms, product.overlay, view, oWhen, null, false));
       }
     };
     probe.onerror = function () {

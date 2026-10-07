@@ -124,8 +124,8 @@
       img.alt = '';
       img.setAttribute('aria-hidden', 'true');
       img.decoding = 'async';
-      img.src = buildUrl(b.layer, state.view, null, null, false);
       el.bounds.appendChild(img);
+      W.loadLayer(img, buildUrl(b.layer, state.view, null, null, false));
     });
   }
 
@@ -138,7 +138,7 @@
    * and the time stamp always belongs to the image under it. `commit` runs only
    * when the base image has arrived; on failure the previous frame and its
    * labels stay, and the error names the frame that could not be shown. */
-  function show(baseUrl, overlayUrl, requested, commit) {
+  function show(baseUrl, overlayUrl, requested, commit, retry) {
     var token = ++pending;
     var waiting = overlayUrl ? 2 : 1;
     var failed = false;
@@ -165,6 +165,8 @@
       el.stage.classList.remove('is-loading');
 
       if (failed) {
+        if (retry && retry()) { return; }       // handled by stepping back a slot
+        if (!state.shown) { el.stamp.textContent = 'unavailable'; }
         el.error.hidden = false;
         el.error.textContent = 'EUMETSAT did not return ' + stampText(requested) +
           (state.shown ? '; still showing ' + stampText(state.shown) + '.' : '.') +
@@ -177,7 +179,7 @@
       // be assigned an undefined src and drawn as a broken image over the frame.
       var overlayOk = !!(overlayUrl && loaded.overlay);
       if (overlayOk) {
-        el.overlay.src = loaded.overlay;
+        W.loadLayer(el.overlay, loaded.overlay);
         el.overlay.hidden = false;
       } else {
         el.overlay.removeAttribute('src');
@@ -221,10 +223,18 @@
     return out;
   }
 
-  function render() {
+  function render(attempt, startAnchor) {
+    attempt = attempt || 0;
+    startAnchor = startAnchor || state.anchor;
     var product = state.product;
     var view = state.view;
     var u = urlsForFrame(product, view, state.frame);
+
+    // Boundaries carry no time, so on first paint they go up straight away -
+    // a slow or failed first frame must not leave the map without them. After
+    // that they wait for the image, so a region switch never pairs the new
+    // region's borders with the old region's picture.
+    if (!state.shown) { renderBoundaries(); }
     var download = el.download ? urlsForFrame(product, view, state.frame, 2400).base : null;
 
     // The control reflects the selection immediately...
@@ -251,6 +261,19 @@
           'That is missing data, not an absence of activity.</em></p>');
       }
       el.caption.innerHTML = parts.join('');
+    }, function () {
+      // The newest slot is sometimes not ingested yet despite the lag allowance,
+      // or a request just fails. On the newest frame, step the window back one
+      // slot and try again rather than opening the viewer on an error. A frame
+      // the visitor scrubbed to is left to report its own failure.
+      if (state.frame !== FRAMES - 1) { return false; }
+      if (attempt >= 3) {
+        state.anchor = startAnchor;            // give up without shifting the window
+        return false;
+      }
+      state.anchor = new Date(state.anchor.getTime() - product.cadence * MINUTE);
+      render(attempt + 1, startAnchor);
+      return true;
     });
   }
 
