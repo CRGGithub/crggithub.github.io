@@ -32,8 +32,9 @@ description: >-
 
 <p>
   The scan time is burnt into the image. If it differs from the UTC clock by more than about
-  ten minutes, the radar or its link to campus is down. The status badge above is checked
-  automatically every half hour.
+  ten minutes, the radar or its link to campus is probably down. The status badge above is set
+  automatically, but only marks the radar offline after two hours without a new scan, so check
+  the time stamp first.
 </p>
 
 ## Latest reflectivity

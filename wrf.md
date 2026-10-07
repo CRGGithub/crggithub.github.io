@@ -145,8 +145,10 @@ description: >-
       <p class="card__body">{{ f.blurb }}</p>
       <p class="card__actions">
         {%- assign interactive = f.page | replace: '.html', '_map.html' %}
-        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ interactive }}" target="_blank" rel="noopener">9 km</a>
-        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ interactive }}" target="_blank" rel="noopener">3 km</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ interactive }}" target="_blank" rel="noopener"
+           aria-label="{{ f.title }}, 9 km interactive map">9 km</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ interactive }}" target="_blank" rel="noopener"
+           aria-label="{{ f.title }}, 3 km interactive map">3 km</a>
       </p>
     </div>
   </li>
@@ -160,8 +162,10 @@ description: >-
         <em>{{ wrf.severe.note | strip_newlines | strip }}</em>
       </p>
       <p class="card__actions">
-        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ wrf.severe.map_page }}" target="_blank" rel="noopener">9 km</a>
-        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ wrf.severe.radar_map_page }}" target="_blank" rel="noopener">With radar</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ wrf.severe.map_page }}" target="_blank" rel="noopener"
+           aria-label="SCEP, 9 km interactive map">9 km</a>
+        <a class="btn btn--ghost btn--sm" href="{{ base }}{{ wrf.severe.radar_map_page }}" target="_blank" rel="noopener"
+           aria-label="SCEP with simulated radar, 9 km interactive map">With radar</a>
       </p>
     </div>
   </li>

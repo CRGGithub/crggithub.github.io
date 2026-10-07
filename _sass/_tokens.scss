@@ -41,6 +41,7 @@ $bp-xl: 78em;
   --plum-700: #5f1a6b;
   --plum-600: #7b2589;
   --plum-500: #9a3ba8;
+  --plum-400: #a04aae;
   --plum-100: #f6ecf8;
 
   --cyan-700: #0b6a80;
@@ -66,7 +67,7 @@ $bp-xl: 78em;
 
   --text:          #241c2b;
   --text-muted:    #6a6076;
-  --text-faint:    #8d849a;
+  --text-faint:    #716a7b;
   --text-invert:   #ffffff;
 
   --brand:         var(--plum-700);
@@ -119,10 +120,10 @@ $bp-xl: 78em;
 
   --text:          #ece8f1;
   --text-muted:    #a89fb5;
-  --text-faint:    #8a7f99;
+  --text-faint:    #8e839c;
 
   --brand:         var(--plum-500);
-  --brand-strong:  var(--plum-400, #b45cc2);
+  --brand-strong:  var(--plum-400);
   --accent:        var(--cyan-400);
   --accent-soft:   #10333c;
   --link:          var(--cyan-400);

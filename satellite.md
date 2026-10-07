@@ -18,7 +18,7 @@ scripts:
 <p>
   Imagery is requested live from the <a href="https://www.eumetsat.int/">EUMETSAT</a> map
   service and is not cached here. Select a product and region, then scrub or animate the
-  last two hours.
+  last twelve frames: about two hours for 10-minute products, nearly three for 15-minute ones.
 </p>
 
 <div class="satview" data-satview tabindex="-1">

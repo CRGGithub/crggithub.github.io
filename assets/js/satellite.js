@@ -70,7 +70,14 @@
     frame: FRAMES - 1,          // 0 = oldest in the window, FRAMES-1 = newest
     boundaries: storedBoundaries(),
     playing: false,
-    timer: null
+    timer: null,
+    // Newest slot of the loop. Fixed while the visitor scrubs or plays, so a
+    // frame keeps meaning the same time however long the page stays open; it
+    // moves only on load, on a product change, and when the page rolls forward
+    // while parked on the newest frame.
+    anchor: null,
+    // What is actually on screen, which can lag what was asked for.
+    shown: null
   };
 
   /* -- Time and request building ----------------------------------------
@@ -82,9 +89,17 @@
   var isoZ = W.isoZ;
   var sast = W.sast;
 
+  function refreshAnchor() {
+    state.anchor = latestSlot(state.product.cadence, state.product.lag);
+  }
+
   function slotForFrame(product, frame) {
     var back = (FRAMES - 1 - frame) * product.cadence * MINUTE;
-    return new Date(latestSlot(product.cadence, product.lag).getTime() - back);
+    return new Date(state.anchor.getTime() - back);
+  }
+
+  function stampText(when) {
+    return isoZ(when).replace('T', ' ').replace(':00Z', 'Z') + '  (' + sast(when) + ' SAST)';
   }
 
   function buildUrl(layer, view, when, width, opaque) {
@@ -118,9 +133,12 @@
 
   var pending = 0;
 
-  /* Load the base and its overlay off-screen, then swap both at once so a
-   * half-updated frame is never on screen. */
-  function show(baseUrl, overlayUrl) {
+  /* Load the base and its overlay off-screen, then swap both - and the labels
+   * that describe them - at once, so a half-updated frame is never on screen
+   * and the time stamp always belongs to the image under it. `commit` runs only
+   * when the base image has arrived; on failure the previous frame and its
+   * labels stay, and the error names the frame that could not be shown. */
+  function show(baseUrl, overlayUrl, requested, commit) {
     var token = ++pending;
     var waiting = overlayUrl ? 2 : 1;
     var failed = false;
@@ -133,7 +151,11 @@
     // A request that neither loads nor errors - a stalled connection, a proxy
     // holding it open - would otherwise leave the stage dimmed for good.
     var guard = setTimeout(function () {
-      if (token === pending && !settled) { el.stage.classList.remove('is-loading'); }
+      if (token !== pending || settled) { return; }
+      el.stage.classList.remove('is-loading');
+      el.error.hidden = false;
+      el.error.textContent = 'Still waiting for EUMETSAT to return ' + stampText(requested) +
+        (state.shown ? '; showing ' + stampText(state.shown) + ' meanwhile.' : '.');
     }, 30000);
 
     function done() {
@@ -144,18 +166,25 @@
 
       if (failed) {
         el.error.hidden = false;
-        el.error.textContent =
-          'EUMETSAT did not return an image for this slot. Try an earlier frame.';
+        el.error.textContent = 'EUMETSAT did not return ' + stampText(requested) +
+          (state.shown ? '; still showing ' + stampText(state.shown) + '.' : '.') +
+          ' Try an earlier frame.';
         return;
       }
+      el.error.hidden = true;
       el.base.src = loaded.base;
-      if (overlayUrl) {
+      // Only show an overlay that actually loaded. A failed one would otherwise
+      // be assigned an undefined src and drawn as a broken image over the frame.
+      var overlayOk = !!(overlayUrl && loaded.overlay);
+      if (overlayOk) {
         el.overlay.src = loaded.overlay;
         el.overlay.hidden = false;
       } else {
         el.overlay.removeAttribute('src');
         el.overlay.hidden = true;
       }
+      state.shown = requested;
+      commit(overlayUrl && !overlayOk);
     }
 
     function load(url, key, required) {
@@ -193,30 +222,36 @@
   }
 
   function render() {
-    var u = urlsForFrame(state.product, state.view, state.frame);
+    var product = state.product;
+    var view = state.view;
+    var u = urlsForFrame(product, view, state.frame);
+    var download = el.download ? urlsForFrame(product, view, state.frame, 2400).base : null;
 
-    show(u.base, u.overlay);
-    renderBoundaries();
-
-    el.stamp.textContent =
-      isoZ(u.when).replace('T', ' ').replace(':00Z', 'Z') + '  (' + sast(u.when) + ' SAST)';
-    el.base.alt = state.product.title + ' over ' + state.view.title + ', ' + isoZ(u.when);
-
-    if (el.download) {
-      el.download.href = urlsForFrame(state.product, state.view, state.frame, 2400).base;
-    }
-
-    var parts = ['<p><strong>' + state.product.title + '</strong> &mdash; ' +
-      state.product.satellite + ', ' + state.product.cadence + ' minute repeat cycle. ' +
-      state.product.blurb + '</p>'];
-    if (state.product.daylight_only) {
-      parts.push('<p><em>Daylight product &mdash; frames after sunset are black.</em></p>');
-    }
-    el.caption.innerHTML = parts.join('');
-
+    // The control reflects the selection immediately...
     el.slider.value = String(state.frame);
+    el.slider.setAttribute('aria-valuetext', stampText(u.when));
     el.prev.disabled = state.frame === 0;
     el.next.disabled = state.frame === FRAMES - 1;
+
+    // ...but everything that describes the picture waits for the picture.
+    show(u.base, u.overlay, u.when, function (overlayMissing) {
+      renderBoundaries();
+      el.stamp.textContent = stampText(u.when);
+      el.base.alt = product.title + ' over ' + view.title + ', ' + isoZ(u.when);
+      if (el.download) { el.download.href = download; }
+
+      var parts = ['<p><strong>' + product.title + '</strong> &mdash; ' +
+        product.satellite + ', ' + product.cadence + ' minute repeat cycle. ' +
+        product.blurb + '</p>'];
+      if (product.daylight_only) {
+        parts.push('<p><em>Daylight product &mdash; frames after sunset are black.</em></p>');
+      }
+      if (overlayMissing) {
+        parts.push('<p><em>The overlay layer is unavailable for this slot, so it is not drawn. ' +
+          'That is missing data, not an absence of activity.</em></p>');
+      }
+      el.caption.innerHTML = parts.join('');
+    });
   }
 
   /* Warm the neighbouring frames so scrubbing does not stall. */
@@ -260,6 +295,7 @@
     function (p) {
       state.product = p;
       state.frame = FRAMES - 1;          // cadences differ, so restart at latest
+      refreshAnchor();
       goto(state.frame);
     });
 
@@ -323,9 +359,10 @@
   /* Roll the window forward as new slots appear, but only while parked on the
    * newest frame, so a visitor who has scrubbed back is left alone. */
   setInterval(function () {
-    if (!state.playing && state.frame === FRAMES - 1) { render(); }
+    if (!state.playing && state.frame === FRAMES - 1) { refreshAnchor(); render(); }
   }, 5 * MINUTE);
 
+  refreshAnchor();
   render();
   prefetch();
 })();

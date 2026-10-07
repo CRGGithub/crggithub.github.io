@@ -33,7 +33,10 @@ scripts:
 
 {% include radar-notice.html %}
 
-<p>All products are timestamped in <strong>UTC</strong>; SAST is UTC+2 year-round.</p>
+<p>
+  Radar, model and satellite products are timestamped in <strong>UTC</strong>; station readings
+  are in <strong>SAST</strong>, which is UTC+2 year-round.
+</p>
 
 ## Start here
 

@@ -73,6 +73,8 @@ marks the SAWS Irene station. Range rings are centred on the radar; the outermos
 
 ## Live image
 
+{% include radar-notice.html %}
+
 {% include live-embed.html
    path=site.data_paths.radar_gif
    kind="image"

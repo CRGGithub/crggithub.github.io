@@ -203,3 +203,11 @@ exclude:
   - CODE_OF_CONDUCT.md
   - push_site.sh
   - reset_git.sh
+  # Legacy radar tile pyramid and its three viewers. Nothing links to them,
+  # the Leaflet viewer has unresolved merge markers, all three load http
+  # scripts, and the Google one has a placeholder key. Kept in the repository,
+  # not published. Written as a glob on purpose: Jekyll also matches exclude
+  # entries as plain path prefixes, so "assets/images/radar/radar" would drop
+  # radar/radardbz.png too - the colour scale the radar page shows. The /*
+  # cannot match that file under any Jekyll version's path normalisation.
+  - "assets/images/radar/radar/*"

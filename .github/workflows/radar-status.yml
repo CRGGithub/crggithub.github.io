@@ -5,9 +5,11 @@
 # _data/radar_status.yml. Every radar mention on the site - the status badges,
 # the offline notice, the home page layout - is driven by that file.
 #
-# It commits only when the status flips (plus a keepalive at most monthly - see
-# the script), so a radar that stays off adds nothing to the history, and the
-# day it comes back on the site follows within about half an hour.
+# It commits only when the status flips, when a scan happens while the radar is
+# recorded as offline (so the banner's last-scan date stays true), and for a
+# monthly keepalive - see the script. A radar that stays off adds next to
+# nothing to the history, and the day it comes back the site follows within
+# about half an hour.
 
 name: Radar status
 
@@ -32,25 +34,43 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Standard library only, and ubuntu-latest ships Python 3.
+      # Standard library only, and ubuntu-latest ships Python 3. A failed
+      # observation exits non-zero, which marks the run failed, but may still
+      # have refreshed the monthly heartbeat - so the next step runs anyway.
       - name: Check the radar
+        id: check
         run: python3 .github/scripts/radar_status.py
 
       - name: Record the change and rebuild the site
+        if: ${{ !cancelled() }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if git diff --quiet -- _data/radar_status.yml; then
+          # Stage first: plain `git diff` ignores an untracked file, so a status
+          # file that had been deleted and was just recreated would be missed.
+          git add -- _data/radar_status.yml
+          if git diff --cached --quiet -- _data/radar_status.yml; then
             echo "Radar status unchanged."
             exit 0
           fi
           status=$(sed -n 's/^status: //p' _data/radar_status.yml)
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add _data/radar_status.yml
           git commit -m "Radar status: ${status}"
           git push || (git pull --rebase && git push)
-          # The push normally triggers the Pages build on its own. Ask for one
-          # explicitly as well, so a change of status never waits on it.
-          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" >/dev/null || true
+
+          # A push made with the workflow token is not guaranteed to start a
+          # Pages build, so request one explicitly. If it cannot be requested,
+          # fail the run: a recorded status the site never shows is the one
+          # outcome this job exists to prevent.
+          for attempt in 1 2 3; do
+            if gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" >/dev/null; then
+              echo "Pages build requested."
+              exit 0
+            fi
+            echo "Pages build request failed (attempt ${attempt}); retrying."
+            sleep $((attempt * 15))
+          done
+          echo "::error::Could not request a Pages build; the status change is committed but not yet published."
+          exit 1

@@ -29,8 +29,10 @@ data_host: "http://fpt-unx.puk.ac.za"
 ```
 
 Every page builds its links and embeds from that value through
-`_includes/live-embed.html` and `_includes/data-link.html`, so the server address never
-appears in page source. To repoint the whole site, change that one line.
+`_includes/live-embed.html` and `_includes/data-link.html`, so the raw IP address never
+appears in the templates or the built pages, and repointing the whole site is one line.
+Be clear about what that buys: rendered pages do contain the hostname, and the hostname
+resolves publicly to the IP. It keeps the address tidy and in one place, not secret.
 
 To publish a friendlier name, add a DNS A record for something like
 `wrf.lekwenaradar.co.za` pointing at the server and set `data_host` to match.
@@ -69,7 +71,7 @@ editing HTML:
   overview, the SAWS warning mirror, the agri forecast, and the GFS cycles the
   model runs from (`cycles:`). Products are linked by their interactive `_map.html`
   versions; the static ones sit behind one footnote link on the WRF page
-- `_data/soundings.yml` — sounding stations by domain, plus the clickable location map
+- `_data/soundings.yml` — sounding stations by domain
 - `_data/satellite.yml` — EUMETSAT products, layer stacks, cadence and regions
 
 Adding a WRF field, for example, is one entry in `_data/wrf.yml`; the page renders the
@@ -125,15 +127,22 @@ that mentions the radar reads that file through `_includes/radar-state.html`: th
 badges, the offline notice (which gives the date of the last scan), the home page's hero
 buttons and card order, and whether the home page shows the radar image at all.
 
-- **Commits only when the status flips.** A radar that stays off adds nothing to the history;
-  the day it comes back, the site follows within about half an hour.
+- **Commits only when something visible changes:** the status flips, or a scan happens while
+  the radar is recorded as offline (so the banner's last-scan date stays true even if the
+  radar ran briefly between two checks). The day the radar comes back, the site follows
+  within about half an hour.
 - **Hysteresis.** Online means a scan within 30 minutes, offline means nothing for two hours,
   and in between the last state holds, so one late upload does not flap the site.
-- **Unreachable is not offline.** If GitHub cannot reach the data server, the run fails
-  visibly and the recorded state is left alone.
+- **Unreachable is not offline.** If GitHub cannot reach the data server, gets no usable
+  `Last-Modified`, or gets one dated in the future (a wrong server clock, not a scan from the
+  future), the run fails visibly and the recorded state is left alone.
+- **The rebuild must succeed.** A push made with the workflow token is not guaranteed to start
+  a Pages build, so the workflow requests one explicitly, retries, and fails the run if it
+  cannot - a recorded status the site never shows is the failure this job exists to prevent.
 - **Monthly keepalive.** GitHub disables scheduled workflows in a public repository after 60
   days without a commit, and the radar can be off for longer than that. So the file is also
-  refreshed at least every 30 days, which keeps the schedule alive.
+  refreshed at least every 30 days, which keeps the schedule alive - including while the data
+  server is unreachable, so an outage cannot quietly switch the job off.
 - **Manual override.** `radar.status` in `_config.yml` is normally `auto`. Set it to
   `online`, `limited` or `offline` to force a state, and `radar.note` to replace the
   automatic banner text.
@@ -193,7 +202,8 @@ Then open <http://localhost:4000>.
 
 ### Mind the version gap
 
-There is no Actions workflow in this repository, so GitHub Pages builds it with the
+No Actions workflow builds this site (the one workflow here only records the radar's
+status), so GitHub Pages builds it with the
 classic pipeline: **Jekyll 3.10 and Ruby Sass 3.7**, not the Jekyll 4 pinned in the
 `Gemfile`. Ruby Sass is the older, stricter compiler, and the difference is not
 cosmetic &mdash; a stylesheet that fails to compile does not fall back to something
@@ -223,7 +233,7 @@ local builds match production.
 ### Dependabot alerts
 
 The same version gap means `Gemfile.lock` never runs in production &mdash; Pages builds
-with its own gems, and there is no Actions workflow. So a Dependabot alert here is about
+with its own gems, and no workflow builds the site. So a Dependabot alert here is about
 a developer's local `jekyll serve`, not about the published site, and the exposure is a
 static-site generator processing this repository's own content.
 
