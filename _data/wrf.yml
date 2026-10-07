@@ -122,11 +122,14 @@ agri:
   dashboard:
     page: agri_dashboard.html
     title: Agri forecast
-    scale: 9 km
+    # Each town is forecast on the 3 km nest or the 9 km domain - the
+    # dashboard labels which against every name - so the card names both.
+    eyebrow: 3 km and 9 km domains
     blurb: >-
-      Twenty-nine grain towns in the Maize Triangle, the summer-grain
-      region, over the next three days: spray windows, planting rain, field
-      access, irrigation need, crop-disease weather, frost and crop heat.
+      Thirty-one grain towns in the Maize Triangle - the Free State, North
+      West and Mpumalanga - over the next three days: spray windows, planting
+      rain, field access, irrigation need, crop-disease weather, frost and
+      crop heat.
   maps:
     - page: agri_rain.html
       title: Rain per day
@@ -144,7 +147,7 @@ agri:
       title: Leaf-wetness hours
       blurb: Hours of likely leaf wetness, against rust and leaf-blight thresholds.
     - page: agri_soiltemp.html
-      title: Soil temperature
+      title: Soil temperature for planting
       blurb: 0-10 cm at 08:00 SAST, against germination and emergence bases.
     - page: agri_tmin.html
       title: Night minimum

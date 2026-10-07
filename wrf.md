@@ -107,7 +107,7 @@ description: >-
 <ul class="card-grid card-grid--wide">
   <li>
     <a class="card" href="{{ base }}{{ wrf.agri.dashboard.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ wrf.agri.dashboard.scale }} domain</p>
+      <p class="card__eyebrow">{{ wrf.agri.dashboard.eyebrow }}</p>
       <h3 class="card__title">{{ wrf.agri.dashboard.title }}</h3>
       <p class="card__body">{{ wrf.agri.dashboard.blurb | strip_newlines | strip }}</p>
       <span class="card__foot">Open the dashboard &nearr;</span>

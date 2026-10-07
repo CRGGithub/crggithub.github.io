@@ -99,6 +99,10 @@ soil:
       title: Soil temperature by depth
       period: Since deployment
       note: Seasonal trend at each sensor.
+    - suffix: air_vs_soil_7d
+      title: Air against soil temperature
+      period: Last 7 days
+      note: Air temperature at Pienaarskamp against the top soil sensor.
 
 # Variables carried in the hourly current-conditions feed.
 variables:
