@@ -98,17 +98,6 @@ scripts:
     </a>
   </li>
   <li>
-    <a class="card" href="{{ '/radar.html#lightning' | relative_url }}">
-      <p class="card__eyebrow">Observed &middot; near-real time</p>
-      <h3 class="card__title">Lightning</h3>
-      <p class="card__body">
-        Live total-lightning detections over Southern Africa from the volunteer-operated
-        Blitzortung network, independent of the radar.
-      </p>
-      <span class="card__foot">Open the lightning map &rarr;</span>
-    </a>
-  </li>
-  <li>
     <a class="card" href="{{ '/wrfskewt.html' | relative_url }}">
       <p class="card__eyebrow">Forecast &middot; vertical profiles</p>
       <h3 class="card__title">Model soundings</h3>

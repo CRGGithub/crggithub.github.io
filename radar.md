@@ -62,18 +62,6 @@ description: >-
    refresh=120
    note="Refreshes every two minutes. Colour scale, place markers and interference are documented on the about page." %}
 
-## Lightning
-
-<p>
-  Total-lightning detections from the volunteer-operated
-  <a href="https://www.blitzortung.org/">Blitzortung</a> network, in near-real time and
-  independent of the radar, so it still shows active convection whenever the radar is out.
-</p>
-
-{% include lightning-map.html
-   title="Live lightning strikes"
-   note="Opens on Southern Africa; pan and zoom from there. Scroll-zoom is off, so use the zoom buttons or open the map full screen. Strike locations are triangulated from a volunteer detector network, so coverage and accuracy vary with detector density." %}
-
 ## Disclaimer
 
 {% include disclaimer.html %}

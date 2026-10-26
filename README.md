@@ -25,40 +25,40 @@ Radar images, WRF products and maps all live on the on-campus server. **Its addr
 written in exactly one place**, `data_host` in `_config.yml`:
 
 ```yaml
-data_host: "http://fpt-unx.puk.ac.za"
+data_host: "https://data.lekwenaradar.co.za"
 ```
 
 Every page builds its links and embeds from that value through
-`_includes/live-embed.html` and `_includes/data-link.html`, so the raw IP address never
-appears in the templates or the built pages, and repointing the whole site is one line.
-Be clear about what that buys: rendered pages do contain the hostname, and the hostname
-resolves publicly to the IP. It keeps the address tidy and in one place, not secret.
+`_includes/live-embed.html` and `_includes/data-link.html`, so repointing the whole site is
+one line.
 
-To publish a friendlier name, add a DNS A record for something like
-`wrf.lekwenaradar.co.za` pointing at the server and set `data_host` to match.
+### HTTPS through Cloudflare
 
-### The HTTPS caveat
+The campus server only speaks plain http, and browsers on an https page block http images
+and frames outright. Since October 2026 that is solved in front of the server rather than on
+it: `data.lekwenaradar.co.za` is a Cloudflare-proxied name for the server. Cloudflare serves
+HTTPS to visitors and fetches from the server over http, so every embed loads inline. It
+needed no access to the server.
 
-The data server currently answers on **http only**. This site answers on both http and
-https. A browser on `https://www.lekwenaradar.co.za` blocks any `http://` image or
-iframe on the page as mixed content, so the radar image and the map frames would come up
-blank.
+The domain's DNS moved from GoDaddy to Cloudflare for this (nameservers
+`jason.ns.cloudflare.com` and `lina.ns.cloudflare.com`). The settings that matter:
 
-`assets/js/site.js` handles that: when the page is https and `data_host` is http, each
-embed collapses to a single row with a link that opens it in its own tab, and a note above
-the first of them explains why, once per page. Controls that could only act on blocked
-embeds, such as the station switcher, are hidden before first paint.
+| Setting | Value | Why |
+|---|---|---|
+| `data` A record | campus server, **Proxied** | Cloudflare's HTTPS in front of the server |
+| `www` CNAME, bare-domain A records | **DNS only** | GitHub Pages issues their certificates itself and must see the traffic directly |
+| SSL/TLS mode | **Flexible** | Nothing listens on 443 on the server; Full or Automatic gives error 521 |
+| Cache rule on `data.lekwenaradar.co.za` | **Bypass cache** | The server sends no caching headers; without it Cloudflare serves stale radar images |
 
-Note that offering visitors an `http://` link to this site does not help: current Chrome
-and Safari silently upgrade that navigation straight back to `https://`. Tested against the
-live site — requesting the http URL in Chrome still lands on https, with every embed
-blocked.
+Two consequences worth knowing. The hop from Cloudflare to campus is unencrypted, which is
+acceptable for public weather data; if the server ever gets its own certificate, switch the
+mode to **Full (strict)**. And the name now resolves to Cloudflare, so pages no longer point
+visitors at the server's own address.
 
-The real fix is a TLS certificate on the data server. Once it has one:
-
-1. change `data_host` to `https://...` — that is the whole switch; `site.js` keys off
-   the scheme, and every embed loads inline again
-2. turn on **Enforce HTTPS** in the repository's GitHub Pages settings
+If `data_host` is ever an `http://` address again, `assets/js/site.js` falls back by itself:
+each blocked embed collapses to an "open in a new tab" row, with one explanation per page.
+Offering visitors an `http://` link to the whole site does not help - current Chrome and
+Safari silently upgrade it straight back to https.
 
 ## Content that lives in `_data`
 
@@ -150,27 +150,6 @@ buttons and card order, and whether the home page shows the radar image at all.
 The workflow needs Actions enabled with write access, and `pages: write` to request a
 rebuild; both are declared in the workflow file. Run it by hand from the Actions tab
 (**Radar status → Run workflow**) to check it can reach the data server from GitHub.
-
-## Lightning map
-
-The radar page embeds the Blitzortung.org live lightning map. Everything about it is in the
-`lightning` block in `_config.yml` — the URL, the map hash (`#zoom/lat/lon`) and every query
-parameter, each commented.
-
-Three things there are deliberate and easy to undo by accident:
-
-- **The URL points at `/en/`, not the site root.** The root is a JavaScript language
-  redirector that picks the UI language from `navigator.language`, which would put a German
-  or French menu inside an English page.
-- **`LinksChecked: 0`.** The vendor's own example embed sets this to `1`. It is not the
-  lightning layer — it is "Detector lines", which draws a line from every strike to each
-  station that received it. The strike layer is `LightningChecked`.
-- **The iframe is `loading="lazy"`.** Their terms ask that the websocket servers not be hit
-  from high-traffic pages, so a visitor who never scrolls to the map never opens a
-  connection.
-
-Their terms also require attribution (in the panel caption) and forbid showing live data on
-commercial sites. A non-commercial university page is within that.
 
 ## Satellite imagery
 

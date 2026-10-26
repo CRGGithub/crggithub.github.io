@@ -26,16 +26,26 @@ contact_email: henno.havenga@nwu.ac.za
 # server address appears, so the raw IP never has to be published and the
 # whole site can be repointed by editing this one line.
 #
-# Currently the campus hostname is used instead of the bare IP. To move to a
-# vanity name, add a DNS A record (e.g. wrf.lekwenaradar.co.za -> the server)
-# and change data_host to match.
+# It points at data.lekwenaradar.co.za, a Cloudflare-proxied name for the
+# campus server (set up October 2026). The server itself only speaks plain
+# http; Cloudflare terminates HTTPS in front of it, so every embed loads inline
+# on the https site. Cloudflare settings this depends on - change them and the
+# site breaks or goes stale:
+#   - DNS: `data` A record -> the server, Proxied. `www` and the bare domain
+#     stay DNS only, so GitHub Pages keeps issuing their certificates.
+#   - SSL/TLS mode: Flexible. The server has nothing listening on 443, so
+#     Full or Automatic gives Cloudflare error 521.
+#   - Cache rule "Bypass cache for data server" on this hostname. The server
+#     sends no caching headers; without the rule Cloudflare would serve stale
+#     radar images.
+# A side effect: the name now resolves to Cloudflare, so pages no longer point
+# visitors at the server's own address.
 #
-# While this is http://, browsers on the https site block every embed from it,
-# and assets/js/site.js swaps each for a link that opens it in a new tab. Once
-# the server has a TLS certificate, change the scheme here to https:// - that
-# one edit is the whole switch, and every embed loads inline again.
+# If the server ever gets its own certificate, switch Cloudflare to Full
+# (strict). If data_host ever goes back to http://, assets/js/site.js turns
+# each blocked embed into an "open in a new tab" link again on its own.
 # ---------------------------------------------------------------------------
-data_host: "http://fpt-unx.puk.ac.za"
+data_host: "https://data.lekwenaradar.co.za"
 
 # ---------------------------------------------------------------------------
 # Radar status
@@ -69,87 +79,6 @@ data_paths:
   stations: "/wrf/stations.html"
   wrf_portal: "/wrf/index.html"
   wrf_prefix: "/wrf/"
-
-# ---------------------------------------------------------------------------
-# Blitzortung.org live lightning map, embedded on the radar page
-#
-# Blitzortung is a volunteer-operated total-lightning detection network. The
-# embed is served over https, so unlike the campus data server it loads inline
-# here with no mixed-content fallback needed.
-#
-# TERMS (https://www.limaps.org/live-data.html): attribution is required, live
-# data may not be demonstrated on commercial sites or via apps, and their
-# websocket servers must not be hit from high-traffic pages. A non-commercial
-# university research and teaching site is within that; keep it that way. The
-# iframe is also lazy-loaded, so no connection is opened for a visitor who
-# never scrolls to it.
-#
-# `embed` points at /en/ rather than the site root on purpose: the root is a
-# JavaScript language redirector that picks the UI language from the visitor's
-# browser, which would drop a German or French menu into an English page.
-#
-# `view` is the map hash: #zoom/latitude/longitude. It sets the opening view,
-# framing Southern Africa; the visitor is free to pan and zoom from there.
-#
-# Note that the view cannot be *confined* to the region. Their URL API exposes
-# no maxBounds or minZoom, so the only way to hold the frame would be to switch
-# interaction off entirely (MapInteractive, which they pass straight to
-# MapLibre's `interactive` flag) - which was tried and deliberately reverted.
-#
-# `params` are documented at the link above. Most defaults are already right
-# (strikes on, strike circles on, detector lines off, sound off) and are set
-# explicitly anyway so a change of vendor default cannot alter this page.
-# Note the vendor's own example switches Detector lines ON, which draws a web
-# of lines from every strike to the stations that received it - not wanted.
-#
-#   MapStyle  0 satellite, 1 Blitzortung base map, 2 shaded relief
-# ---------------------------------------------------------------------------
-lightning:
-  provider: Blitzortung.org
-  provider_url: "https://www.blitzortung.org/"
-  embed: "https://maps.blitzortung.org/en/"
-  view: "#5/-27.0/25.0"
-  params:
-    # No cookie banner inside the frame, and no cookies set on our visitors.
-    Cookies: 0
-    CookiesPredefined: 0
-    CookiesStatistics: 0
-    CookiesAdvertisements: 0
-    CookiesMaps: 0
-    # Their own menu and info panels; we present the map, not their site.
-    MenuDiv: 0
-    InfoDiv: 0
-    # Base map and projection.
-    MapStyle: 1
-    MapProjection: mercator
-    MapLanguage: en
-    # Pan and zoom stay on. Scroll zoom does not: a map that swallows the
-    # page scroll as the reader passes over it is worse than one that needs a
-    # button. Rotation is off so north stays up.
-    MapInteractive: 1
-    MapScrollZoom: 0
-    MapDragRotate: 0
-    MapTouchRotate: 0
-    # Zoom buttons are the way in without scroll zoom, so they stay, as do the
-    # scale bar and full screen. No compass (rotation is disabled), no globe,
-    # and no geolocation, which would prompt the visitor for their position.
-    NavigationControl: 1
-    NavigationControlCompass: 0
-    ScaleControl: 1
-    FullScreenControl: 1
-    GlobeControl: 0
-    GeolocateControl: 0
-    # Data layers.
-    LightningChecked: 1
-    LightningRange: 23
-    CirclesChecked: 1
-    LinksChecked: 0
-    DetectorsChecked: 0
-    CoverageChecked: 0
-    DayNightChecked: 0
-    TimeZonesChecked: 0
-    CountingChecked: 0
-    AudioChecked: 0
 
 # ---------------------------------------------------------------------------
 # EUMETSAT WMS (view.eumetsat.int)

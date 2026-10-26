@@ -19,5 +19,5 @@
 {%- assign radar_last_scan = radar_auto.last_scan -%}
 {%- assign radar_note = site.radar.note | strip_newlines | strip -%}
 {%- if radar_note == '' and radar_status == 'offline' and radar_last_scan -%}
-  {%- capture radar_note -%}Its most recent scan is from {{ radar_last_scan | date: "%-d %B %Y" }}. WRF forecasts, station observations, satellite imagery and lightning are unaffected.{%- endcapture -%}
+  {%- capture radar_note -%}Its most recent scan is from {{ radar_last_scan | date: "%-d %B %Y" }}. WRF forecasts, station observations and satellite imagery are unaffected.{%- endcapture -%}
 {%- endif -%}
