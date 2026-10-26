@@ -62,8 +62,10 @@ radar:
 # Paths on the data server
 data_paths:
   radar_gif: "/latest.gif"
-  radar_storms: "/shpmap.html"
-  radar_dbz: "/leaflet.html"
+  # The live radar viewer: animated reflectivity and echo tops with TITAN
+  # storm tracks. It superseded shpmap.html, a static storm-cell map last
+  # regenerated in April 2022, which is no longer linked.
+  radar_live: "/leaflet.html"
   stations: "/wrf/stations.html"
   wrf_portal: "/wrf/index.html"
   wrf_prefix: "/wrf/"
@@ -208,6 +210,6 @@ exclude:
   # scripts, and the Google one has a placeholder key. Kept in the repository,
   # not published. Written as a glob on purpose: Jekyll also matches exclude
   # entries as plain path prefixes, so "assets/images/radar/radar" would drop
-  # radar/radardbz.png too - the colour scale the radar page shows. The /*
+  # radar/radardbz.png too - an old colour-scale image kept in the repo. The /*
   # cannot match that file under any Jekyll version's path normalisation.
   - "assets/images/radar/radar/*"

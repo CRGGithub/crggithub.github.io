@@ -54,8 +54,8 @@ scripts:
       </p>
       <h3 class="card__title">Lekwena Radar</h3>
       <p class="card__body">
-        Dual-polarised C-band Doppler radar at Potchefstroom. Reflectivity imagery, an
-        interactive maximum-dBZ map and automatically tracked storm cells.
+        Dual-polarised C-band Doppler radar at Potchefstroom. A live, interference-filtered
+        viewer with animation, echo tops and TITAN storm tracks with short-range forecasts.
       </p>
       <span class="card__foot">Open the radar &rarr;</span>
     </a>

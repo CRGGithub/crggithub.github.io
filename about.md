@@ -81,7 +81,7 @@ marks the SAWS Irene station. Range rings are centred on the radar; the outermos
    title="Lekwena C-band reflectivity"
    alt="Latest reflectivity image from the NWU Lekwena radar"
    refresh=120
-   note="The radar page carries the interactive dBZ map and tracked storm cells." %}
+   note="The radar page carries the live interactive viewer, with animation, echo tops and storm tracks." %}
 
 ## Background
 

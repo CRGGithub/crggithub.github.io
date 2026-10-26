@@ -11,7 +11,7 @@ from the `master` branch.
 | Path             | Source          | What it is |
 |------------------|-----------------|------------|
 | `/`              | `index.md`      | Landing page: live radar image, clocks, product index |
-| `/radar.html`    | `radar.md`      | Reflectivity image, interactive dBZ map, tracked storm cells |
+| `/radar.html`    | `radar.md`      | Live interactive radar viewer with storm tracks, latest reflectivity image, lightning |
 | `/stations.html` | `stations.md`   | Live automatic weather station readings and year-to-date records |
 | `/wrf.html`      | `wrf.md`        | WRF impact dashboards, gridded fields, model configuration |
 | `/wrfskewt.html` | `wrfskewt.md`   | Forecast Skew-T soundings for 34 locations |

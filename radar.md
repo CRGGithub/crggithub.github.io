@@ -5,8 +5,8 @@ permalink: /radar.html
 eyebrow: Observed
 tagline: The NWU Lekwena dual-polarised C-band Doppler radar, Potchefstroom.
 description: >-
-  Live reflectivity, interactive maximum-dBZ maps and automatically tracked
-  storm cells from the North-West University Lekwena C-band weather radar.
+  The live, interference-filtered NWU Lekwena C-band radar: animated
+  reflectivity and echo tops with TITAN storm tracks and short-range forecasts.
 ---
 
 <div class="timebar">
@@ -30,14 +30,29 @@ description: >-
 
 {% include radar-notice.html %}
 
+## Live radar
+
+<p>
+  Composite (column-maximum) reflectivity and echo tops, filtered for radio-frequency
+  interference and animated over up to four hours. Storms of 30&nbsp;dBZ and above are tracked
+  with TITAN, with cones for where each may be in 15 and 30&nbsp;minutes. Click the map for the
+  history at a point; times are UTC.
+</p>
+
+{% include live-embed.html
+   path=site.data_paths.radar_live
+   kind="frame"
+   title="Lekwena radar live"
+   note="Track forecasts are linear extrapolations: storms can grow, decay, split or turn." %}
+
+## Latest reflectivity image
+
 <p>
   The scan time is burnt into the image. If it differs from the UTC clock by more than about
   ten minutes, the radar or its link to campus is probably down. The status badge above is set
   automatically, but only marks the radar offline after two hours without a new scan, so check
   the time stamp first.
 </p>
-
-## Latest reflectivity
 
 {% include live-embed.html
    path=site.data_paths.radar_gif
@@ -47,45 +62,12 @@ description: >-
    refresh=120
    note="Refreshes every two minutes. Colour scale, place markers and interference are documented on the about page." %}
 
-## Maximum dBZ map
-
-<p>
-  Reflectivity over a basemap; the layer control toggles the radar overlay.
-</p>
-
-{% include live-embed.html
-   path=site.data_paths.radar_dbz
-   kind="frame"
-   title="Interactive maximum dBZ"
-   height="32rem" %}
-
-<figure>
-  <img src="{{ '/assets/images/radar/radardbz.png' | relative_url }}"
-       alt="Colour scale mapping reflectivity in dBZ onto the viridis colour map"
-       loading="lazy" decoding="async">
-  <figcaption>Reflectivity scale used by the map above.</figcaption>
-</figure>
-
-## Storm characteristics
-
-<p>
-  Cells are identified and tracked automatically; click a polygon or track for its
-  characteristics. Radio-frequency interference is occasionally tracked as a cell, so
-  cross-check against the reflectivity image above.
-</p>
-
-{% include live-embed.html
-   path=site.data_paths.radar_storms
-   kind="frame"
-   title="Tracked storm cells"
-   height="32rem" %}
-
 ## Lightning
 
 <p>
   Total-lightning detections from the volunteer-operated
   <a href="https://www.blitzortung.org/">Blitzortung</a> network, in near-real time and
-  independent of the radar. Useful for locating active convection while the radar is out.
+  independent of the radar, so it still shows active convection whenever the radar is out.
 </p>
 
 {% include lightning-map.html
