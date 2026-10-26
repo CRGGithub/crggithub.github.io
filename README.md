@@ -10,10 +10,10 @@ from the `master` branch.
 
 | Path             | Source          | What it is |
 |------------------|-----------------|------------|
-| `/`              | `index.md`      | Landing page: live radar image, clocks, product index |
+| `/`              | `index.md`      | Landing page: eight big tiles, the live radar viewer, the latest satellite image |
 | `/radar.html`    | `radar.md`      | Live interactive radar viewer with storm tracks, latest reflectivity image, lightning |
 | `/stations.html` | `stations.md`   | Live automatic weather station readings and year-to-date records |
-| `/wrf.html`      | `wrf.md`        | WRF impact dashboards, gridded fields, model configuration |
+| `/wrf.html`      | `wrf.md`        | "Forecasts": warnings, overview, dashboards, agri and forecast-map buttons; model details folded |
 | `/wrfskewt.html` | `wrfskewt.md`   | Forecast Skew-T soundings for 34 locations |
 | `/satellite.html`| `satellite.md`  | EUMETSAT imagery viewer |
 | `/about.html`    | `about.md`      | How to read the radar, project background, press |
@@ -59,6 +59,13 @@ If `data_host` is ever an `http://` address again, `assets/js/site.js` falls bac
 each blocked embed collapses to an "open in a new tab" row, with one explanation per page.
 Offering visitors an `http://` link to the whole site does not help - current Chrome and
 Safari silently upgrade it straight back to https.
+
+## Writing for the site
+
+Pages lead with the live content and keep text to a line or two. Technical detail - model
+configuration, data caveats, product tables - goes in a `<details class="fold">` at the foot of
+the page. Product names are plain English (`name:` in `_data/wrf.yml`) with the technical term
+alongside in small print (`title:`), so students and specialists can still find it.
 
 ## Content that lives in `_data`
 

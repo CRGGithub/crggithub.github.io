@@ -3,7 +3,7 @@ layout: page
 title: Soundings
 permalink: /wrfskewt.html
 eyebrow: Forecast
-tagline: Forecast Skew-T / log-p diagrams for 34 locations across South Africa and its neighbours.
+tagline: Forecast temperature, moisture and wind above 34 towns, from the ground up.
 description: >-
   WRF forecast Skew-T / log-p soundings for 34 locations, from a 3 km
   convection-permitting nest over the Highveld out to the 9 km outer domain.
@@ -12,29 +12,8 @@ description: >-
 {%- assign snd = site.data.soundings -%}
 {%- assign base = site.data_host | append: site.data_paths.wrf_prefix -%}
 
-<p>
-  Forecast profiles stepped through the run, grouped by the domain that produces them.
-</p>
-
-<aside class="callout callout--info" role="note">
-  <div class="callout__body">
-    <p>
-      These are <strong>model</strong> soundings, not observations. For observed profiles to
-      verify against, use the
-      <a href="https://weather.uwyo.edu/upperair/sounding.shtml">University of Wyoming
-      upper-air database</a>.
-    </p>
-  </div>
-</aside>
-
 {%- for g in snd.groups %}
 ## {{ g.title }}
-
-<p>
-  <span class="badge badge--accent">{{ g.domain }} &middot; {{ g.resolution }}</span>
-</p>
-
-<p>{{ g.blurb | strip_newlines | strip }}</p>
 
 <ul class="chips">
   {%- for s in g.stations %}
@@ -48,16 +27,20 @@ description: >-
 </ul>
 {%- endfor %}
 
-## Practical limits
-
-<aside class="callout callout--info" role="note">
-  <div class="callout__body">
-    <ul class="plain-list">
-      <li>Initialised from public GFS analyses.</li>
-      <li>Discard the first hour of each run for spin-up.</li>
-      <li>Customised products on request:
-          <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.</li>
-      <li>SAWS is the only entity in South Africa mandated to issue weather warnings.</li>
+<details class="fold">
+  <summary>About soundings</summary>
+  <div class="fold__body">
+    <p>
+      Each page is a forecast Skew-T / log-p diagram stepped through the run. These are
+      <strong>model</strong> soundings, not observations; for observed profiles use the
+      <a href="https://weather.uwyo.edu/upperair/sounding.shtml">University of Wyoming upper-air database</a>.
+    </p>
+    <ul>
+      {%- for g in snd.groups %}
+      <li><strong>{{ g.title }}</strong> ({{ g.domain }}, {{ g.resolution }}): {{ g.blurb | strip_newlines | strip }}</li>
+      {%- endfor %}
+      <li>Initialised from public GFS analyses; discard the first hour of each run for spin-up.</li>
+      <li>Only the SA Weather Service issues official warnings.</li>
     </ul>
   </div>
-</aside>
+</details>

@@ -95,7 +95,7 @@ nav:
     url: /radar.html
   - title: Stations
     url: /stations.html
-  - title: WRF
+  - title: Forecasts
     url: /wrf.html
   - title: Soundings
     url: /wrfskewt.html

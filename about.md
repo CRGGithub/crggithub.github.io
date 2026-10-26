@@ -3,7 +3,7 @@ layout: page
 title: About
 permalink: /about.html
 eyebrow: Background
-tagline: Interpreting the Lekwena radar imagery, and the background to the facility.
+tagline: How to read the radar, and where it came from.
 description: >-
   How to interpret the NWU Lekwena radar imagery, the background to the project,
   its partners, and press coverage of the radar since its 2018 launch.

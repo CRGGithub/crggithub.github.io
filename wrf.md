@@ -1,244 +1,145 @@
 ---
 layout: page
-title: NWU-WRF
+title: Forecasts
 permalink: /wrf.html
-eyebrow: Forecast
-tagline: A two-domain operational WRF-ARW forecast, run in house every day.
+eyebrow: NWU-WRF forecast
+tagline: Our own forecast for the next three days, updated twice a day.
 description: >-
-  The North-West University operational WRF forecast - 9 and 3 km domains over
-  South Africa, with gridded fields and sector impact dashboards.
+  Three-day forecast maps, impact and farm dashboards from the North-West
+  University's in-house WRF weather model, updated twice a day.
 ---
 
 {%- assign wrf = site.data.wrf -%}
-{%- assign portal = site.data_host | append: site.data_paths.wrf_portal -%}
 {%- assign base = site.data_host | append: site.data_paths.wrf_prefix -%}
-
-<ul class="stats">
-  <li class="stat"><span class="stat__value">{{ wrf.version | remove: 'WRF-ARW ' }}</span><span class="stat__label">WRF-ARW version</span></li>
-  <li class="stat"><span class="stat__value">3 km</span><span class="stat__label">Finest nest</span></li>
-  <li class="stat"><span class="stat__value">{{ wrf.length }}</span><span class="stat__label">Forecast length</span></li>
-  <li class="stat"><span class="stat__value">{{ wrf.cycles | join: ' &amp; ' }}</span><span class="stat__label">GFS cycles, twice daily</span></li>
-</ul>
-
-<p>
-  An operational WRF-ARW configuration run in house each day and co-located with the Lekwena
-  radar and the NWU station network for verification. Model documentation is maintained by the
-  <a href="https://www2.mmm.ucar.edu/wrf/users/">WRF user community</a>.
-</p>
-
-<p>
-  <a class="btn btn--primary" href="{{ portal }}" target="_blank" rel="noopener">
-    Open the full WRF portal
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
-  </a>
-</p>
 
 ## Official warnings
 
-<p>
-  Issued by the <a href="https://www.weathersa.co.za/">South African Weather Service</a>.
-</p>
-
-<ul class="card-grid card-grid--wide">
-  <li>
-    <a class="card" href="{{ base }}{{ wrf.warnings.map_page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">Official &middot; SAWS</p>
-      <h3 class="card__title">{{ wrf.warnings.title }}</h3>
-      <p class="card__body">{{ wrf.warnings.blurb | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the map &nearr;</span>
-    </a>
-  </li>
+<ul class="btn-row">
+  <li><a class="btn btn--primary btn--lg" href="{{ base }}{{ wrf.warnings.map_page }}" target="_blank" rel="noopener">SAWS warnings map &nearr;</a></li>
 </ul>
 
-## Synoptic overview
+## Weather overview
 
-<p>
-  Surface analysis with the two upper-air levels that drive it, stepped three-hourly from
-  T+12 h to T+72 h &mdash; on the model's own {{ wrf.overview.scale }} domain, and on the
-  wider GFS fields that force it.
-</p>
-
-<ul class="card-grid card-grid--wide">
-  <li>
-    <a class="card" href="{{ base }}{{ wrf.overview.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ wrf.overview.scale }} domain</p>
-      <h3 class="card__title">{{ wrf.overview.title }}</h3>
-      <p class="card__body">{{ wrf.overview.blurb | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the overview &nearr;</span>
-    </a>
-  </li>
-  <li>
-    <a class="card" href="{{ base }}{{ wrf.gfs_overview.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">GFS {{ wrf.gfs_overview.scale }} &middot; {{ wrf.gfs_overview.coverage }}</p>
-      <h3 class="card__title">{{ wrf.gfs_overview.title }}</h3>
-      <p class="card__body">{{ wrf.gfs_overview.blurb | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the overview &nearr;</span>
-    </a>
-  </li>
+<ul class="btn-row">
+  <li><a class="btn btn--ghost btn--lg" href="{{ base }}{{ wrf.overview.page }}" target="_blank" rel="noopener">South Africa &nearr;</a></li>
+  <li><a class="btn btn--ghost btn--lg" href="{{ base }}{{ wrf.gfs_overview.page }}" target="_blank" rel="noopener">Wider region &nearr;</a></li>
 </ul>
 
 ## Impact dashboards
 
-<p>
-  Model output scored per location against storm, heat, frost, fire and agricultural
-  decision thresholds.
-</p>
-
-<ul class="card-grid card-grid--wide">
+<ul class="btn-row">
   {%- for d in wrf.dashboards %}
-  <li>
-    <a class="card" href="{{ base }}{{ d.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ d.scale }} domain</p>
-      <h3 class="card__title">{{ d.title }}</h3>
-      <p class="card__body">{{ d.blurb | strip_newlines | strip }}</p>
-      <span class="card__foot">Open dashboard &nearr;</span>
-    </a>
-  </li>
+  <li><a class="btn btn--ghost btn--lg" href="{{ base }}{{ d.page }}" target="_blank" rel="noopener">{{ d.short }} &nearr;</a></li>
   {%- endfor %}
 </ul>
 
 ## Agri forecast
 
-<p>
-  Developed under the {{ wrf.agri.project }} project. Start with the town dashboard, or open
-  a regional map for a single decision.
-</p>
-
-<ul class="card-grid card-grid--wide">
-  <li>
-    <a class="card" href="{{ base }}{{ wrf.agri.dashboard.page }}" target="_blank" rel="noopener">
-      <p class="card__eyebrow">{{ wrf.agri.dashboard.eyebrow }}</p>
-      <h3 class="card__title">{{ wrf.agri.dashboard.title }}</h3>
-      <p class="card__body">{{ wrf.agri.dashboard.blurb | strip_newlines | strip }}</p>
-      <span class="card__foot">Open the dashboard &nearr;</span>
-    </a>
-  </li>
+<ul class="btn-row">
+  <li><a class="btn btn--primary btn--lg" href="{{ base }}{{ wrf.agri.dashboard.page }}" target="_blank" rel="noopener">Farm dashboard: 31 towns &nearr;</a></li>
 </ul>
 
-<div class="table-scroll">
-  <table>
-    <thead><tr><th>Regional map</th><th>What it shows</th></tr></thead>
-    <tbody>
-      {%- for m in wrf.agri.maps %}
-      <tr>
-        <td><a href="{{ base }}{{ m.page | replace: '.html', '_map.html' }}" target="_blank" rel="noopener"><strong>{{ m.title }}</strong></a></td>
-        <td>{{ m.blurb }}</td>
-      </tr>
-      {%- endfor %}
-    </tbody>
-  </table>
-</div>
+<ul class="btn-row">
+  {%- for m in wrf.agri.maps %}
+  <li><a class="btn btn--ghost btn--sm" href="{{ base }}{{ m.page | replace: '.html', '_map.html' }}" target="_blank" rel="noopener" title="{{ m.title }}">{{ m.short }}</a></li>
+  {%- endfor %}
+</ul>
 
-## Interactive maps
+<p class="tech">Maize Trust Early Warning for Farmers project.</p>
 
-<p>
-  Zoomable maps over a street basemap, with a frame slider through the run. Pick a field and a
-  resolution: the 3 km nest resolves convection explicitly and is the better guide to
-  thunderstorm timing, placement and mode over the Highveld.
+## Forecast maps
+
+<p class="lead-line">
+  Zoom in and play through the next three days, for all of South Africa or a closer look at
+  North West and Gauteng.
 </p>
 
-<ul class="card-grid">
+<ul class="mapgrid">
   {%- for f in wrf.fields %}
+  {%- assign interactive = f.page | replace: '.html', '_map.html' %}
   <li>
-    <div class="card">
-      <h3 class="card__title">{{ f.title }}</h3>
-      <p class="card__body">{{ f.blurb }}</p>
-      <p class="card__actions">
-        {%- assign interactive = f.page | replace: '.html', '_map.html' %}
+    <div class="mapcard">
+      <h3 class="mapcard__name">{{ f.name }}<span class="mapcard__term">{{ f.title }}</span></h3>
+      <p class="mapcard__actions">
         <a class="btn btn--ghost btn--sm" href="{{ base }}{{ interactive }}" target="_blank" rel="noopener"
-           aria-label="{{ f.title }}, 9 km interactive map">9 km</a>
+           aria-label="{{ f.name }}, South Africa map">South Africa</a>
         <a class="btn btn--ghost btn--sm" href="{{ base }}nwgp_{{ interactive }}" target="_blank" rel="noopener"
-           aria-label="{{ f.title }}, 3 km interactive map">3 km</a>
+           aria-label="{{ f.name }}, North West and Gauteng map">NW &amp; Gauteng</a>
       </p>
     </div>
   </li>
   {%- endfor %}
   <li>
-    <div class="card">
-      <p class="card__eyebrow">{{ wrf.severe.status }} &middot; {{ wrf.severe.scale }} only</p>
-      <h3 class="card__title">{{ wrf.severe.title }}</h3>
-      <p class="card__body">
-        {{ wrf.severe.blurb | strip_newlines | strip }}
-        <em>{{ wrf.severe.note | strip_newlines | strip }}</em>
-      </p>
-      <p class="card__actions">
+    <div class="mapcard">
+      <h3 class="mapcard__name">{{ wrf.severe.name }}<span class="mapcard__term">SCEP &middot; experimental, not a warning</span></h3>
+      <p class="mapcard__actions">
         <a class="btn btn--ghost btn--sm" href="{{ base }}{{ wrf.severe.map_page }}" target="_blank" rel="noopener"
-           aria-label="SCEP, 9 km interactive map">9 km</a>
+           aria-label="Severe storm potential map">Map</a>
         <a class="btn btn--ghost btn--sm" href="{{ base }}{{ wrf.severe.radar_map_page }}" target="_blank" rel="noopener"
-           aria-label="SCEP with simulated radar, 9 km interactive map">With radar</a>
+           aria-label="Severe storm potential with simulated rain">With rain</a>
       </p>
     </div>
   </li>
 </ul>
 
 <p>
-  Vertical profiles for 34 locations are on the
-  <a href="{{ '/wrfskewt.html' | relative_url }}">soundings page</a>.
+  Want the atmosphere above a town? See the <a href="{{ '/wrfskewt.html' | relative_url }}">soundings</a>.
 </p>
 
-## Model domains
+<details class="fold">
+  <summary>About the forecast model</summary>
+  <div class="fold__body">
+    <p>
+      An in-house {{ wrf.version }} configuration, run twice a day from the
+      {{ wrf.cycles | join: ' and ' }} NCEP GFS cycles, {{ wrf.length }} ahead. It is a research
+      forecast: only the SA Weather Service issues official warnings. Model documentation is kept by the
+      <a href="https://www2.mmm.ucar.edu/wrf/users/">WRF user community</a>; custom forecasts on
+      request from <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.
+    </p>
 
-<div class="table-scroll">
-  <table>
-    <thead>
-      <tr>
-        <th>Domain</th><th>Resolution</th><th>Grid</th><th>Extent</th><th>Coverage</th>
-      </tr>
-    </thead>
-    <tbody>
-      {%- for d in wrf.domains %}
-      <tr>
-        <td><strong>{{ d.id }}</strong><br><span class="cell-note">{{ d.label }}</span></td>
-        <td>{{ d.resolution }}</td>
-        <td>{{ d.grid }}</td>
-        <td>{{ d.extent }}</td>
-        <td>{{ d.coverage }}{% if d.note %}<br><span class="cell-note">{{ d.note }}</span>{% endif %}</td>
-      </tr>
-      {%- endfor %}
-    </tbody>
-  </table>
-</div>
+    <h3>Domains</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Domain</th><th>Resolution</th><th>Grid</th><th>Extent</th><th>Coverage</th></tr></thead>
+        <tbody>
+          {%- for d in wrf.domains %}
+          <tr>
+            <td><strong>{{ d.id }}</strong><br><span class="cell-note">{{ d.label }}</span></td>
+            <td>{{ d.resolution }}</td><td>{{ d.grid }}</td><td>{{ d.extent }}</td>
+            <td>{{ d.coverage }}{% if d.note %}<br><span class="cell-note">{{ d.note }}</span>{% endif %}</td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
 
-<p>
-  The two domains are two-way nested. The 9 km domain takes its lateral boundary conditions
-  directly from GFS; both are published.
-</p>
+    <h3>Configuration</h3>
+    <div class="table-scroll">
+      <table class="spec">
+        <tbody>
+          {%- for p in wrf.physics %}
+          <tr><th scope="row">{{ p.name }}</th><td>{{ p.value }}</td></tr>
+          {%- endfor %}
+          <tr><th scope="row">Forecast length</th><td>{{ wrf.length }}</td></tr>
+          <tr><th scope="row">Cycles</th><td>Twice daily, from the {{ wrf.cycles | join: ' and ' }} GFS cycles</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-## Configuration
-
-<div class="table-scroll">
-  <table class="spec">
-    <tbody>
-      {%- for p in wrf.physics %}
-      <tr><th scope="row">{{ p.name }}</th><td>{{ p.value }}</td></tr>
-      {%- endfor %}
-      <tr><th scope="row">Forecast length</th><td>{{ wrf.length }}</td></tr>
-      <tr><th scope="row">Cycles</th><td>Twice daily, from the {{ wrf.cycles | join: ' and ' }} GFS cycles</td></tr>
-    </tbody>
-  </table>
-</div>
-
-## Practical limits
-
-<aside class="callout callout--info" role="note">
-  <div class="callout__body">
-    <ul class="plain-list">
-      <li>Initialised from public GFS analyses, so GFS initial-condition error propagates
-          into the forecast.</li>
+    <h3>Good to know</h3>
+    <ul>
+      <li>Initialised from public GFS analyses, so GFS starting errors carry into the forecast.</li>
       <li>Discard the first hour of each run for spin-up.</li>
       <li>Verify against observed profiles in the
-          <a href="https://weather.uwyo.edu/upperair/sounding.shtml">University of Wyoming
-          upper-air database</a>.</li>
-      <li>Customised products on request:
-          <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.</li>
-      <li>SAWS is the only entity in South Africa mandated to issue weather warnings.</li>
+          <a href="https://weather.uwyo.edu/upperair/sounding.shtml">University of Wyoming upper-air database</a>.</li>
     </ul>
-  </div>
-</aside>
 
-<p class="page-footnote">
-  Static image versions, without the interactive basemap:
-  <a href="{{ base }}{{ wrf.static_maps }}" target="_blank" rel="noopener">gridded and agri fields</a>,
-  <a href="{{ base }}{{ wrf.severe.page }}" target="_blank" rel="noopener">SCEP</a> and the
-  <a href="{{ base }}{{ wrf.warnings.page }}" target="_blank" rel="noopener">SAWS warnings list</a>.
-</p>
+    <p>
+      <a href="{{ site.data_host }}{{ site.data_paths.wrf_portal }}" target="_blank" rel="noopener">Full forecast portal &nearr;</a>
+      &middot; Plain images without the zoomable map:
+      <a href="{{ base }}{{ wrf.static_maps }}" target="_blank" rel="noopener">forecast fields</a>,
+      <a href="{{ base }}{{ wrf.severe.page }}" target="_blank" rel="noopener">SCEP</a>,
+      <a href="{{ base }}{{ wrf.warnings.page }}" target="_blank" rel="noopener">SAWS warnings list</a>.
+    </p>
+  </div>
+</details>

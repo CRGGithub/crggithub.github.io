@@ -1,0 +1,15 @@
+{%- comment -%}
+  Small line icons for the home tiles. Usage: {% include icon.html name="radar" %}
+{%- endcomment -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+{%- case include.name -%}
+{%- when "radar" -%}<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 18.4 5.6"/><circle cx="12" cy="12" r="1" fill="currentColor"/>
+{%- when "map" -%}<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>
+{%- when "satellite" -%}<path d="M13 7 9 3 5 7l4 4"/><path d="m17 11 4 4-4 4-4-4"/><path d="m8 12 4 4 6-6-4-4-6 6z"/><path d="M16 8l3-3"/><path d="M3 21c2-2 4-3 6-3"/>
+{%- when "station" -%}<path d="M12 2v20"/><path d="M12 6h6"/><path d="M12 6 6 3"/><circle cx="18" cy="6" r="1.5"/><path d="M8 22h8"/>
+{%- when "dashboard" -%}<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>
+{%- when "agri" -%}<path d="M12 22V12"/><path d="M12 12c0-4 3-7 8-7 0 5-3 8-8 7z"/><path d="M12 15c0-3-2-6-7-6 0 4 2 6 7 6z"/>
+{%- when "warning" -%}<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+{%- when "sounding" -%}<path d="M6 21 18 3"/><path d="M4 16c3 0 5-2 6-5s3-5 6-6"/><circle cx="12" cy="8" r="2.5"/><path d="M12 10.5V13"/>
+{%- endcase -%}
+</svg>

@@ -3,11 +3,10 @@ layout: page
 title: Stations
 permalink: /stations.html
 eyebrow: Observed
-tagline: Live conditions and year-to-date records from NWU's automatic weather stations.
+tagline: What NWU's weather stations around Potchefstroom are measuring.
 description: >-
-  Hourly observations and year-to-date climate records from the automatic
-  weather stations operated by the NWU Climatology Research Group around
-  Potchefstroom.
+  Live readings and this year's records from the NWU automatic weather stations
+  and soil moisture probe around Potchefstroom.
 scripts:
   - /assets/js/stations.js
 ---
@@ -15,58 +14,18 @@ scripts:
 {%- assign st = site.data.stations -%}
 {%- assign live = site.data_host | append: st.live_page -%}
 
-<div class="timebar">
-  <span class="timebar__item">
-    <span class="timebar__label">UTC</span>
-    <span class="clock"><span class="clock__time" data-clock="utc">--:--:--</span></span>
-  </span>
-  <span class="timebar__item">
-    <span class="timebar__label">SAST</span>
-    <span class="clock"><span class="clock__time" data-clock="sast">--:--:--</span></span>
-  </span>
-  <span class="timebar__item">
-    <span class="timebar__label">Feed</span>
-    <span class="badge badge--accent">Hourly</span>
-  </span>
-</div>
-
-<p>
-  Instrument observations, not model output. These records are also the reference against
-  which the <a href="{{ '/wrf.html' | relative_url }}">WRF forecasts</a> are verified.
-</p>
-
-<aside class="callout callout--warn" role="note">
-  <div class="callout__body">
-    <p class="callout__title">Unprocessed telemetry</p>
-    <p>
-      Values are raw station telemetry, <strong>neither quality-controlled nor
-      homogenised</strong>, so sensor faults and communication gaps appear as data. Please
-      make contact before use in published work.
-    </p>
-  </div>
-</aside>
-
-## Current conditions
+## Right now
 
 {% include live-embed.html
    path=st.live_page
    kind="frame"
-   title="Live station readings"
+   title="Live readings"
    height="34rem"
-   note="Refreshed hourly. Panel times are SAST." %}
+   note="Updated hourly; times are SAST. Raw readings, not quality-checked." %}
 
-<p data-hide-when-blocked>
-  <a class="btn btn--ghost" href="{{ live }}" target="_blank" rel="noopener">
-    Open the full station report
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>
-  </a>
-</p>
+<p class="tech"><a href="{{ live }}" target="_blank" rel="noopener">Open the full station report &nearr;</a></p>
 
-## Year-to-date trends
-
-<p>
-  The same six records for the current calendar year, per station.
-</p>
+## This year
 
 <div data-stations>
   <ul class="chips" data-station-chips data-hide-when-blocked role="group" aria-label="Station">
@@ -80,8 +39,6 @@ scripts:
 
   {%- assign fallback = st.stations | where: "default", true | first -%}
   {%- assign fallback = fallback | default: st.stations[0] -%}
-
-  <p data-station-blurb data-hide-when-blocked class="card__body">{{ fallback.blurb | strip_newlines | strip }}</p>
 
   <div class="chart-grid"
        data-live-embed
@@ -97,7 +54,6 @@ scripts:
            data-chart="{{ c.suffix }}"
            src="{{ site.data_host }}{{ st.img_prefix }}{{ fallback.id }}_{{ c.suffix }}.png"
            alt="{{ c.title }} for {{ fallback.name }}, year to date">
-      <figcaption class="panel__foot"><p>{{ c.note }}</p></figcaption>
     </figure>
     {%- endfor %}
   </div>
@@ -118,22 +74,7 @@ scripts:
 
 ## Soil moisture
 
-<p>
-  A single {{ st.soil.probe }} at {{ st.soil.site }}, reading moisture and temperature at
-  {{ st.soil.sensors }} depths, with rainfall from {{ st.soil.rain_from }} plotted behind it.
-</p>
-
-<aside class="callout callout--info" role="note">
-  <div class="callout__body">
-    <p class="callout__title">Scaled Frequency, not water content</p>
-    <p>
-      SF is an instrument index where 0 is air and 100 is water at factory calibration. It
-      tracks wetting and drying well, but it is <strong>not</strong> volumetric water content
-      and should not be read as a percentage of water in the soil. Site-specific calibration
-      is needed for that.
-    </p>
-  </div>
-</aside>
+<p class="lead-line">Moisture and temperature at six depths under Potchefstroom, with the day's rain.</p>
 
 <div class="chart-grid"
      data-live-embed
@@ -149,46 +90,51 @@ scripts:
     <img class="panel__media" loading="lazy" decoding="async" referrerpolicy="no-referrer"
          src="{{ site.data_host }}{{ st.img_prefix }}soil_{{ c.suffix }}.png"
          alt="{{ c.title }}, {{ c.period | downcase }}, at {{ st.soil.site }}">
-    <figcaption class="panel__foot"><p>{{ c.note }}</p></figcaption>
   </figure>
   {%- endfor %}
 </div>
 
-## The network
+<p class="tech">
+  Soil moisture is a relative index (0 = air, 100 = water), not a percentage of water in the soil.
+</p>
 
-<div class="table-scroll">
-  <table>
-    <thead><tr><th>Station</th><th>Type</th><th>Notes</th></tr></thead>
-    <tbody>
-      {%- for s in st.stations %}
-      <tr>
-        <td><strong>{{ s.name }}</strong></td>
-        <td>{{ s.kind }}</td>
-        <td>{{ s.blurb | strip_newlines | strip }}</td>
-      </tr>
-      {%- endfor %}
-    </tbody>
-  </table>
-</div>
+<details class="fold">
+  <summary>About the stations</summary>
+  <div class="fold__body">
+    <p>
+      Raw station telemetry, neither quality-controlled nor homogenised, so sensor faults and
+      communication gaps show up as data. Please make contact before using it in published work.
+      The soil readings come from a single {{ st.soil.probe }}, in Scaled Frequency (SF): it
+      tracks wetting and drying well but needs site calibration before it means water content.
+    </p>
 
-## What is measured
+    <h3>The network</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Station</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          {%- for s in st.stations %}
+          <tr><td><strong>{{ s.name }}</strong></td><td>{{ s.kind }}</td><td>{{ s.blurb | strip_newlines | strip }}</td></tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
 
-<div class="table-scroll">
-  <table>
-    <thead><tr><th>Variable</th><th>Unit</th><th>Notes</th></tr></thead>
-    <tbody>
-      {%- for v in st.variables %}
-      <tr><td><strong>{{ v.name }}</strong></td><td>{{ v.unit }}</td><td>{{ v.note }}</td></tr>
-      {%- endfor %}
-    </tbody>
-  </table>
-</div>
+    <h3>What is measured</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Variable</th><th>Unit</th><th>Notes</th></tr></thead>
+        <tbody>
+          {%- for v in st.variables %}
+          <tr><td><strong>{{ v.name }}</strong></td><td>{{ v.unit }}</td><td>{{ v.note }}</td></tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
 
-<aside class="callout callout--info" role="note">
-  <div class="callout__body">
     <p>
       Station data for research or teaching is available on request:
       <a href="mailto:{{ site.contact_email }}">{{ site.contact_name }}</a>.
     </p>
   </div>
-</aside>
+</details>

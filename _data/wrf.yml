@@ -96,6 +96,7 @@ warnings:
 
 dashboards:
   - page: impact_dashboard.html
+    short: 18 towns across South Africa
     title: National Impact Dashboard
     scale: 9 km
     blurb: >-
@@ -103,6 +104,7 @@ dashboards:
       rainfall, wind, heat stress (Heat Index and WBGT), livestock heat load
       (THI), frost, fire danger, spray windows and irrigation scheduling.
   - page: nwu_dashboard.html
+    short: NWU campuses
     title: NWU Campus Dashboard
     scale: 3 km
     blurb: >-
@@ -132,27 +134,35 @@ agri:
       crop heat.
   maps:
     - page: agri_rain.html
+      short: Rain
       title: Rain per day
       blurb: Gauge-day rainfall against the 25 mm planting-rain threshold.
     - page: agri_spray.html
+      short: Spraying
       title: Spray conditions
       blurb: Hourly Delta-T, wind and rain against spraying limits.
     - page: agri_access.html
+      short: Field access
       title: Field access
       blurb: Topsoil moisture against field capacity, for trafficability.
     - page: agri_irrigation.html
+      short: Irrigation
       title: Irrigation need
       blurb: Mid-season maize water use (FAO-56) less effective rain.
     - page: agri_leafwet.html
+      short: Leaf wetness
       title: Leaf-wetness hours
       blurb: Hours of likely leaf wetness, against rust and leaf-blight thresholds.
     - page: agri_soiltemp.html
+      short: Soil temperature
       title: Soil temperature for planting
       blurb: 0-10 cm at 08:00 SAST, against germination and emergence bases.
     - page: agri_tmin.html
+      short: Frost
       title: Night minimum
       blurb: Lowest overnight temperature, against frost thresholds.
     - page: agri_tmax.html
+      short: Crop heat
       title: Day maximum
       blurb: Highest daytime temperature, against crop heat-stress thresholds.
 
@@ -172,6 +182,7 @@ severe:
   page: wrfscep.html
   map_page: wrfscep_map.html
   radar_map_page: wrfscep_radar_map.html
+  name: Severe storm potential
   title: Severe Convective Environment (SCEP)
   scale: 9 km
   status: Experimental
@@ -194,34 +205,32 @@ static_maps: static_maps.html
 # same name with an nwgp_ prefix. The site links the interactive twins - see
 # `static_maps` above.
 fields:
+  # `name` is what visitors see; `title` is the technical name, shown small for
+  # students and specialists. Listed in the order people most often want them.
   - page: wrfradar.html
-    title: Simulated Radar
-    blurb: Model-simulated radar reflectivity.
+    name: Rain & storms
+    title: Simulated radar
   - page: wrfrainfall.html
-    title: Accumulated Precipitation
-    blurb: Precipitation accumulated from model initialisation.
-  - page: wrfcape.html
-    title: Simulated CAPE
-    blurb: Convective available potential energy.
-  - page: wrfhail.html
-    title: Hail Forecast
-    blurb: Maximum hailstone diameter at the surface, from the HAILCAST model.
-  - page: wrfwindspeed.html
-    title: Max Wind Gust (Beaufort)
-    blurb: >-
-      Peak surface gust in each output interval, banded by Beaufort force from
-      0 (calm) to 12 (hurricane force).
+    name: Rainfall total
+    title: Accumulated precipitation
   - page: wrftemp.html
-    title: Temperature
-    blurb: Screen-level (2 m) air temperature.
+    name: Temperature
+    title: 2 m air temperature
+  - page: wrfwindspeed.html
+    name: Wind gusts
+    title: Max gust, Beaufort scale
   - page: wrfutci.html
+    name: Feels-like temperature
     title: UTCI
-    blurb: >-
-      Universal Thermal Climate Index: equivalent temperature accounting for
-      humidity, wind and radiation as well as air temperature.
   - page: wrfcf.html
-    title: Cloud Fraction
-    blurb: Total column cloud cover.
+    name: Cloud cover
+    title: Cloud fraction
+  - page: wrfhail.html
+    name: Hail
+    title: HAILCAST max diameter
+  - page: wrfcape.html
+    name: Storm energy
+    title: CAPE
   - page: wrfevap.html
-    title: Accumulated Evaporation
-    blurb: Actual evapotranspiration accumulated from model initialisation.
+    name: Evaporation
+    title: Accumulated evapotranspiration

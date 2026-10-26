@@ -3,7 +3,7 @@ layout: page
 title: Satellite
 permalink: /satellite.html
 eyebrow: Observed
-tagline: Meteosat imagery over Southern Africa, straight from EUMETSAT.
+tagline: Clouds, storms and lightning seen from space, every 10 minutes.
 description: >-
   Current Meteosat Third Generation and MSG imagery over Southern Africa -
   GeoColour with lightning, Convection RGB, water vapour, airmass, instability
@@ -14,12 +14,6 @@ scripts:
 ---
 
 {%- assign sat = site.data.satellite -%}
-
-<p>
-  Imagery is requested live from the <a href="https://www.eumetsat.int/">EUMETSAT</a> map
-  service and is not cached here. Select a product and region, then scrub or animate the
-  last twelve frames: about two hours for 10-minute products, nearly three for 15-minute ones.
-</p>
 
 <div class="satview" data-satview tabindex="-1">
   <div class="satview__toolbar">
@@ -91,8 +85,10 @@ scripts:
   </div>
 </noscript>
 
-## Reading the products
-
+<details class="fold">
+  <summary>What the products show</summary>
+  <div class="fold__body">
+    <p>Images come live from <a href="https://www.eumetsat.int/">EUMETSAT</a> and are not stored here.</p>
 <div class="table-scroll">
   <table>
     <thead>
@@ -111,39 +107,16 @@ scripts:
   </table>
 </div>
 
-<aside class="callout callout--info" role="note">
-  <div class="callout__body">
-    <p class="callout__title">Why the newest frame lags the clock</p>
+<h3>Why the newest image is a little behind the clock</h3>
+  <div>
     <p>
-      Full-disc repeat cycles are 10 or 15 minutes depending on instrument, and EUMETSAT
-      requires further time to process and publish each slot. Requests are therefore stepped
-      back far enough to fall inside the archive; scrub right for the most recent frame.
+      The satellites take a new picture every 10 or 15 minutes, and EUMETSAT needs a little
+      time to process each one, so the newest image is usually 20 to 40 minutes old. Slide all
+      the way right for the latest.
     </p>
   </div>
-</aside>
-
-## Related
-
-<ul class="linklist">
-  <li>
-    <a href="{{ site.eumetsat.viewer }}" target="_blank" rel="noopener">
-      <span class="linklist__name">EUMETSAT View</span>
-      <span class="linklist__note">Full product catalogue and archive</span>
-    </a>
-  </li>
-  <li>
-    <a href="{{ '/radar.html' | relative_url }}">
-      <span class="linklist__name">Lekwena radar</span>
-      <span class="linklist__note">Ground-based reflectivity</span>
-    </a>
-  </li>
-  <li>
-    <a href="{{ '/wrf.html' | relative_url }}">
-      <span class="linklist__name">NWU-WRF simulated radar and CAPE</span>
-      <span class="linklist__note">Forecast reflectivity and instability</span>
-    </a>
-  </li>
-</ul>
+  </div>
+</details>
 
 <script type="application/json" id="satview-config">
 {

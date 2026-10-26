@@ -1,0 +1,190 @@
+// ---------------------------------------------------------------------------
+// Streamlined navigation: big tiles, compact map cards, button rows and a
+// "Details" fold for the technical material that used to sit in front of the
+// live content. Kept to plain properties - GitHub Pages builds with Ruby Sass
+// 3.7, so no CSS math functions with mixed units and no :has().
+// ---------------------------------------------------------------------------
+
+// ---- Big picture tiles (home page) ----------------------------------------
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+  li { margin: 0; max-width: none; }
+  @include md-down { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  height: 100%;
+  padding: 1.1rem 1.1rem 1rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+
+  &:hover, &:focus-visible {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+    color: var(--text);
+  }
+}
+
+.tile__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.7rem;
+  background: var(--accent-soft);
+  color: var(--accent);
+  svg { width: 1.45rem; height: 1.45rem; }
+}
+
+.tile__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tile__sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.tile__badge {
+  margin-top: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile { transition: none; }
+  .tile:hover, .tile:focus-visible { transform: none; }
+}
+
+// ---- One-line page intro ---------------------------------------------------
+
+.lead-line {
+  margin: 0 0 1.1rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+// ---- Compact map cards (WRF page) ------------------------------------------
+
+.mapgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+  li { margin: 0; max-width: none; }
+  @include sm-down { grid-template-columns: 1fr; }
+}
+
+.mapcard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  height: 100%;
+  padding: 0.85rem 0.95rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.mapcard__name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+// The technical term, for students and specialists, kept out of the way.
+.mapcard__term,
+.tech {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.mapcard__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: auto 0 0;
+  max-width: none;
+}
+
+// ---- Rows of buttons --------------------------------------------------------
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+  li { margin: 0; max-width: none; }
+}
+
+.btn--lg {
+  padding: 0.75rem 1.15rem;
+  font-size: 1rem;
+}
+
+// ---- Details fold -------------------------------------------------------------
+
+.fold {
+  margin: 2rem 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+
+  > summary {
+    cursor: pointer;
+    padding: 0.85rem 1.1rem;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    &::-webkit-details-marker { display: none; }
+    &::before {
+      content: "";
+      width: 0.5rem;
+      height: 0.5rem;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(-45deg);
+      transition: transform 0.15s;
+    }
+    &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  }
+  &[open] > summary::before { transform: rotate(45deg); }
+}
+
+.fold__body {
+  padding: 0 1.1rem 1.1rem;
+  > :first-child { margin-top: 0; }
+  h3 { font-size: 1rem; margin: 1.2rem 0 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fold > summary::before { transition: none; }
+}
