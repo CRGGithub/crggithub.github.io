@@ -3,6 +3,6 @@
 # Derived from the Last-Modified header of the radar image on the data
 # server. To force a status regardless of this file, set radar.status in
 # _config.yml.
-status: offline
-last_scan: "2026-03-10T02:42:01Z"
-recorded: "2026-10-25T09:20:53Z"
+status: online
+last_scan: "2026-10-26T12:49:02Z"
+recorded: "2026-10-26T12:49:17Z"
