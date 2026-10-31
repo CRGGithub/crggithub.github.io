@@ -37,6 +37,21 @@ description: >-
    note="Press play to animate the last few hours. Tick Storm tracks to see where storms are heading in the next 30 minutes - a straight-line estimate, so storms can still grow, fade or turn. Click the map for the history at a point. Times are UTC." %}
 
 <details class="fold">
+  <summary>Experimental viewer</summary>
+  <div class="fold__body">
+    <p>
+      A new radar viewer we are still testing. It may change, break or be slow at times; use the
+      live view above for anything that matters.
+      <a href="{{ site.data_host }}{{ site.data_paths.radar_experimental }}" target="_blank" rel="noopener">Open full screen</a>.
+    </p>
+{% include live-embed.html
+   path=site.data_paths.radar_experimental
+   kind="frame"
+   title="Experimental radar viewer" %}
+  </div>
+</details>
+
+<details class="fold">
   <summary>Simple radar image</summary>
   <div class="fold__body">
     <p>

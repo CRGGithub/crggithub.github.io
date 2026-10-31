@@ -76,6 +76,8 @@ data_paths:
   # storm tracks. It superseded shpmap.html, a static storm-cell map last
   # regenerated in April 2022, which is no longer linked.
   radar_live: "/leaflet.html"
+  # A trial viewer still being developed; shown in a fold on the radar page.
+  radar_experimental: "/experimental.html"
   stations: "/wrf/stations.html"
   wrf_portal: "/wrf/index.html"
   wrf_prefix: "/wrf/"
